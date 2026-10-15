@@ -1,0 +1,2 @@
+issue_id,session_id,date,reporter_role,area,subject,chapter,steps_to_reproduce,expected,actual,severity,academic_risk,privacy_risk,owner,due_date,status,fix_version,retest_by,retest_date,evidence,decision
+,,,,,,,,,,,BLOCKER_OR_HIGH_OR_MEDIUM_OR_LOW,,,,OPEN,,,,,

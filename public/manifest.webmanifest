@@ -1,0 +1,11 @@
+{
+  "name": "HSC2Plus — HSC Study Companion",
+  "short_name": "HSC2Plus",
+  "description": "বাংলা মাধ্যমের Commerce ও Humanities শিক্ষার্থীদের study, practice ও exam preparation companion.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f8f6",
+  "theme_color": "#0a6b5c",
+  "lang": "bn-BD",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

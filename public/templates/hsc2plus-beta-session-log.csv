@@ -1,0 +1,2 @@
+session_id,date,participant_code,role,group,device,consent_recorded,assigned_chapter,tasks_completed,total_tasks,time_minutes,help_requests,wrong_turns,confidence_before,confidence_after,content_issue_count,usability_issue_count,observer,follow_up,result
+,,,,,,NO,,,,,,,,,,,,,,,NOT_RUN
