@@ -7,6 +7,9 @@ import { OfflineSupport } from "@/components/offline-support";
 export const metadata: Metadata = {
   title: "HSC2Plus — Learn. Practice. Repeat.",
   description: "বাংলা মাধ্যমের HSC ব্যবসায় শিক্ষা ও মানবিক বিভাগের শিক্ষার্থীদের জন্য পাঠ, রিভিশন, অনুশীলন ও মডেল টেস্টের Public Beta।",
+   verification: {
+    google: "2A9GBDVUBb4EHR1uPaEhCVuAMNRIhvDUQdlgH9Vo6JY",
+  },
   icons: { icon: "/favicon.svg" },
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "HSC2Plus", statusBarStyle: "default" },
