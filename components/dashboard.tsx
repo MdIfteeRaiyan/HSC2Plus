@@ -58,9 +58,9 @@ import {
   previousBoardArchive,
   priorityCompletionLedger,
   releaseReadinessAudit,
-  questionProvenancePolicy,
   subjectsByGroup,
 } from "@/lib/academic-data";
+import type { QuestionVisual as QuestionVisualData } from "@/lib/academic-data";
 import { AppShell } from "./app-shell";
 import { AeroFocusBackdrop, SoundStatus } from "./premium-ui";
 
@@ -83,19 +83,6 @@ function Ring({ value, size = 72 }: { value: number; size?: number }) {
       <strong>{value}%</strong>
     </div>
   );
-}
-
-function questionSourceLabel(category: "Concept" | "Application" | "Board-style" | "College-standard", bangla: boolean) {
-  if (bangla) {
-    if (category === "Board-style") return "নিজস্ব HSC অনুশীলন · বোর্ড-প্যাটার্ন";
-    if (category === "College-standard") return "নিজস্ব HSC অনুশীলন · কলেজ-স্ট্যান্ডার্ড";
-    if (category === "Application") return "নিজস্ব HSC অনুশীলন · প্রয়োগভিত্তিক";
-    return "নিজস্ব HSC অনুশীলন · ধারণাভিত্তিক";
-  }
-  if (category === "Board-style") return "Original HSC practice · Board-pattern";
-  if (category === "College-standard") return "Original HSC practice · College-standard";
-  if (category === "Application") return "Original HSC practice · Application";
-  return "Original HSC practice · Concept";
 }
 
 function stableQuestionKey(question: { type: string; prompt: string; promptBn?: string }) {
@@ -201,6 +188,21 @@ function ModelAnswerBreakdown({ text, bangla, cq }: { text: string; bangla: bool
     ? [["ক", "জ্ঞান", "১"], ["খ", "অনুধাবন", "২"], ["গ", "প্রয়োগ", "৩"], ["ঘ", "উচ্চতর দক্ষতা", "৪"]]
     : [["A", "Knowledge", "1"], ["B", "Comprehension", "2"], ["C", "Application", "3"], ["D", "Higher order", "4"]];
   return <div className="cq-model-breakdown">{parts.slice(0, 4).map((part, index) => <section key={`${index}-${part.slice(0,20)}`}><header><span>{meta[index][0]}</span><strong>{meta[index][1]}</strong><em>{meta[index][2]} {bangla ? "নম্বর" : Number(meta[index][2]) === 1 ? "mark" : "marks"}</em></header><p style={{ whiteSpace: "pre-line" }}>{part}</p></section>)}</div>;
+}
+
+function QuestionVisual({ visual, surface }: { visual?: QuestionVisualData; surface: "question" | "answer" }) {
+  if (!visual || (visual.placement && visual.placement !== "both" && visual.placement !== surface)) return null;
+  const points = visual.points ?? [];
+  const xValues = points.map((point) => point.x), yValues = points.map((point) => point.y);
+  const xMin = Math.min(...xValues, 0), xMax = Math.max(...xValues, 1), yMin = Math.min(...yValues, 0), yMax = Math.max(...yValues, 1);
+  const coordinates = points.map((point) => ({...point,cx:55+((point.x-xMin)/Math.max(1,xMax-xMin))*400,cy:170-((point.y-yMin)/Math.max(1,yMax-yMin))*125}));
+  return <figure className={`question-visual question-visual-${visual.kind}`} aria-label={visual.alt}>
+    <figcaption><strong>{visual.title}</strong><span>{visual.caption}</span></figcaption>
+    {visual.kind === "table" && <div className="question-visual-table-wrap"><table><thead><tr>{visual.headers?.map((header)=><th key={header} scope="col">{header}</th>)}</tr></thead><tbody>{visual.rows?.map((row,rowIndex)=><tr key={`${rowIndex}-${row.join("-")}`}>{row.map((cell,cellIndex)=><td key={`${cellIndex}-${cell}`}>{cell}</td>)}</tr>)}</tbody></table></div>}
+    {visual.kind === "flow" && <div className="question-visual-flow" role="img" aria-label={visual.alt}>{visual.steps?.map((step,index)=><div key={`${index}-${step}`}><span>{index+1}</span><strong>{step}</strong>{index < (visual.steps?.length ?? 0)-1 && <ArrowRight size={17} aria-hidden="true"/>}</div>)}</div>}
+    {visual.kind === "graph" && <svg viewBox="0 0 500 210" role="img" aria-label={visual.alt}><line x1="55" y1="170" x2="470" y2="170"/><line x1="55" y1="170" x2="55" y2="25"/><polyline points={coordinates.map((point)=>`${point.cx},${point.cy}`).join(" ")}/>{coordinates.map((point,index)=><g key={`${point.label}-${index}`}><circle cx={point.cx} cy={point.cy} r="5"/><text x={point.cx+7} y={point.cy-7}>{point.label}</text></g>)}<text x="420" y="198">{visual.xLabel}</text><text x="8" y="24">{visual.yLabel}</text></svg>}
+    {visual.kind === "image" && visual.src && <img src={visual.src} alt={visual.alt} loading="lazy" decoding="async"/>}
+  </figure>;
 }
 
 function LessonVisual({ subjectId, english, chapter, lesson, concept, lessonSteps }: { subjectId: string; english: boolean; chapter: string; lesson: string; concept?: string; lessonSteps?: string[] }) {
@@ -334,7 +336,7 @@ function AcademicSourcePanel({ english = false, group }: { english?: boolean; gr
           <p>{english ? officialAcademicSources.policy.questionStatement : officialAcademicSources.policy.questionStatementBn}</p>
         </div>
         <section className="review-handoff-tools" aria-label={english ? "Academic review handoff tools" : "একাডেমিক রিভিউ হ্যান্ডঅফ টুলস"}>
-          <div><span className="eyebrow">REVIEW HANDOFF</span><strong>{english ? "Move all 351 group learning-unit records into qualified review" : "৩৫১টি গ্রুপভিত্তিক শেখার ইউনিট যোগ্য পর্যালোচকের কাছে দাও"}</strong><p>{english ? "The register keeps every decision attached to a record ID. The evidence manifest preserves sources, blockers and current status without claiming approval." : "পর্যালোচনা তালিকায় প্রতিটি সিদ্ধান্ত নির্দিষ্ট নথি নম্বরের সঙ্গে থাকবে। প্রমাণপত্রে উৎস, প্রতিবন্ধকতা ও বর্তমান অবস্থা সংরক্ষিত থাকবে—অনুমোদনের কোনো অযাচাইকৃত দাবি ছাড়া।"}</p></div>
+          <div><span className="eyebrow">REVIEW HANDOFF</span><strong>{english ? "Move all 356 group learning-unit records into qualified review" : "৩৫৬টি গ্রুপভিত্তিক শেখার ইউনিট যোগ্য পর্যালোচকের কাছে দাও"}</strong><p>{english ? "The register keeps every decision attached to a record ID. The evidence manifest preserves sources, blockers and current status without claiming approval." : "পর্যালোচনা তালিকায় প্রতিটি সিদ্ধান্ত নির্দিষ্ট নথি নম্বরের সঙ্গে থাকবে। প্রমাণপত্রে উৎস, প্রতিবন্ধকতা ও বর্তমান অবস্থা সংরক্ষিত থাকবে—অনুমোদনের কোনো অযাচাইকৃত দাবি ছাড়া।"}</p></div>
           <div className="review-handoff-actions">
             <button type="button" onClick={downloadReviewerPacket}><Download size={15}/>{english ? "Reviewer register (.csv)" : "পর্যালোচকের তালিকা (.csv)"}</button>
             <button type="button" onClick={downloadNctbComparisonRegister}><Download size={15}/>{english ? "NCTB comparison (.csv)" : "NCTB তুলনা তালিকা (.csv)"}</button>
@@ -343,7 +345,7 @@ function AcademicSourcePanel({ english = false, group }: { english?: boolean; gr
           <small><ShieldCheck size={13}/>{english ? "Downloading a pack does not change any chapter status. Only a named qualified reviewer can sign off a record." : "পর্যালোচনা ফাইল ডাউনলোড করলে কোনো অধ্যায়ের অবস্থা বদলাবে না। কেবল পরিচয়-উল্লেখিত যোগ্য বিষয় পর্যালোচক একটি নথি অনুমোদন করতে পারবেন।"}</small>
         </section>
         <section className="automated-assurance" aria-label={english ? "Automated content assurance" : "স্বয়ংক্রিয় কনটেন্ট যাচাই"}>
-          <div className="automated-assurance-head"><span><CheckCircle2 size={18}/><strong>{english ? "351/351 group learning records passed automated assurance" : "৩৫১/৩৫১টি গ্রুপভিত্তিক শেখার নথি স্বয়ংক্রিয় যাচাইয়ে উত্তীর্ণ"}</strong></span><small>{english ? academicContentAssurance.auditedOn : academicContentAssurance.auditedOnBn}</small></div>
+          <div className="automated-assurance-head"><span><CheckCircle2 size={18}/><strong>{english ? "356/356 group learning records passed automated assurance" : "৩৫৬/৩৫৬টি গ্রুপভিত্তিক শেখার নথি স্বয়ংক্রিয় যাচাইয়ে উত্তীর্ণ"}</strong></span><small>{english ? academicContentAssurance.auditedOn : academicContentAssurance.auditedOnBn}</small></div>
           <p>{english ? academicContentAssurance.scope : academicContentAssurance.scopeBn}</p>
           <div>{academicContentAssurance.checks.map((check)=><span key={check.id}><Check size={13}/>{english ? check.label : check.labelBn}</span>)}</div>
           <aside><CircleAlert size={16}/><p>{english ? academicContentAssurance.limitation : academicContentAssurance.limitationBn}</p></aside>
@@ -1534,11 +1536,6 @@ function Subjects({ group }: { group: "commerce" | "humanities" }) {
           ))}
         </div>
         <section className="subject-detail">
-          <div className="content-status">
-            <span className="status-dot" />
-            {englishSubject ? `NCTB catalogue checked ${officialAcademicSources.checkedOn} · chapter order under academic review` : `এনসিটিবি ক্যাটালগ দেখা হয়েছে ${officialAcademicSources.checkedOnBn} · অধ্যায়ের ক্রম একাডেমিক পর্যালোচনায়`}
-          </div>
-          <AcademicSourcePanel english={englishSubject} group={group} />
           <div className="subject-detail-head">
             <div>
               <span className="eyebrow">{englishSubject ? "FULL SUBJECT LIBRARY" : "সম্পূর্ণ বিষয় লাইব্রেরি"}</span>
@@ -2574,9 +2571,9 @@ function QuestionBankPractice({ group, target }: { group: "commerce" | "humaniti
     <div className="page-shell">
       <section className="bank-practice-card">
         <div className="bank-practice-meta"><span>{resource.subject} · {banglaMedium ? resource.unitBn : resource.unit}</span><strong>{index + 1}/{questions.length}</strong></div>
-        <div className="question-tags"><span className="topic-pill">{banglaMedium ? (question.type === "MCQ" ? "বহুনির্বাচনি" : question.type === "CQ" ? "সৃজনশীল" : "লিখিত") : question.type}</span><span>{banglaMedium ? (question.level === "Foundation" ? "ভিত্তিমূলক" : question.level === "Standard" ? "মানসম্মত" : "চ্যালেঞ্জ") : question.level}</span><span>{banglaMedium ? (question.category === "Board-style" ? "বোর্ড-প্যাটার্ন" : question.category === "College-standard" ? "কলেজ-স্ট্যান্ডার্ড" : question.category === "Concept" ? "ধারণাভিত্তিক" : "প্রয়োগ") : question.category}</span><span>{banglaMedium ? "বাংলা মাধ্যম" : "English subject"}</span></div>
-        <div className="question-standard-note"><ShieldCheck size={14}/><span>{banglaMedium ? "HSC একাদশ–দ্বাদশ স্তর · নিজস্ব প্রশ্ন · পাঠ্যবই ও অধ্যায়ক্রমের বিশেষজ্ঞ যাচাই চলমান" : "HSC XI–XII level · original question · textbook and chapter alignment under specialist review"}</span></div>
+        <div className="question-tags"><span className="topic-pill">{question.type === "MCQ" ? "MCQ" : question.type === "CQ" ? (banglaMedium ? "CQ · ১০ নম্বর" : "CQ · 10 marks") : (banglaMedium ? "লিখিত" : "Written")}</span><span>{banglaMedium ? (question.level === "Foundation" ? "সহজ" : question.level === "Standard" ? "মাঝারি" : "কঠিন") : question.level}</span></div>
         <h1 className={banglaMedium ? "bangla-question-title" : ""} style={{ whiteSpace: "pre-line" }}>{practicePrompt}</h1>
+        <QuestionVisual visual={question.visual} surface="question"/>
         {question.optionsBn && (
           <div className="option-list bank-options">
             {question.optionsBn.map((option, optionIndex) => (
@@ -2616,6 +2613,7 @@ function QuestionBankPractice({ group, target }: { group: "commerce" | "humaniti
             {question.optionsBn && question.correctIndex !== undefined && <div className="revealed-mcq-answer"><span>{banglaMedium ? "সঠিক উত্তর" : "CORRECT ANSWER"}</span><strong>{(banglaMedium ? ["ক","খ","গ","ঘ"] : ["A","B","C","D"])[question.correctIndex]}. {question.optionsBn[question.correctIndex]}</strong></div>}
             {question.optionsBn && <section className={`mcq-feedback ${incorrectMcq ? "incorrect" : "correct"}`}><strong>{incorrectMcq ? (banglaMedium ? "কেন তোমার উত্তরটি সঠিক নয়" : "Why your answer is incorrect") : (banglaMedium ? "কেন উত্তরটি সঠিক" : "Why the answer is correct")}</strong>{incorrectMcq && <p>{banglaMedium ? `“${selectedMcqText}” বিকল্পটি প্রশ্নের নির্ণায়ক ধারণা, শর্ত বা প্রমাণের সঙ্গে সম্পূর্ণভাবে মেলে না।` : `“${selectedMcqText}” does not fully satisfy the decisive concept, condition or evidence required by the question.`}</p>}<p>{practiceGuide}</p><small>{banglaMedium ? "মনে রাখো: প্রশ্নের মূল শব্দ শনাক্ত করো, তারপর প্রতিটি বিকল্প অধ্যায়ের নিয়মের সঙ্গে মিলিয়ে বাদ দাও।" : "Remember: identify the controlling word, then eliminate each option against the chapter rule."}</small></section>}
             {!question.optionsBn && <p>{practiceGuide}</p>}
+            <QuestionVisual visual={question.visual} surface="answer"/>
             {(banglaMedium ? question.markingPointsBn : question.markingPoints) && <ol className="marking-breakdown">{(banglaMedium ? question.markingPointsBn : question.markingPoints)?.map((point) => <li key={point}>{point}</li>)}</ol>}
             {(banglaMedium ? question.modelAnswerBn : question.modelAnswer) && <details className="model-answer"><summary>{banglaMedium ? "পূর্ণাঙ্গ Model Answer দেখো" : "View complete model answer"}</summary><ModelAnswerBreakdown text={(banglaMedium ? question.modelAnswerBn : question.modelAnswer)!} bangla={banglaMedium} cq={question.type === "CQ"}/></details>}
             <div><button onClick={() => assess("review")}><RotateCcw size={16}/>{banglaMedium ? "আরও অনুশীলন" : "Practice again"}</button><button className="mastered" onClick={() => assess("mastered")}><Check size={16}/>{banglaMedium ? "বুঝেছি" : "Got it"}</button></div>
@@ -2912,7 +2910,7 @@ function TestCenter({ group, onNavigate }: { group: "commerce" | "humanities"; o
       <header><span>HSC2Plus · ORIGINAL BOARD-PATTERN PRACTICE</span><h1>{testSubject === "English" ? `English ${testPaper === "2nd Paper" ? "2nd" : "1st"} Paper Model Test` : `${selectedTestSubject?.nameBn ?? testSubject} মডেল টেস্ট`}</h1><p>{writtenPaper ? `${cqQuestions.length} written tasks` : `${mcqQuestions.length} MCQ + ${cqQuestions.length} CQ`} · {totalMarks} marks · {duration} minutes</p></header>
       <section className="exam-print-instructions"><strong>Instructions</strong>{mcqQuestions.length > 0 && <span>MCQ: choose one answer for each question.</span>}<span>{writtenPaper ? "Complete the reading, grammar or writing tasks according to their individual instructions." : "CQ: answer all four parts—১+২+৩+৪."}</span><span>Questions are original practice written in board pattern; they are not claimed as previous-board questions.</span></section>
       {mcqQuestions.length > 0 && <section><h2>Part A · MCQ · {mcqQuestions.length} marks</h2>{mcqQuestions.map((question, questionIndex)=><article className="exam-print-question" key={question.key}><strong>{questionIndex+1}. {question.question}</strong><div>{question.options.map((option, optionIndex)=><span key={option}><b>{question.isEnglish ? ["A","B","C","D"][optionIndex] : ["ক","খ","গ","ঘ"][optionIndex]}.</b> {option}</span>)}</div></article>)}</section>}
-      {cqQuestions.length > 0 && <section className="exam-print-cq"><h2>{writtenPaper ? "Written tasks" : "Part B · CQ"} · {writtenMarks} marks</h2>{cqQuestions.map((question, questionIndex)=><article className="exam-print-question" key={question.key}><strong>{questionIndex+1}. {"taskLabel" in question ? String(question.taskLabel) : question.subject === "English" ? question.unit : question.unitBn} · {question.marks ?? 10} marks</strong>{"taskInstruction" in question&&<small>{String(question.taskInstruction)}</small>}<p style={{whiteSpace:"pre-line"}}>{question.subject === "English" ? question.prompt : (question.promptBn ?? question.prompt)}</p></article>)}</section>}
+      {cqQuestions.length > 0 && <section className="exam-print-cq"><h2>{writtenPaper ? "Written tasks" : "Part B · CQ"} · {writtenMarks} marks</h2>{cqQuestions.map((question, questionIndex)=><article className="exam-print-question" key={question.key}><strong>{questionIndex+1}. {"taskLabel" in question ? String(question.taskLabel) : question.subject === "English" ? question.unit : question.unitBn} · {question.marks ?? 10} marks</strong>{"taskInstruction" in question&&<small>{String(question.taskInstruction)}</small>}<p style={{whiteSpace:"pre-line"}}>{question.subject === "English" ? question.prompt : (question.promptBn ?? question.prompt)}</p><QuestionVisual visual={question.visual} surface="question"/></article>)}</section>}
       <section className="exam-print-answer-grid"><h2>MCQ answer grid</h2><div>{mcqQuestions.map((_, questionIndex)=><span key={questionIndex}>{questionIndex+1}. □ ক/A&nbsp; □ খ/B&nbsp; □ গ/C&nbsp; □ ঘ/D</span>)}</div></section>
       <footer>© 2026 HSC2Plus · Personal educational use only · Page <span className="print-page-number"/></footer>
     </article>
@@ -3029,7 +3027,7 @@ function TestCenter({ group, onNavigate }: { group: "commerce" | "humanities"; o
                   <article key={key}>
                     <div className="cq-result-head"><span>{cqIndex + 1}</span><div><strong>{bangla ? (question.subjectBn ?? question.subject) : question.subject} · {bangla ? question.unitBn : question.unit}</strong><p>{bangla ? (question.promptBn ?? question.prompt) : question.prompt}</p></div><div className="cq-total-score"><small>মোট</small><strong>{cqTotal}/{question.marks ?? 10}</strong></div></div>
                     {writtenPaper ? <div className="cq-part-scoring"><label><span><b>Score</b>Task rubric</span><select aria-label="Written task score" value={partScores[0] ?? ""} onChange={(event)=>{setCqAssessmentSaved(false);setCqPartScores(current=>({...current,[key]:[Number(event.target.value)]}));}}><option value="" disabled>নম্বর দাও</option>{Array.from({length:(question.marks??10)+1},(_,value)=><option key={value} value={value}>{value}/{question.marks??10}</option>)}</select></label></div> : <div className="cq-part-scoring">{([['ক','জ্ঞান',1],['খ','অনুধাবন',2],['গ','প্রয়োগ',3],['ঘ','উচ্চতর দক্ষতা',4]] as const).map(([part, skill, max], partIndex) => <label key={part}><span><b>{part}</b>{bangla ? skill : ['Knowledge','Understanding','Application','Higher order'][partIndex]}</span><select aria-label={`${part} score`} value={partScores[partIndex] ?? ""} onChange={(event) => { setCqAssessmentSaved(false); setCqPartScores((current) => { const next = [...(current[key] ?? [-1,-1,-1,-1])]; next[partIndex] = Number(event.target.value); return { ...current, [key]: next }; }); }}><option value="" disabled>নম্বর দাও</option>{Array.from({ length: max + 1 }, (_, scoreValue) => <option key={scoreValue} value={scoreValue}>{scoreValue}/{max}</option>)}</select></label>)}</div>}
-                    <details><summary>পূর্ণাঙ্গ উত্তর ও নম্বর নির্দেশিকা দেখো</summary><p>{bangla ? (question.answerGuideBn ?? question.answerGuide) : question.answerGuide}</p>{(bangla ? question.markingPointsBn : question.markingPoints) && <ol>{(bangla ? question.markingPointsBn : question.markingPoints)?.map((point) => <li key={point}>{point}</li>)}</ol>}{(bangla ? question.modelAnswerBn : question.modelAnswer) && <ModelAnswerBreakdown text={(bangla ? question.modelAnswerBn : question.modelAnswer)!} bangla={bangla} cq/>}</details>
+                    <details><summary>পূর্ণাঙ্গ উত্তর ও নম্বর নির্দেশিকা দেখো</summary><QuestionVisual visual={question.visual} surface="answer"/><p>{bangla ? (question.answerGuideBn ?? question.answerGuide) : question.answerGuide}</p>{(bangla ? question.markingPointsBn : question.markingPoints) && <ol>{(bangla ? question.markingPointsBn : question.markingPoints)?.map((point) => <li key={point}>{point}</li>)}</ol>}{(bangla ? question.modelAnswerBn : question.modelAnswer) && <ModelAnswerBreakdown text={(bangla ? question.modelAnswerBn : question.modelAnswer)!} bangla={bangla} cq/>}</details>
                   </article>
                 );
               })}
@@ -3083,7 +3081,7 @@ function TestCenter({ group, onNavigate }: { group: "commerce" | "humanities"; o
           <div className="question-navigator exam-split-navigator">
             {(["MCQ","CQ"] as const).map((kind) => { const section=examItems.filter((navItem)=>navItem.kind===kind); if(!section.length)return null; return <section key={kind}><strong>{kind==="MCQ"?`MCQ · ${section.length}`:`${writtenPaper?"WRITTEN":"CQ"} · ${section.length}`}</strong><div>{section.map((navItem,sectionIndex)=>{const itemIndex=examItems.findIndex((candidate)=>candidate.key===navItem.key);return <button key={navItem.key} aria-label={`${kind} question ${sectionIndex+1}`} className={`${itemIndex === index ? "active" : ""} ${navItem.kind === "MCQ" ? answers[navItem.key] !== undefined ? "answered" : "" : (cqParts[navItem.key] ?? []).some(Boolean) ? "answered" : ""}`} onClick={() => setIndex(itemIndex)}>{sectionIndex + 1}</button>})}</div></section>})}
           </div>
-          {mcqQuestion ? <><h2>{mcqQuestion.question}</h2><div className="option-list">{mcqQuestion.options.map((option, optionIndex) => <button key={option} aria-label={`${mcqQuestion.isEnglish ? ["A", "B", "C", "D"][optionIndex] : ["ক", "খ", "গ", "ঘ"][optionIndex]}. ${option}`} className={`option ${answers[itemKey] === optionIndex ? "selected" : ""}`} onClick={() => setAnswers((current) => ({ ...current, [itemKey]: optionIndex }))}><span>{mcqQuestion.isEnglish ? ["A", "B", "C", "D"][optionIndex] : ["ক", "খ", "গ", "ঘ"][optionIndex]}</span>{option}</button>)}</div></> : writtenPaper ? <div className="cq-exam-paper"><span>{cqQuestion!.marks ?? 10} marks · {writtenQuestion?.taskLabel ?? "WRITTEN TASK"}</span>{writtenQuestion?.taskInstruction&&<p className="written-task-instruction">{writtenQuestion.taskInstruction}</p>}<h2>{cqQuestion!.subject !== "English" ? (cqQuestion!.promptBn ?? cqQuestion!.prompt) : cqQuestion!.prompt}</h2><p>{englishPaper ? "Write the answer on paper following the task instruction, required format and word limit. No hint or model answer is shown before submission." : "নির্দেশনা, নির্ধারিত কাঠামো ও শব্দসীমা মেনে খাতায় উত্তর লেখো। জমা দেওয়ার আগে কোনো উত্তর দেখানো হবে না।"}</p><div><label><input type="checkbox" checked={cqParts[itemKey]?.[0]??false} onChange={()=>setCqParts(current=>({...current,[itemKey]:[!(current[itemKey]?.[0]??false)]}))}/><span>{englishPaper?"Task completed and checked":"উত্তর লেখা ও যাচাই সম্পন্ন"}</span></label></div></div> : <div className="cq-exam-paper"><span>১০ নম্বর · ১+২+৩+৪</span><h2>{cqQuestion!.subject !== "English" ? (cqQuestion!.promptBn ?? cqQuestion!.prompt) : cqQuestion!.prompt}</h2><p>খাতায় উত্তর লেখো। প্রতিটি অংশ শেষ হলে নিচে চিহ্ন দাও—জমা দেওয়ার আগে কোনো hint বা answer দেখানো হবে না।</p><div className="cq-time-plan"><span><b>২ মিনিট</b> উদ্দীপক পড়া ও ক</span><span><b>৫ মিনিট</b> খ সম্পন্ন</span><span><b>১১ মিনিট</b> গ সম্পন্ন</span><span><b>২০ মিনিট</b> ঘ ও final check</span></div><div>{["ক · জ্ঞান · ১", "খ · অনুধাবন · ২", "গ · প্রয়োগ · ৩", "ঘ · উচ্চতর দক্ষতা · ৪"].map((part,partIndex)=><label key={part}><input type="checkbox" checked={cqParts[itemKey]?.[partIndex] ?? false} onChange={() => setCqParts((current)=>{const next=[...(current[itemKey] ?? [false,false,false,false])];next[partIndex]=!next[partIndex];return {...current,[itemKey]:next};})}/><span>{part}</span></label>)}</div></div>}
+          {mcqQuestion ? <><h2>{mcqQuestion.question}</h2><div className="option-list">{mcqQuestion.options.map((option, optionIndex) => <button key={option} aria-label={`${mcqQuestion.isEnglish ? ["A", "B", "C", "D"][optionIndex] : ["ক", "খ", "গ", "ঘ"][optionIndex]}. ${option}`} className={`option ${answers[itemKey] === optionIndex ? "selected" : ""}`} onClick={() => setAnswers((current) => ({ ...current, [itemKey]: optionIndex }))}><span>{mcqQuestion.isEnglish ? ["A", "B", "C", "D"][optionIndex] : ["ক", "খ", "গ", "ঘ"][optionIndex]}</span>{option}</button>)}</div></> : writtenPaper ? <div className="cq-exam-paper"><span>{cqQuestion!.marks ?? 10} marks · {writtenQuestion?.taskLabel ?? "WRITTEN TASK"}</span>{writtenQuestion?.taskInstruction&&<p className="written-task-instruction">{writtenQuestion.taskInstruction}</p>}<h2>{cqQuestion!.subject !== "English" ? (cqQuestion!.promptBn ?? cqQuestion!.prompt) : cqQuestion!.prompt}</h2><QuestionVisual visual={cqQuestion!.visual} surface="question"/><p>{englishPaper ? "Write the answer on paper following the task instruction, required format and word limit. No hint or model answer is shown before submission." : "নির্দেশনা, নির্ধারিত কাঠামো ও শব্দসীমা মেনে খাতায় উত্তর লেখো। জমা দেওয়ার আগে কোনো উত্তর দেখানো হবে না।"}</p><div><label><input type="checkbox" checked={cqParts[itemKey]?.[0]??false} onChange={()=>setCqParts(current=>({...current,[itemKey]:[!(current[itemKey]?.[0]??false)]}))}/><span>{englishPaper?"Task completed and checked":"উত্তর লেখা ও যাচাই সম্পন্ন"}</span></label></div></div> : <div className="cq-exam-paper"><span>১০ নম্বর · ১+২+৩+৪</span><h2>{cqQuestion!.subject !== "English" ? (cqQuestion!.promptBn ?? cqQuestion!.prompt) : cqQuestion!.prompt}</h2><QuestionVisual visual={cqQuestion!.visual} surface="question"/><p>খাতায় উত্তর লেখো। প্রতিটি অংশ শেষ হলে নিচে চিহ্ন দাও—জমা দেওয়ার আগে কোনো hint বা answer দেখানো হবে না।</p><div className="cq-time-plan"><span><b>২ মিনিট</b> উদ্দীপক পড়া ও ক</span><span><b>৫ মিনিট</b> খ সম্পন্ন</span><span><b>১১ মিনিট</b> গ সম্পন্ন</span><span><b>২০ মিনিট</b> ঘ ও final check</span></div><div>{["ক · জ্ঞান · ১", "খ · অনুধাবন · ২", "গ · প্রয়োগ · ৩", "ঘ · উচ্চতর দক্ষতা · ৪"].map((part,partIndex)=><label key={part}><input type="checkbox" checked={cqParts[itemKey]?.[partIndex] ?? false} onChange={() => setCqParts((current)=>{const next=[...(current[itemKey] ?? [false,false,false,false])];next[partIndex]=!next[partIndex];return {...current,[itemKey]:next};})}/><span>{part}</span></label>)}</div></div>}
           <div className="test-question-nav">
             <button disabled={index === 0} onClick={() => setIndex((value) => Math.max(0, value - 1))}>আগের প্রশ্ন</button>
             <button className={flagged[itemKey] ? "flagged" : ""} onClick={() => setFlagged((current) => ({...current,[itemKey]:!current[itemKey]}))}><Bookmark size={15} fill={flagged[itemKey] ? "currentColor" : "none"}/>{flagged[itemKey] ? "আবার দেখার জন্য রাখা হয়েছে" : "পরে আবার দেখব"}</button>
@@ -3397,7 +3395,6 @@ function ExamLibrary({ group, display = "full", target = null }: { group: "comme
             <span className="pending"><Clock3 size={14}/>{resource.review?.status === "reviewed" ? (banglaMedium ? "একাডেমিক পর্যালোচনা সম্পন্ন" : "Academic review complete") : (banglaMedium ? "NCTB মিল যাচাই চলমান" : "NCTB alignment in review")}</span>
           </div>
           {resource.review?.mappingStage === "official-curriculum-located-edition-under-comparison" && <div className="curriculum-mapping-stage" role="status"><ShieldCheck size={18}/><div><strong>{banglaMedium ? "অফিসিয়াল শিক্ষাক্রম পাওয়া গেছে" : "Official curriculum located"}</strong><p>{banglaMedium ? "বিষয়টি mapped। এখন বইয়ের কাঠামো, title/imprint এবং প্রযোজ্য অনুমোদিত সংস্করণ মিলিয়ে দেখা হচ্ছে। বিনামূল্যের NCTB download না থাকাকে আর ‘unmapped’ ধরা হচ্ছে না।" : "The subject is mapped. Textbook structure, title/imprint and the applicable approved edition are now under comparison; a missing free NCTB download no longer makes it unmapped."}</p></div></div>}
-          <AcademicSourcePanel english={!banglaMedium} group={group} />
           <details className="chapter-review-record">
             <summary><ShieldCheck size={16}/><span><strong>{banglaMedium ? "এই অধ্যায়ের পর্যালোচনা নথি" : "Chapter review record"}</strong><small>{resource.review?.recordId}</small></span><ChevronRight size={16}/></summary>
             <div className="chapter-review-body">
@@ -3663,14 +3660,6 @@ function ExamLibrary({ group, display = "full", target = null }: { group: "comme
                   </div>
                   <button className="new-bank-set" onClick={() => { setBankRound((round) => round + 1); setBankPage(0); }}>{banglaMedium ? "নতুন অনুশীলন সেট · না-দেখা প্রশ্ন আগে" : "New practice set · unseen first"}<span>{banglaMedium ? `সেশন ${bankRound + 1}` : `Session ${bankRound + 1}`}</span></button>
                 </section>
-                <details className="question-provenance-panel">
-                  <summary><ShieldCheck size={15}/><span><strong>{banglaMedium ? "প্রশ্নের উৎস ও সত্যতা" : "Question source & authenticity"}</strong><small>{banglaMedium ? "বর্তমান ব্যাংক: ১০০% নিজস্ব HSC অনুশীলন" : "Current bank: 100% original HSC practice"}</small></span><ChevronRight size={15}/></summary>
-                  <div>
-                    <p>{banglaMedium ? questionProvenancePolicy.ruleBn : questionProvenancePolicy.rule}</p>
-                    <span><strong>{questionProvenancePolicy.authenticPastBoardCount}</strong>{banglaMedium ? "পূর্ণ উদ্ধৃতিসহ বিগত বোর্ড প্রশ্ন" : "past-board items with complete citation"}</span>
-                    <small>{banglaMedium ? `প্রয়োজনীয় উদ্ধৃতি: ${questionProvenancePolicy.citationFieldsBn.join(" · ")}` : `Required citation: ${questionProvenancePolicy.citationFields.join(" · ")}`}</small>
-                  </div>
-                </details>
                 <div className="bank-filters" aria-label="প্রশ্ন ছাঁকনি">
                   <label className="bank-search-field">
                     {banglaMedium ? "প্রশ্ন খুঁজুন" : "Search questions"}
@@ -3715,14 +3704,16 @@ function ExamLibrary({ group, display = "full", target = null }: { group: "comme
                         <span>{banglaMedium ? (question.category === "Board-style" ? "বোর্ড-প্যাটার্ন" : question.category === "College-standard" ? "কলেজ-স্ট্যান্ডার্ড" : question.category === "Concept" ? "ধারণাভিত্তিক" : "প্রয়োগ") : question.category}</span>
                       </div>
                       <h3 style={{ whiteSpace: "pre-line" }}>{banglaMedium ? (question.promptBn ?? question.prompt) : question.prompt}</h3>
+                      <QuestionVisual visual={question.visual} surface="question"/>
                       {question.optionsBn && <ol className="bank-option-preview">{question.optionsBn.map((option) => <li key={option}>{option}</li>)}</ol>}
                       <details onToggle={(event) => { if (!event.currentTarget.open) markBankQuestionReviewed(stableQuestionKey(question)); }}>
                         <summary>{banglaMedium ? "উত্তর ও মূল্যায়ন নির্দেশিকা দেখো" : "View answer and marking guide"}</summary>
+                        <QuestionVisual visual={question.visual} surface="answer"/>
                         <p>{banglaMedium ? (question.answerGuideBn ?? question.answerGuide) : question.answerGuide}</p>
                         {(banglaMedium ? question.markingPointsBn : question.markingPoints) && <ol className="marking-breakdown">{(banglaMedium ? question.markingPointsBn : question.markingPoints)?.map((point) => <li key={point}>{point}</li>)}</ol>}
                         {(banglaMedium ? question.modelAnswerBn : question.modelAnswer) && <div className="bank-model-answer"><strong>{banglaMedium ? "পূর্ণাঙ্গ মডেল উত্তর" : "Complete model answer"}</strong><ModelAnswerBreakdown text={(banglaMedium ? question.modelAnswerBn : question.modelAnswer)!} bangla={banglaMedium} cq={question.type === "CQ"}/></div>}
                       </details>
-                      <small className="question-source">{question.marks ? `${question.marks} ${banglaMedium ? "নম্বর" : question.marks === 1 ? "mark" : "marks"} · ` : ""}{questionSourceLabel(question.category, banglaMedium)}</small>
+                      <small className="question-source">{question.marks ? `${question.marks} ${banglaMedium ? "নম্বর" : question.marks === 1 ? "mark" : "marks"}` : ""}</small>
                     </article>
                   ))}
                   {visibleQuestions.length === 0 && <div className="bank-empty"><Search size={21}/><strong>{banglaMedium ? "মিলছে এমন প্রশ্ন নেই" : "No matching questions"}</strong><span>{banglaMedium ? "খোঁজের শব্দ বা একটি ফিল্টার পরিবর্তন করো।" : "Change the search term or one filter."}</span></div>}
@@ -3759,7 +3750,7 @@ function ExamLibrary({ group, display = "full", target = null }: { group: "comme
                     <select value={level} onChange={(event) => { setLevel(event.target.value as typeof level); setArchivePage(0); }} aria-label={banglaMedium ? "কঠিনতার স্তর" : "Difficulty"}><option value="All">{banglaMedium ? "সব স্তর" : "All levels"}</option><option value="Foundation">Foundation</option><option value="Standard">Standard</option><option value="Challenge">Challenge</option></select>
                     <select value={category} onChange={(event) => { setCategory(event.target.value as typeof category); setArchivePage(0); }} aria-label={banglaMedium ? "প্রশ্নের মান" : "Question standard"}><option value="All">{banglaMedium ? "সব ক্যাটাগরি" : "All categories"}</option><option value="Board-style">Board-pattern</option><option value="College-standard">College-standard</option><option value="Concept">Concept</option><option value="Application">Application</option></select>
                   </div>
-                  <div className="practice-archive-results">{pagedPracticeArchive.map((question, index) => { const modelAnswer = banglaMedium ? question.modelAnswerBn : question.modelAnswer; const markingPoints = banglaMedium ? question.markingPointsBn : question.markingPoints; return <article key={`${stableQuestionKey(question)}-${index}`} className={question.type === "CQ" ? "archive-cq-card" : ""}><header><span>{question.type}</span><span>{question.category === "Board-style" ? "Board-pattern" : question.category}</span><span>{question.level}</span><b>{question.marks ?? (question.type === "MCQ" ? 1 : 10)} {banglaMedium ? "নম্বর" : "marks"}</b></header><h4>{banglaMedium ? (question.promptBn ?? question.prompt) : question.prompt}</h4>{question.type === "MCQ" && question.optionsBn && <ol>{question.optionsBn.map((option, optionIndex) => <li key={option}><span>{banglaMedium ? ["ক", "খ", "গ", "ঘ"][optionIndex] : String.fromCharCode(65 + optionIndex)}</span>{option}</li>)}</ol>}<details><summary>{banglaMedium ? (question.type === "CQ" ? "পূর্ণাঙ্গ ১+২+৩+৪ উত্তর দেখো" : "উত্তর ও ব্যাখ্যা দেখো") : "Show answer and explanation"}<ChevronRight size={15}/></summary><div className="archive-answer-panel">{question.type === "MCQ" && <strong>{banglaMedium ? "সঠিক উত্তর" : "Correct answer"}: {banglaMedium ? ["ক", "খ", "গ", "ঘ"][question.correctIndex ?? 0] : String.fromCharCode(65 + (question.correctIndex ?? 0))}</strong>}<p>{banglaMedium ? (question.answerGuideBn ?? question.answerGuide) : question.answerGuide}</p>{markingPoints?.length ? <ol className="marking-breakdown">{markingPoints.map((point) => <li key={point}>{point}</li>)}</ol> : null}{modelAnswer ? <div className="bank-model-answer"><strong>{banglaMedium ? "পূর্ণাঙ্গ মডেল উত্তর" : "Complete model answer"}</strong><ModelAnswerBreakdown text={modelAnswer} bangla={banglaMedium} cq={question.type === "CQ"}/></div> : null}</div></details></article>; })}</div>
+                  <div className="practice-archive-results">{pagedPracticeArchive.map((question, index) => { const modelAnswer = banglaMedium ? question.modelAnswerBn : question.modelAnswer; const markingPoints = banglaMedium ? question.markingPointsBn : question.markingPoints; return <article key={`${stableQuestionKey(question)}-${index}`} className={question.type === "CQ" ? "archive-cq-card" : ""}><header><span>{question.type}</span><span>{question.category === "Board-style" ? "Board-pattern" : question.category}</span><span>{question.level}</span><b>{question.marks ?? (question.type === "MCQ" ? 1 : 10)} {banglaMedium ? "নম্বর" : "marks"}</b></header><h4>{banglaMedium ? (question.promptBn ?? question.prompt) : question.prompt}</h4><QuestionVisual visual={question.visual} surface="question"/>{question.type === "MCQ" && question.optionsBn && <ol>{question.optionsBn.map((option, optionIndex) => <li key={option}><span>{banglaMedium ? ["ক", "খ", "গ", "ঘ"][optionIndex] : String.fromCharCode(65 + optionIndex)}</span>{option}</li>)}</ol>}<details><summary>{banglaMedium ? (question.type === "CQ" ? "পূর্ণাঙ্গ ১+২+৩+৪ উত্তর দেখো" : "উত্তর ও ব্যাখ্যা দেখো") : "Show answer and explanation"}<ChevronRight size={15}/></summary><div className="archive-answer-panel">{question.type === "MCQ" && <strong>{banglaMedium ? "সঠিক উত্তর" : "Correct answer"}: {banglaMedium ? ["ক", "খ", "গ", "ঘ"][question.correctIndex ?? 0] : String.fromCharCode(65 + (question.correctIndex ?? 0))}</strong>}<QuestionVisual visual={question.visual} surface="answer"/><p>{banglaMedium ? (question.answerGuideBn ?? question.answerGuide) : question.answerGuide}</p>{markingPoints?.length ? <ol className="marking-breakdown">{markingPoints.map((point) => <li key={point}>{point}</li>)}</ol> : null}{modelAnswer ? <div className="bank-model-answer"><strong>{banglaMedium ? "পূর্ণাঙ্গ মডেল উত্তর" : "Complete model answer"}</strong><ModelAnswerBreakdown text={modelAnswer} bangla={banglaMedium} cq={question.type === "CQ"}/></div> : null}</div></details></article>; })}</div>
                   {practiceArchiveQuestions.length === 0 && <div className="archive-empty"><Search size={24}/><strong>{banglaMedium ? "এই ফিল্টারে প্রশ্ন পাওয়া যায়নি" : "No questions match these filters"}</strong><p>{banglaMedium ? "ফিল্টার বদলে আবার চেষ্টা করো।" : "Adjust the filters and try again."}</p></div>}
                   {practiceArchivePageCount > 1 && <div className="archive-pagination"><button disabled={archivePage === 0} onClick={() => setArchivePage((page) => Math.max(0, page - 1))}><ChevronLeft size={15}/>{banglaMedium ? "আগের" : "Previous"}</button><span>{archivePage + 1} / {practiceArchivePageCount}</span><button disabled={archivePage >= practiceArchivePageCount - 1} onClick={() => setArchivePage((page) => Math.min(practiceArchivePageCount - 1, page + 1))}>{banglaMedium ? "পরের" : "Next"}<ChevronRight size={15}/></button></div>}
                 </>}
@@ -3801,12 +3792,6 @@ function ExamLibrary({ group, display = "full", target = null }: { group: "comme
                 </>}
               </section>
             )}
-          </div>
-          <div className="verification-note">
-            <CircleAlert size={17} />
-            <p>
-              {banglaMedium ? "প্রতিটি অধ্যায় এনসিটিবি পাঠ্যক্রমের সঙ্গে মিলিয়ে দেখা হচ্ছে। “বোর্ড-প্যাটার্ন” চিহ্নিত প্রশ্নগুলো নতুনভাবে তৈরি অনুশীলন; এগুলোকে হুবহু বিগত বোর্ড প্রশ্ন বলা হচ্ছে না। পাঠ্যবইয়ের সংস্করণ, বিগত বোর্ড প্রশ্ন ও কলেজ প্রশ্নের উৎস একাডেমিক পর্যালোচনায় আছে।" : "Every unit is being checked against the NCTB curriculum. Items marked “Board-style” are newly written practice, not verbatim past-board questions. Textbook editions and board/college question sources remain under academic review."}
-            </p>
           </div>
         </section>
       </div>

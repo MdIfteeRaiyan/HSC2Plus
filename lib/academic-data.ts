@@ -28,7 +28,7 @@ export const humanitiesSubjects: Subject[] = [
   { id: "economics", name: "Economics", nameBn: "অর্থনীতি", paper: "1st & 2nd Paper", progress: 76, mastery: 82, color: "#0a6b5c", nextChapter: "মৌলিক অর্থনৈতিক সমস্যা", chapters: 20 },
   { id: "civics", name: "Civics & Good Governance", nameBn: "পৌরনীতি ও সুশাসন", paper: "1st & 2nd Paper", progress: 51, mastery: 64, color: "#2456a6", nextChapter: "Values, Law & Liberty", chapters: 20 },
   { id: "geography", name: "Geography", nameBn: "ভূগোল", paper: "1st & 2nd Paper", progress: 0, mastery: 0, color: "#287d69", nextChapter: "প্রাকৃতিক ভূগোল", chapters: 18 },
-  { id: "history", name: "History", nameBn: "ইতিহাস", paper: "Full Subject", progress: 43, mastery: 58, color: "#c67922", nextChapter: "Colonial Bengal", chapters: 12 },
+  { id: "history", name: "History", nameBn: "ইতিহাস", paper: "1st & 2nd Paper", progress: 43, mastery: 58, color: "#c67922", nextChapter: "ভারতবর্ষে ইউরোপীয়দের আগমন", chapters: 17 },
   { id: "logic", name: "Logic", nameBn: "যুক্তিবিদ্যা", paper: "1st & 2nd Paper", progress: 0, mastery: 0, color: "#8056b3", nextChapter: "যুক্তিবিদ্যা পরিচিতি", chapters: 16 },
   { id: "statistics", name: "Statistics", nameBn: "পরিসংখ্যান", paper: "1st & 2nd Paper", progress: 0, mastery: 0, color: "#3c7f8f", nextChapter: "পরিসংখ্যান, চলক ও প্রতীক", chapters: 17 },
   { id: "islamic_history", name: "Islamic History & Culture", nameBn: "ইসলামের ইতিহাস ও সংস্কৃতি", paper: "1st & 2nd Paper", progress: 0, mastery: 0, color: "#9a6a25", nextChapter: "Pre-Islamic Arabia", chapters: 13 },
@@ -66,6 +66,9 @@ export const suppliedCommerceEconomicsSources = [
   { id:"bangla-2-question-guide",subjectId:"bangla",paper:"2nd Paper",label:"Bangla Second Paper writing and question reference",labelBn:"বাংলা দ্বিতীয় পত্র লিখন ও প্রশ্ন সহায়ক বই",url:"https://drive.google.com/file/d/12ZArZL2rbgDGXJTFBU60OVKcwXEcb2lW/view",role:"question-pattern-reference",format:"user-supplied guide scan",use:["grammar task patterns","writing formats","original practice planning"] },
   { id:"finance-1-support",subjectId:"finance",paper:"1st Paper",label:"Finance, Banking & Insurance · First Paper reference",labelBn:"ফিন্যান্স, ব্যাংকিং ও বিমা · প্রথম পত্র সহায়ক বই",url:"https://drive.google.com/file/d/1Eesx-8EHt3XjHczqEMIO-oGbm-UOqTzM/view",role:"content-foundation",format:"162-page scan",use:["chapter concepts","formula and decision patterns","MCQ and written-task structure"] },
   { id:"finance-2-support",subjectId:"finance",paper:"2nd Paper",label:"Finance, Banking & Insurance · Second Paper reference",labelBn:"ফিন্যান্স, ব্যাংকিং ও বিমা · দ্বিতীয় পত্র সহায়ক বই",url:"https://drive.google.com/file/d/1XXVMZH4H495_6MEUz1WGNGXhyFEnCFrS/view",role:"content-foundation",format:"247-page scan",use:["banking and insurance concepts","case patterns","written-question structure"] },
+  { id:"finance-1-chapter-pack-2026",subjectId:"finance",paper:"1st Paper",label:"Finance First Paper chapter pack",labelBn:"ফিন্যান্স প্রথম পত্র অধ্যায়ভিত্তিক প্যাক",url:"user-supplied:finance1st.zip",role:"worked-solution-reference",format:"9 chapter PDFs · 250 scanned pages · supplied 20 October 2026",use:["all nine chapter structures","formula and cash-flow workings","table/graph/stimulus patterns","original CQ and answer authoring"] },
+  { id:"finance-2-chapter-pack-2026",subjectId:"finance",paper:"2nd Paper",label:"Finance Second Paper chapter pack",labelBn:"ফিন্যান্স দ্বিতীয় পত্র অধ্যায়ভিত্তিক প্যাক",url:"user-supplied:finanance2ndpaper.zip",role:"worked-solution-reference",format:"14 chapter PDFs · 220 scanned pages · supplied 20 October 2026",use:["all fourteen banking and insurance chapters","document and calculation layouts","stimulus/table patterns","original CQ and answer authoring"] },
+  { id:"finance-2-mcq-pack-2026",subjectId:"finance",paper:"2nd Paper",label:"Finance Second Paper MCQ pack",labelBn:"ফিন্যান্স দ্বিতীয় পত্র MCQ প্যাক",url:"user-supplied:finanance2ndpaper.zip#MCQ",role:"question-pattern-reference",format:"27 scanned pages · supplied 20 October 2026",use:["chapter-balanced MCQ patterns","plausible distractor review","original practice and model-test authoring"] },
   { id:"finance-1-all-sheet",subjectId:"finance",paper:"1st Paper",label:"Finance First Paper all-sheet reference",labelBn:"ফিন্যান্স প্রথম পত্র অল-শিট সহায়ক উপকরণ",url:"https://drive.google.com/file/d/19v1NzLaopL0yrAiKJO7rmuOoFV/view",role:"worked-solution-reference",format:"user-supplied sheet collection",use:["formula practice","decision-case variations","worked-answer comparison"] },
   { id:"finance-1-scribd-guide",subjectId:"finance",paper:"1st Paper",label:"Finance, Banking & Insurance First Paper guide",labelBn:"ফিন্যান্স, ব্যাংকিং ও বিমা প্রথম পত্র গাইড",url:"https://www.scribd.com/document/606059986/ফিন্যান্স-ও-ব্যাংকিং-বিমা-১ম-পত্র",role:"question-pattern-reference",format:"274-page public Scribd preview · OCR quality limited",use:["chapter-wise question density","formula and numerical pattern sampling","original MCQ/CQ planning"] },
   { id:"finance-1-students-question-guide",subjectId:"finance",paper:"1st Paper",label:"Finance First Paper question reference",labelBn:"ফিন্যান্স প্রথম পত্র প্রশ্ন সহায়ক বই",url:"https://students.bd/en/download/read/1UQHt8OkVF9lUV5Y49T3-cgB8Trv_NG18",role:"question-pattern-reference",format:"Students.bd reader · direct content review pending",use:["MCQ/CQ structure comparison after access","practice-bank planning"] },
@@ -462,6 +465,38 @@ chaptersBySubject.islamic_history = [
   ...islamicHistoryFirstPaperReferenceChapters.map((unit)=>buildIslamicHistoryChapter(unit,"1st Paper")),
   ...islamicHistorySecondPaperReferenceChapters.map((unit)=>buildIslamicHistoryChapter(unit,"2nd Paper")),
 ];
+const historyFirstPaperReferenceChapters = [
+  { title:"European arrival and British ascendancy in India", titleBn:"ভারতবর্ষে ইউরোপীয়দের আগমন: ইংরেজ আধিপত্য প্রতিষ্ঠা", page:"3-24", lessons:["ভারতবর্ষে আগত ইউরোপীয় কোম্পানিসমূহ","ইংরেজ ইস্ট ইন্ডিয়া কোম্পানির আধিপত্য বিস্তার","বাংলায় নবাবি বংশ","পলাশী ও বক্সারের যুদ্ধ","দেওয়ানি লাভ ও দ্বৈতশাসন","লর্ড ক্লাইভের চরিত্র ও কৃতিত্ব"] },
+  { title:"British colonial rule: Company period", titleBn:"ইংরেজ ঔপনিবেশিক শাসন: কোম্পানি আমল", page:"51-98", lessons:["ওয়ারেন হেস্টিংস ও নিয়ামক আইন","কর্ণওয়ালিশ ও চিরস্থায়ী বন্দোবস্ত","ওয়েলেসলি ও অধীনতামূলক মিত্রতা","উইলিয়াম বেন্টিংকের সংস্কার","ডালহৌসির নীতি","ফরায়েজি ও ওহাবি আন্দোলন","১৮৫৭ সালের স্বাধীনতা সংগ্রাম"] },
+  { title:"British colonial rule: Crown period", titleBn:"ইংরেজ ঔপনিবেশিক শাসন: ব্রিটিশ আমল", page:"99-162", lessons:["১৮৫৮ সালের ভারত শাসন আইন","বঙ্গভঙ্গ, স্বদেশি ও বয়কট আন্দোলন","সংস্কার আন্দোলন ও মুসলিম জাগরণ","কংগ্রেস ও মুসলিম লীগ","শাসনতান্ত্রিক সংস্কারসমূহ","লাহোর প্রস্তাব ও দ্বিজাতিতত্ত্ব","১৯৪৭ সালে ভারত ও পাকিস্তানের অভ্যুদয়"] },
+  { title:"Bengal in Pakistan: Language Movement", titleBn:"পাকিস্তানি আমলে বাংলা: ভাষা আন্দোলন ও এর গতিপ্রকৃতি", page:"163-198", lessons:["পূর্ব বাংলার রাজনৈতিক ও অর্থনৈতিক অবস্থা","ভাষা আন্দোলনের প্রেক্ষাপট","ধীরেন্দ্রনাথ দত্তের ভূমিকা","১৯৪৮ সালের আন্দোলন","একুশে ফেব্রুয়ারি ১৯৫২","শহিদ, নারী ও ছাত্রসমাজের ভূমিকা","বাংলা ভাষার আন্তর্জাতিকায়ন"] },
+  { title:"Autonomy and self-determination movement", titleBn:"পূর্ব বাংলার স্বায়ত্তশাসন ও স্বাধিকার আন্দোলন", page:"201-250", lessons:["যুক্তফ্রন্ট নির্বাচন ১৯৫৪","সামরিক শাসন ও শিক্ষা আন্দোলন","পূর্ব-পশ্চিম বৈষম্য","ছয় দফা ও আগরতলা মামলা","ঊনসত্তরের গণঅভ্যুত্থান","১৯৭০ সালের নির্বাচন","অসহযোগ আন্দোলন ও ৭ মার্চের ভাষণ"] },
+  { title:"Declaration of independence and Liberation War", titleBn:"বাংলাদেশের স্বাধীনতা ঘোষণা ও মুক্তিযুদ্ধ", page:"251-284", lessons:["স্বাধীনতা ঘোষণার প্রেক্ষাপট","বঙ্গবন্ধুর স্বাধীনতার ঘোষণা ও গ্রেফতার","গণহত্যা ও নির্যাতন","বাঙালির প্রতিরোধ যুদ্ধ","নেতৃবৃন্দের ভারতে আশ্রয়","প্রবাসী সরকার গঠন ও শপথ"] },
+  { title:"Activities of the Mujibnagar Government", titleBn:"বাংলাদেশ সরকারের (মুজিবনগর) কার্যক্রম", page:"285-312", lessons:["মন্ত্রণালয়, বিভাগ ও শাখা","মুক্তিবাহিনী গঠন","সেক্টর ব্যবস্থাপনা","মুক্তিযুদ্ধ পরিচালনা","গণমাধ্যমের ভূমিকা","কূটনৈতিক তৎপরতা","আত্মসমর্পণ ও স্বাধীন বাংলাদেশের অভ্যুদয়"] },
+  { title:"Expatriate Bengalis and the outside world", titleBn:"প্রবাসী বাঙালি ও বহির্বিশ্ব", page:"313-334", lessons:["ভারত সরকার ও জনগণের ভূমিকা","বৃহৎ শক্তিবর্গের ভূমিকা","অন্যান্য দেশের ভূমিকা","জাতিসংঘ ও আন্তর্জাতিক সংস্থা","প্রবাসী বাঙালি ও বিদেশি ব্যক্তিবর্গ","বিদেশি বন্ধুদের সম্মাননা"] },
+] as const;
+const historySecondPaperReferenceChapters = [
+  { title:"Industrial Revolution", titleBn:"শিল্প বিপ্লব", lessons:["বিপ্লব-পূর্ব ইংল্যান্ড","শিল্পবিপ্লবের কারণ","শিল্প-সম্পর্কিত আবিষ্কার","ইংল্যান্ডে অর্থনৈতিক, সামাজিক ও রাজনৈতিক পরিবর্তন","ইউরোপে প্রভাব ও ফলাফল","ঔপনিবেশিক শাসনের সূচনা"] },
+  { title:"French Revolution", titleBn:"ফরাসি বিপ্লব", lessons:["প্রাক-বিপ্লব ফ্রান্স","দার্শনিকদের অবদান","বিপ্লবের ঘটনাপ্রবাহ","ফলাফল ও প্রভাব","নেপোলিয়ন বোনাপার্ট"] },
+  { title:"First World War, Treaty of Versailles and League of Nations", titleBn:"প্রথম বিশ্বযুদ্ধ, ভার্সাই সন্ধি ও লীগ অব নেশনস", lessons:["ত্রিশক্তি আঁতাত ও ত্রিশক্তি চুক্তি","প্রথম বিশ্বযুদ্ধের ঘটনাপ্রবাহ","ফলাফল ও প্রভাব","ভার্সাই সন্ধি","লীগ অব নেশনস গঠনের পটভূমি"] },
+  { title:"Bolshevik Revolution", titleBn:"বলশেভিক বিপ্লব", lessons:["প্রাক-বিপ্লব রাশিয়া","দার্শনিক পটভূমি","লেনিন ও বলশেভিক বিপ্লব","বিপ্লবের ফলাফল"] },
+  { title:"Rise of Hitler and Mussolini and the Second World War", titleBn:"হিটলার ও মুসোলিনির উত্থান এবং দ্বিতীয় বিশ্বযুদ্ধ", lessons:["হিটলারের উত্থান","মুসোলিনির উত্থান","তাদের কর্মকাণ্ডের তুলনা","দ্বিতীয় বিশ্বযুদ্ধের কারণ, ঘটনাপ্রবাহ ও ফল"] },
+  { title:"United Nations and world peace", titleBn:"জাতিসংঘ এবং বিশ্বশান্তি", lessons:["জাতিসংঘ গঠনের পটভূমি","জাতিসংঘে বৃহৎ শক্তির ভূমিকা","বিশ্বশান্তি ও নিরাপত্তায় জাতিসংঘ"] },
+  { title:"Cold War", titleBn:"স্নায়ুযুদ্ধ: পুঁজিবাদী ও সমাজতান্ত্রিক বিশ্বের দ্বন্দ্ব", lessons:["স্নায়ুযুদ্ধের ধারণা","স্নায়ুযুদ্ধের উদ্ভব","শান্তিপূর্ণ সহাবস্থান","স্নায়ুযুদ্ধের অবসান"] },
+  { title:"Post-Cold War world", titleBn:"স্নায়ুযুদ্ধ-পরবর্তী বিশ্ব", lessons:["সোভিয়েত ইউনিয়নের বিলুপ্তি","স্বাধীন রাষ্ট্রসমূহের উদ্ভব","পূর্ব ইউরোপে সমাজতন্ত্রের পতন","বার্লিন প্রাচীরের অবসান","জার্মানির একত্রীকরণ"] },
+  { title:"Anti-racism movement", titleBn:"বর্ণবাদবিরোধী আন্দোলন", lessons:["বর্ণবাদের ধারণা","গান্ধী, মার্টিন লুথার কিং, ম্যান্ডেলা ও টুটু","বর্ণবাদবিরোধী আন্দোলনসমূহ","আন্দোলনের সফলতা ও ঐতিহাসিক গুরুত্ব"] },
+] as const;
+const buildHistoryChapter = (unit:{title:string;titleBn:string;lessons:readonly string[];page?:string},paper:"1st Paper"|"2nd Paper",index:number):ChapterPreview => ({
+  title:unit.title,titleBn:unit.titleBn,lessons:unit.lessons.length,questions:paper==="1st Paper"?138:126,status:"pending",progress:0,paper,
+  outcomes:["সময়, স্থান, ব্যক্তি ও ঘটনার নির্ভুল কালক্রম তৈরি করা","দীর্ঘমেয়াদি ও তাৎক্ষণিক কারণ থেকে ফল ও তাৎপর্য ব্যাখ্যা করা","উদ্দীপকের প্রমাণ ব্যবহার করে পূর্ণ ১+২+৩+৪ CQ উত্তর লেখা"],
+  lessonPlan:unit.lessons.map((titleBn,lessonIndex)=>({title:`${unit.title} · lesson ${lessonIndex+1}`,titleBn,minutes:lessonIndex===unit.lessons.length-1?26:20,format:lessonIndex===unit.lessons.length-1?"Practice" as const:lessonIndex>2?"Worked example" as const:"Concept" as const})),
+  examPlan:{mcq:90,cq:30,written:18},examPrep:["তারিখের তালিকা নয়—কারণ, ঘটনা, ফল ও গুরুত্বের যোগ তৈরি করো","ব্যক্তি ও প্রতিষ্ঠানের ভূমিকা আলাদা রাখো","উৎস বা উদ্দীপকের প্রমাণ সরাসরি প্রয়োগ করো","CQ-এর গ ও ঘ অংশে ব্যাখ্যা ও মূল্যায়ন সম্পূর্ণ করো"],
+  sourceRef:{book:paper==="1st Paper"?"HSC History First Paper supporting guide (383-page scan)":"HSC History Second Paper supporting guide (302-page Scribd reference)",edition:paper==="1st Paper"?"User-provided 2027 supplement scan · official approval comparison pending":"User-provided reference · official approval comparison pending",page:unit.page??`Chapter ${index+1}`,evidence:"reference-guide",url:paper==="2nd Paper"?"https://www.scribd.com/document/805601344/HSC-History-2nd-Paper":undefined,role:"content-foundation",scopeNote:"Used for chapter structure, examples and practice patterns; subject-specialist verification is still required."},
+});
+chaptersBySubject.history = [
+  ...historyFirstPaperReferenceChapters.map((unit,index)=>buildHistoryChapter(unit,"1st Paper",index)),
+  ...historySecondPaperReferenceChapters.map((unit,index)=>buildHistoryChapter(unit,"2nd Paper",index)),
+];
 const buildAccountingChapter = (unit: { title:string; titleBn:string; page:string; lessons:string[] }, paper: "1st Paper"|"2nd Paper", index:number): ChapterPreview => ({
   title: unit.title, titleBn: unit.titleBn, lessons: unit.lessons.length, questions: unit.lessons.length >= 10 ? 148 : 124,
   status: "pending", progress: 0, paper,
@@ -691,6 +726,21 @@ for (const group of ["commerce", "humanities"] as const) {
   practiceQuestionsByGroup[group] = practiceQuestionsByGroup[group].map((question, index) => ({ ...question, ...banglaObjectivePractice[group][index] }));
 }
 
+export type QuestionVisual = {
+  kind: "table" | "flow" | "graph" | "image";
+  title: string;
+  caption: string;
+  alt: string;
+  placement?: "question" | "answer" | "both";
+  headers?: string[];
+  rows?: string[][];
+  steps?: string[];
+  points?: { x: number; y: number; label: string }[];
+  xLabel?: string;
+  yLabel?: string;
+  src?: string;
+};
+
 export type ExamResource = {
   subject: string;
   subjectBn?: string;
@@ -837,6 +887,8 @@ export type ExamResource = {
       correctIndex?: number;
       marks?: number;
       sourceStatus?: "authored-board-pattern";
+      requiresVisual?: boolean;
+      visual?: QuestionVisual;
     }[];
   };
 };
@@ -976,9 +1028,9 @@ export const curriculumVerificationLedger = {
 } as const;
 
 export const academicReviewGate = {
-  totalChapterRecords: 351,
+  totalChapterRecords: 356,
   signedOffChapterRecords: 0,
-  pendingChapterRecords: 351,
+  pendingChapterRecords: 356,
   requiredReviewer: "Qualified HSC subject reviewer",
   requiredReviewerBn: "যোগ্য HSC বিষয়ভিত্তিক একাডেমিক পর্যালোচক",
   releaseRule: "A chapter can be marked Reviewed only when one named subject specialist records the source edition, completes every applicable check, records corrections, dates the decision and signs the final declaration.",
@@ -1142,8 +1194,8 @@ export const previousBoardArchive = {
 } as const;
 
 export const boardPaperSourceCatalog = {
-  checkedOn: "4 October 2026",
-  checkedOnBn: "৪ অক্টোবর ২০২৬",
+  checkedOn: "20 October 2026",
+  checkedOnBn: "২০ অক্টোবর ২০২৬",
   policy: "Discovery links are not copied into HSC2Plus or called verified papers until a legible original PDF/scan and its board, year, subject, paper and set can be checked together.",
   policyBn: "পাঠযোগ্য মূল PDF/স্ক্যান এবং একই সঙ্গে বোর্ড, বছর, বিষয়, পত্র ও সেট যাচাই না হওয়া পর্যন্ত অনুসন্ধানে পাওয়া কোনো লিংক HSC2Plus-এ কপি করা বা যাচাইকৃত প্রশ্নপত্র বলা হবে না।",
   sources: [
@@ -1180,6 +1232,99 @@ export const boardPaperSourceCatalog = {
       status: "scan-audit-required",
       noteBn: "প্রশ্ন পাওয়া যাওয়ার সম্ভাব্য সূচি; আর্কাইভে প্রকাশের আগে উৎসের ছবি, সেট এবং প্রশ্নপত্র যাচাই বাধ্যতামূলক।",
     },
+    {
+      id: "satt-bangla-board-index",
+      kind: "discovery-index",
+      label: "Bangla 1st and 2nd Paper multi-board index",
+      labelBn: "বাংলা ১ম ও ২য় পত্রের বহু-বোর্ড সূচি",
+      coverage: "2025 board-specific Bangla papers plus older paginated collections; question order, marks and topic labels are visible",
+      coverageBn: "২০২৫ সালের বোর্ডভিত্তিক বাংলা প্রশ্ন এবং আগের বছরের paginated collection; প্রশ্নের ক্রম, নম্বর ও বিষয়ভিত্তিক tag দেখা যায়",
+      url: "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE-82989",
+      status: "scan-audit-required",
+      noteBn: "বোর্ড, বছর ও প্রশ্নের ক্রম শনাক্ত করা যায়; তবে তৃতীয় পক্ষের প্রতিলিপি বলে মূল প্রশ্নপত্র/স্ক্যানের সঙ্গে মিলিয়ে তারপর আর্কাইভে প্রকাশ করতে হবে।",
+    },
+    {
+      id: "scribd-bangla-2-board-collection",
+      kind: "discovery-index",
+      label: "Bangla 2nd Paper all-board compiled document",
+      labelBn: "বাংলা ২য় পত্র সকল বোর্ডের সংকলিত নথি",
+      coverage: "Thirty-page secondary compilation useful for finding candidate questions and cross-checking year/board coverage",
+      coverageBn: "৩০ পৃষ্ঠার secondary compilation; সম্ভাব্য প্রশ্ন খোঁজা ও বছর/বোর্ড coverage cross-check করতে উপযোগী",
+      url: "https://www.scribd.com/document/819986292/Bangla-2nd-paper-all-board-question",
+      status: "scan-audit-required",
+      noteBn: "OCR-এ বিকৃতি আছে এবং নথিটি copyright-protected; bulk copy নয়—শুধু candidate discovery ও মূল প্রশ্নপত্রের সঙ্গে মিলানোর কাজে ব্যবহার করা হবে।",
+    },
+  ],
+} as const;
+
+export const boardQuestionMatchRegister = {
+  checkedOn: "20 October 2026",
+  subjectId: "bangla",
+  status: "secondary-source-match-complete",
+  rule: "A match proves that the same board/year/paper or task family appears in the discovery source and supplied study material. It does not by itself prove an authentic original board scan.",
+  ruleBn: "match বলতে discovery source ও দেওয়া সহায়ক উপকরণে একই বোর্ড/বছর/পত্র বা একই task family পাওয়া বোঝায়; এটি একা মূল বোর্ড স্ক্যানের সত্যতা প্রমাণ করে না।",
+  sourceIds: ["satt-bangla-board-index", "bangla-1-question-guide", "bangla-2-question-guide", "scribd-bangla-2-board-collection"],
+  sattInventory: [
+    { year: 2025, firstPaper: ["Mymensingh", "Barishal", "Dinajpur", "Cumilla", "Jashore", "Sylhet", "Chattogram", "Rajshahi", "Dhaka"], secondPaper: ["Mymensingh", "Barishal", "Dinajpur", "Cumilla", "Jashore", "Sylhet", "Chattogram", "Rajshahi", "Dhaka"] },
+    { year: 2024, firstPaper: ["Mymensingh", "Barishal", "Dinajpur", "Cumilla", "Jashore", "Chattogram", "Rajshahi", "Dhaka", "Madrasah"], secondPaper: ["Mymensingh", "Barishal", "Dinajpur", "Cumilla", "Jashore", "Chattogram", "Rajshahi", "Dhaka", "Madrasah"] },
+    { year: 2023, firstPaper: ["Mymensingh", "Barishal", "Dinajpur", "Cumilla", "Jashore", "Sylhet", "Chattogram", "Rajshahi", "Dhaka"], secondPaper: ["Mymensingh", "Barishal", "Dinajpur", "Cumilla", "Jashore", "Sylhet", "Rajshahi", "Dhaka"] },
+    { year: 2018, firstPaper: ["Combined boards"], secondPaper: [] },
+    { year: 2017, firstPaper: ["Barishal", "Jashore", "Sylhet", "Chattogram", "Cumilla", "Dinajpur", "Rajshahi", "Dhaka"], secondPaper: [] },
+    { year: 2016, firstPaper: ["Barishal", "Jashore", "Sylhet", "Chattogram", "Cumilla", "Dinajpur", "Rajshahi", "Dhaka"], secondPaper: [] },
+  ],
+  secondPaperTaskMatches: [
+    { order: 1, task: "Rules of Bangla pronunciation", taskBn: "বাংলা উচ্চারণের নিয়ম", guideUnit: "01_Bangla_2nd_Question_1_Rules_of_Bangla_Pronunciation.pdf", sattEvidence: "Dhaka and Mymensingh 2025 question 1", scribdEvidence: "compiled document candidate", match: "exact-topic" },
+    { order: 2, task: "Rules of Bangla spelling", taskBn: "বাংলা বানানের নিয়ম", guideUnit: "02_Bangla_2nd_Question_2_Rules_of_Bangla_Spelling.pdf", sattEvidence: "Dhaka and Mymensingh 2025 question 2", scribdEvidence: "compiled document candidate", match: "exact-topic" },
+    { order: 3, task: "Grammatical word classification", taskBn: "ব্যাকরণিক শব্দশ্রেণি", guideUnit: "03_Bangla_2nd_Question_3_Grammatical_Word_Classification.pdf", sattEvidence: "Dhaka and Mymensingh 2025 question 3", scribdEvidence: "compiled document candidate", match: "exact-topic" },
+    { order: 4, task: "Prefix, suffix and compound", taskBn: "উপসর্গ, প্রত্যয় ও সমাস", guideUnit: "04_Bangla_2nd_Question_4_Prefix_Suffix_and_Samas.pdf", sattEvidence: "Dhaka and Mymensingh 2025 question 4", scribdEvidence: "compiled document candidate", match: "exact-topic" },
+    { order: 5, task: "Syntax and sentence transformation", taskBn: "বাক্যতত্ত্ব ও বাক্য রূপান্তর", guideUnit: "05_Bangla_2nd_Question_5_Syntax.pdf", sattEvidence: "Dhaka and Mymensingh 2025 question 5", scribdEvidence: "compiled document candidate", match: "exact-topic" },
+    { order: 6, task: "Misuse and proper use", taskBn: "অপপ্রয়োগ ও শুদ্ধ প্রয়োগ", guideUnit: "06_Bangla_2nd_Question_6_Misuse_and_Proper_Use_of_Bangla.pdf", sattEvidence: "Dhaka and Mymensingh 2025 question 6", scribdEvidence: "compiled document candidate", match: "exact-topic" },
+    { order: 7, task: "Technical terms and translation", taskBn: "পারিভাষিক শব্দ ও অনুবাদ", guideUnit: "07_Bangla_2nd_Question_7_Technical_Terms_and_Translation.pdf", sattEvidence: "paper section is behind Satt pagination/login", scribdEvidence: "technical-term and translation section visible in OCR", match: "structural" },
+    { order: 8, task: "Diary, speech and report", taskBn: "দিনলিপি, ভাষণ ও প্রতিবেদন", guideUnit: "08_Bangla_2nd_Question_8_Diary_Writing_Speech_and_Report.pdf", sattEvidence: "paper section is behind Satt pagination/login", scribdEvidence: "writing-section compilation", match: "structural" },
+    { order: 9, task: "Email, SMS and formal letters", taskBn: "ই-মেইল, SMS ও প্রাতিষ্ঠানিক পত্র", guideUnit: "09_Bangla_2nd_Question_9_Email_SMS_and_Formal_Letters.pdf", sattEvidence: "paper section is behind Satt pagination/login", scribdEvidence: "writing-section compilation", match: "structural" },
+    { order: 10, task: "Summary, theme and amplification", taskBn: "সারাংশ, সারমর্ম ও ভাব-সম্প্রসারণ", guideUnit: "10_Bangla_2nd_Question_10_Summary_Theme_and_Amplification.pdf", sattEvidence: "paper section is behind Satt pagination/login", scribdEvidence: "writing-section compilation", match: "structural" },
+    { order: 11, task: "Dialogue and short story", taskBn: "সংলাপ ও ক্ষুদেগল্প", guideUnit: "11_Bangla_2nd_Question_11_Dialogue_and_Short_Story_Writing.pdf", sattEvidence: "paper section is behind Satt pagination/login", scribdEvidence: "writing-section compilation", match: "structural" },
+    { order: 12, task: "Essay and article", taskBn: "প্রবন্ধ ও নিবন্ধ", guideUnit: "12_Bangla_2nd_Question_12_Essay_and_Article_Writing.pdf", sattEvidence: "paper section is behind Satt pagination/login", scribdEvidence: "writing-section compilation", match: "structural" },
+  ],
+  firstPaperMatch: {
+    guideId: "bangla-1-question-guide",
+    sattCoverage: "MCQ and CQ paper pages identified by board and year",
+    matchingBasis: ["prose/poetry title", "stimulus topic", "MCQ option set", "CQ 1+2+3+4 structure"],
+    status: "paper-index-matched-question-level-review-required",
+  },
+  unresolved: [
+    "Satt second-page question details require login for some papers",
+    "The Scribd OCR is unreliable for exact Bangla spelling",
+    "Original scan page and set/code are still required before authentic-archive publication",
+  ],
+} as const;
+
+export const allSubjectBoardQuestionSurvey = {
+  checkedOn: "20 October 2026",
+  subjectCount: 13,
+  coveredSubjectIds: ["bangla", "english", "ict", "accounting", "finance", "business", "economics", "civics", "geography", "logic", "statistics", "islamic_history", "history"],
+  status: "all-subject-discovery-and-reference-match-complete",
+  admissionRule: "Satt pages locate candidate board/year/paper/question records. Supplied books and guides cross-check chapter, task type and solution method. Only an original or official paper can move a candidate into the authentic archive.",
+  subjects: [
+    { subjectId: "bangla", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE-82989"], references: ["bangla-1-question-guide", "bangla-2-question-guide", "banglaSecondPaperGuideSources", "scribd-bangla-2-board-collection"], match: "paper-and-task-family", remaining: "original scans and set/code" },
+    { subjectId: "english", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=english-for-today-47336", "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=english-78800"], references: ["englishForTodayUnits", "englishSecondPaperReferenceChapters", "user-supplied English 1st model sets", "user-supplied English 2nd grammar and writing PDFs"], match: "paper-and-task-family", remaining: "original paper scans and teacher-approved answer keys" },
+    { subjectId: "ict", papers: ["Full Subject"], sattUrls: ["https://sattacademy.com/board-exams?subject=%E0%A6%A4%E0%A6%A5%E0%A7%8D%E0%A6%AF-%E0%A6%93-%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A6%BE%E0%A6%AF%E0%A7%8B%E0%A6%97-%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AF%E0%A7%81%E0%A6%95%E0%A7%8D%E0%A6%A4%E0%A6%BF"], references: ["ict-cq-scan-369", "ict-mcq-guide-28", "ict-akkharpatra-full-guide", "ictReferenceChapters"], match: "chapter-question-and-code-task", remaining: "original diagrams/code screenshots and board scan pages" },
+    { subjectId: "accounting", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%B9%E0%A6%BF%E0%A6%B8%E0%A6%BE%E0%A6%AC%E0%A6%AC%E0%A6%BF%E0%A6%9C%E0%A7%8D%E0%A6%9E%E0%A6%BE%E0%A6%A8-%E0%A7%A7%E0%A6%AE-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0", "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%B9%E0%A6%BF%E0%A6%B8%E0%A6%BE%E0%A6%AC%E0%A6%AC%E0%A6%BF%E0%A6%9C%E0%A7%8D%E0%A6%9E%E0%A6%BE%E0%A6%A8-%E0%A7%A8%E0%A7%9F-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0"], references: ["accounting-1-support", "accounting-2-support", "accountingReferenceChapters", "accountingSecondPaperReferenceChapters"], match: "chapter-calculation-and-statement", remaining: "original tables/figures and reviewer-recalculated answers" },
+    { subjectId: "finance", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AB%E0%A6%BF%E0%A6%A8%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%B8-%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%82%E0%A6%95%E0%A6%BF%E0%A6%82-%E0%A6%93-%E0%A6%AC%E0%A6%BF%E0%A6%AE%E0%A6%BE-%E0%A7%A7%E0%A6%AE-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0", "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AB%E0%A6%BF%E0%A6%A8%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%B8-%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%82%E0%A6%95%E0%A6%BF%E0%A6%82-%E0%A6%93-%E0%A6%AC%E0%A6%BF%E0%A6%AE%E0%A6%BE-%E0%A7%A8%E0%A7%9F-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0"], references: ["finance-1-chapter-pack-2026", "finance-2-chapter-pack-2026", "finance-2-mcq-pack-2026", "financeReferenceChapters"], match: "chapter-formula-and-decision", remaining: "original cash-flow/table images and reviewer-recalculated answers" },
+    { subjectId: "business", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%AC%E0%A6%B8%E0%A6%BE%E0%A7%9F-%E0%A6%B8%E0%A6%82%E0%A6%97%E0%A6%A0%E0%A6%A8-%E0%A6%93-%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%AC%E0%A6%B8%E0%A7%8D%E0%A6%A5%E0%A6%BE%E0%A6%AA%E0%A6%A8%E0%A6%BE-%E0%A7%A7%E0%A6%AE-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0"], references: ["business-1-master-note", "businessFirstPaperReferenceChapters", "businessSecondPaperReferenceChapters", "user-supplied second-paper guide"], match: "chapter-principle-and-case", remaining: "direct second-paper Satt index confirmation and original scans" },
+    { subjectId: "economics", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A5%E0%A6%A8%E0%A7%80%E0%A6%A4%E0%A6%BF-12603"], references: ["economics-1-support", "economics-2-support", "economicsReferenceChapters", "user-supplied chapter-wise first-paper files"], match: "chapter-graph-formula-and-case", remaining: "paper-specific index split and original graph/table scans" },
+    { subjectId: "civics", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AA%E0%A7%8C%E0%A6%B0%E0%A6%A8%E0%A7%80%E0%A6%A4%E0%A6%BF-%E0%A6%93-%E0%A6%B8%E0%A7%81%E0%A6%B6%E0%A6%BE%E0%A6%B8%E0%A6%A8", "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AA%E0%A7%8C%E0%A6%B0%E0%A6%A8%E0%A7%80%E0%A6%A4%E0%A6%BF-%E0%A6%93-%E0%A6%B8%E0%A7%81%E0%A6%B6%E0%A6%BE%E0%A6%B8%E0%A6%A8-%E0%A7%A8%E0%A7%9F-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0"], references: ["civicsReferenceChapters", "civicsSecondPaperReferenceChapters", "user-supplied Civics first and second-paper readers"], match: "chapter-concept-and-analytical-case", remaining: "original scans and constitutional terminology review" },
+    { subjectId: "geography", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AD%E0%A7%82%E0%A6%97%E0%A7%8B%E0%A6%B2-%E0%A7%A7%E0%A6%AE-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0", "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AD%E0%A7%82%E0%A6%97%E0%A7%8B%E0%A6%B2-%E0%A7%A8%E0%A7%9F-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0"], references: ["geographyReferenceChapters", "user-supplied Geography first and second-paper books"], match: "chapter-map-diagram-and-case", remaining: "original maps, figures and scan pages" },
+    { subjectId: "logic", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AF%E0%A7%81%E0%A6%95%E0%A7%8D%E0%A6%A4%E0%A6%BF%E0%A6%AC%E0%A6%BF%E0%A6%A6%E0%A7%8D%E0%A6%AF%E0%A6%BE"], references: ["logic-1-scribd-reference", "logic-2-scribd-reference", "logicReferenceChapters"], match: "chapter-rule-symbol-and-argument", remaining: "paper-specific index split and original symbol/diagram scans" },
+    { subjectId: "statistics", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AA%E0%A6%B0%E0%A6%BF%E0%A6%B8%E0%A6%82%E0%A6%96%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8-%E0%A7%A7%E0%A6%AE-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0", "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AA%E0%A6%B0%E0%A6%BF%E0%A6%B8%E0%A6%82%E0%A6%96%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8-%E0%A7%A8%E0%A7%9F-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0"], references: ["statisticsFirstPaperReferenceChapters", "statisticsSecondPaperReferenceChapters", "statistics-note-sample", "user-supplied Statistics books"], match: "chapter-table-formula-and-graph", remaining: "original tables/graphs and independently recalculated keys" },
+    { subjectId: "islamic_history", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%87%E0%A6%B8%E0%A6%B2%E0%A6%BE%E0%A6%AE%E0%A7%87%E0%A6%B0-%E0%A6%87%E0%A6%A4%E0%A6%BF%E0%A6%B9%E0%A6%BE%E0%A6%B8-%E0%A6%93-%E0%A6%B8%E0%A6%82%E0%A6%B8%E0%A7%8D%E0%A6%95%E0%A7%83%E0%A6%A4%E0%A6%BF-%E0%A7%A7%E0%A6%AE-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0-39996"], references: ["islamicHistoryFirstPaperReferenceChapters", "islamicHistorySecondPaperReferenceChapters", "user-supplied Islamic History first and second-paper guides"], match: "chapter-date-event-and-analysis", remaining: "direct second-paper Satt index confirmation and historical fact review" },
+    { subjectId: "history", papers: ["1st Paper", "2nd Paper"], sattUrls: ["https://sattacademy.com/guide/%E0%A6%87%E0%A6%A4%E0%A6%BF%E0%A6%B9%E0%A6%BE%E0%A6%B8-%E0%A7%A7%E0%A6%AE-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0", "https://sattacademy.com/guide/%E0%A6%87%E0%A6%A4%E0%A6%BF%E0%A6%B9%E0%A6%BE%E0%A6%B8-%E0%A7%A8%E0%A7%9F-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0", "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%87%E0%A6%A4%E0%A6%BF%E0%A6%B9%E0%A6%BE%E0%A6%B8-%E0%A7%A8%E0%A7%9F-%E0%A6%AA%E0%A6%A4%E0%A7%8D%E0%A6%B0"], references: ["historyFirstPaperReferenceChapters", "historySecondPaperReferenceChapters", "383-page user-supplied History 1st Paper guide scan", "Scribd History 2nd Paper reference", "Satt 2026 first and second-paper candidate collections"], match: "paper-chapter-lesson-and-question-family", remaining: "original board-paper scan pages, set/code and specialist chronology review" },
+  ],
+  missingMaterialPriority: [
+    { priority: 1, subjectId: "all", need: "Readable original board-paper scans/PDFs showing board, year, subject, paper and set/code" },
+    { priority: 2, subjectId: "accounting-finance-statistics", need: "Teacher-checked numerical answer keys so every working can be independently recalculated" },
+    { priority: 3, subjectId: "history-civics-islamic_history", need: "Subject-specialist review of chronology, names, constitutional terms and historical interpretation" },
+    { priority: 4, subjectId: "english-bangla", need: "Teacher-approved writing samples and marking notes for open-ended answers" },
   ],
 } as const;
 
@@ -1206,12 +1351,12 @@ export const boardArchiveCoverage = {
 } as const;
 
 export const boardSourceIntakeRegistry = {
-  checkedOn: "30 September 2026",
-  checkedOnBn: "৩০ সেপ্টেম্বর ২০২৬",
+  checkedOn: "20 October 2026",
+  checkedOnBn: "২০ অক্টোবর ২০২৬",
   sourcePolicy: "Only an official board/NCTB document or a legible original scan with board, year, set and question number can advance to transcription.",
   sourcePolicyBn: "শুধু অফিসিয়াল বোর্ড/NCTB নথি অথবা বোর্ড, বছর, সেট ও প্রশ্ন নম্বরসহ পাঠযোগ্য মূল স্ক্যান transcription ধাপে যেতে পারবে।",
   summary: {
-    officialReferencesChecked: 3,
+    sourcesChecked: 5,
     authenticPapersLocated: 0,
     transcriptionReady: 0,
     publishedQuestions: 0,
@@ -1254,6 +1399,26 @@ export const boardSourceIntakeRegistry = {
       note: "Curriculum authority reference only; paper images and exact board-question citations are still required.",
       noteBn: "শিক্ষাক্রম কর্তৃপক্ষের রেফারেন্স মাত্র; প্রশ্নপত্রের ছবি ও সুনির্দিষ্ট বোর্ড-প্রশ্ন উদ্ধৃতি এখনও প্রয়োজন।",
     },
+    {
+      id: "satt-bangla-board-index",
+      label: "Satt Academy HSC Bangla board-question index",
+      labelBn: "Satt Academy HSC বাংলা বোর্ড-প্রশ্ন সূচি",
+      url: "https://sattacademy.com/board-exams/%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A6%E0%A6%B6-%E0%A6%B6%E0%A7%8D%E0%A6%B0%E0%A7%87%E0%A6%A3%E0%A6%BF?subject=%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE-82989",
+      sourceLocated: true,
+      paperLocated: false,
+      note: "Board/year/paper pages and readable transcriptions are available, but the source is a third-party index rather than an original board scan.",
+      noteBn: "বোর্ড/বছর/পত্রভিত্তিক পৃষ্ঠা ও পাঠযোগ্য প্রতিলিপি আছে; তবে এটি মূল বোর্ড স্ক্যান নয়, তৃতীয় পক্ষের সূচি।",
+    },
+    {
+      id: "scribd-bangla-2-board-collection",
+      label: "Scribd Bangla 2nd Paper all-board compilation",
+      labelBn: "Scribd বাংলা ২য় পত্র সকল বোর্ড সংকলন",
+      url: "https://www.scribd.com/document/819986292/Bangla-2nd-paper-all-board-question",
+      sourceLocated: true,
+      paperLocated: false,
+      note: "Useful as a secondary cross-check only; OCR corruption and copyright restrictions prevent direct bulk ingestion.",
+      noteBn: "শুধু secondary cross-check হিসেবে উপযোগী; OCR বিকৃতি ও copyright সীমাবদ্ধতার কারণে সরাসরি bulk import করা হবে না।",
+    },
   ],
 } as const;
 
@@ -1261,7 +1426,7 @@ export const priorityCompletionLedger = {
   checkedOn: "8 October 2026",
   checkedOnBn: "৮ অক্টোবর ২০২৬",
   internal: [
-    { id: "coverage", label: "All learning-unit packs", labelBn: "সব শেখার ইউনিটের প্যাক", status: "complete", evidence: "351/351 group learning-unit records include lessons, notes and practice." },
+    { id: "coverage", label: "All learning-unit packs", labelBn: "সব শেখার ইউনিটের প্যাক", status: "complete", evidence: "356/356 group learning-unit records include lessons, notes and practice." },
     { id: "notes", label: "Three note modes and printable books", labelBn: "তিন ধরনের নোট ও প্রিন্টযোগ্য অধ্যায় বই", status: "complete", evidence: "Detailed, revision and last-minute modes are available for every chapter." },
     { id: "questions", label: "High-volume renewable question banks", labelBn: "বড় ও নবায়নযোগ্য প্রশ্নভান্ডার", status: "complete", evidence: "Every chapter keeps 40 balanced core items in memory and renewable practice rotation." },
     { id: "answers", label: "Answers and marking frameworks", labelBn: "উত্তর ও নম্বর নির্দেশিকা", status: "complete", evidence: "CQ uses 1+2+3+4 marking; written and MCQ items include explanations." },
@@ -1271,7 +1436,7 @@ export const priorityCompletionLedger = {
   ],
   external: [
     { id: "curriculum", label: "Direct NCTB paper, chapter and edition comparison", labelBn: "NCTB পত্র, অধ্যায়ক্রম ও সংস্করণ সরাসরি মিল", status: "evidence-required", owner: "Qualified subject reviewer + approved books/syllabi", progress: "13 subjects source-traced; 11 official-listing links recorded; paper/chapter/edition pending" },
-    { id: "reviewer", label: "Academic reviewer sign-off", labelBn: "একাডেমিক পর্যালোচকের অনুমোদন", status: "reviewer-required", owner: "Qualified HSC subject reviewers", progress: "0/351" },
+    { id: "reviewer", label: "Academic reviewer sign-off", labelBn: "একাডেমিক পর্যালোচকের অনুমোদন", status: "reviewer-required", owner: "Qualified HSC subject reviewers", progress: "0/356" },
     { id: "archive", label: "Authentic previous-board archive", labelBn: "যাচাইকৃত বিগত বোর্ড আর্কাইভ", status: "source-required", owner: "Legible original/official papers with complete citations", progress: "0 verified" },
     { id: "ai-pdf", label: "AI assessment of uploaded answer PDFs", labelBn: "আপলোড করা উত্তর PDF-এর AI মূল্যায়ন", status: "service-required", owner: "Secure AI service, consent and server-side file handling" },
     { id: "device-qa", label: "Real-device accessibility and performance approval", labelBn: "বাস্তব ডিভাইসে accessibility ও performance অনুমোদন", status: "evidence-required", owner: "Android, iPhone, tablet, Windows and macOS test runs", progress: "0 physical-device runs recorded" },
@@ -1322,7 +1487,7 @@ export const releaseReadinessAudit = {
     "Complete real-device, accessibility and PDF testing",
     "Run a controlled teacher-and-student beta",
     "Resolve academic and usability reports",
-    "Expand sign-off to all 351 group learning-unit records",
+    "Expand sign-off to all 356 group learning-unit records",
     "Build the authentic previous-board archive",
     "Complete operations and legal sign-off, then make the site public",
   ],
@@ -1330,7 +1495,7 @@ export const releaseReadinessAudit = {
 
 export const curriculumCoverageRegistry = {
   totalUniqueSubjects: 13,
-  totalChapterRecords: 351,
+  totalChapterRecords: 356,
   languagePolicy: "Bangla-first; English subject remains English",
   groups: {
     commerce: {
@@ -1349,14 +1514,14 @@ export const curriculumCoverageRegistry = {
     humanities: {
       label: "Humanities",
       labelBn: "মানবিক",
-      chapterRecords: 201,
+      chapterRecords: 206,
       subjects: [
         { id: "bangla", label: "Bangla", labelBn: "বাংলা", chapters: 54, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "english", label: "English", labelBn: "ইংরেজি", chapters: 25, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "ict", label: "Information & Communication Technology", labelBn: "তথ্য ও যোগাযোগ প্রযুক্তি", chapters: 6, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "economics", label: "Economics", labelBn: "অর্থনীতি", chapters: 20, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "civics", label: "Civics & Good Governance", labelBn: "পৌরনীতি ও সুশাসন", chapters: 20, libraryScope: "full-subject", officialPaperMapping: "under-review" },
-        { id: "history", label: "History", labelBn: "ইতিহাস", chapters: 12, libraryScope: "full-subject", officialPaperMapping: "under-review" },
+        { id: "history", label: "History", labelBn: "ইতিহাস", chapters: 17, libraryScope: "first-and-second-paper", officialPaperMapping: "reference-structure-matched" },
         { id: "logic", label: "Logic", labelBn: "যুক্তিবিদ্যা", chapters: 16, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "islamic_history", label: "Islamic History & Culture", labelBn: "ইসলামের ইতিহাস ও সংস্কৃতি", chapters: 13, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "statistics", label: "Statistics", labelBn: "পরিসংখ্যান", chapters: 17, libraryScope: "full-subject", officialPaperMapping: "under-review" },
@@ -2133,7 +2298,8 @@ function buildTopicCqSet(subjectId: string, chapter: ChapterPreview, detail: Cha
     {label:"পরিবর্তিত শর্ত ও বিচার",stimulus:`${context} পরে একটি গুরুত্বপূর্ণ শর্ত/তথ্য বদলে যাওয়ায় আগের সিদ্ধান্তটি পুনর্বিবেচনা করতে হয়।`,focus:"পরিবর্তিত সিদ্ধান্ত",change:"শর্ত বদলের প্রভাব ও সীমাবদ্ধতা"},
   ];
   const firstSentence = core.split(/[।.!?]/)[0]?.trim() || core;
-  return cases.map((item,index)=>{
+  const caseVariants = subjectId === "accounting" ? cases.slice(0,1) : cases;
+  return caseVariants.map((item,index)=>{
     const workshopParts = workshop?.cqSolution?.parts;
     const workshopAnswer = workshopParts?.length === 4
       ? workshopParts.map((part) => `${part.label}. ${part.marks} নম্বর: ${part.answer}`).join("\n\n")
@@ -2144,6 +2310,11 @@ function buildTopicCqSet(subjectId: string, chapter: ChapterPreview, detail: Cha
     const workshopSpecificAnswer = workshopAnswer && index === 0
       ? workshopAnswer
       : null;
+    const questionVisual: QuestionVisual | undefined = workshop
+      ? (index % 2 === 0
+        ? { kind:"table", title:workshop.title, caption:`${chapter.titleBn} অধ্যায়ের উদ্দীপক বিশ্লেষণের তথ্যছক`, alt:`${chapter.titleBn}: ${workshop.comparison.headers.join(", ")} তুলনামূলক তথ্যছক`, placement:"both", headers:[...workshop.comparison.headers], rows:workshop.comparison.rows.map((row)=>[...row]) }
+        : { kind:"flow", title:workshop.visual.title, caption:workshop.visual.caption, alt:`${chapter.titleBn}: ${workshop.visual.steps.join(" থেকে ")} ধাপচিত্র`, placement:"both", steps:[...workshop.visual.steps] })
+      : undefined;
     return ({
     type:"CQ" as const,
     level:index < 2 ? "Standard" as const : "Challenge" as const,
@@ -2156,6 +2327,8 @@ function buildTopicCqSet(subjectId: string, chapter: ChapterPreview, detail: Cha
     modelAnswerBn:workshopSpecificAnswer ?? `ক. ১ নম্বর: ${firstSentence}।\n\nখ. ২ নম্বর: ${core} তাই ${termA} মূল ধারণাটি শনাক্ত করে এবং ${termB} তার কার্যকারণ, প্রয়োগ বা ফল স্পষ্ট করে। শুধু দুটি সংজ্ঞা নয়—তাদের এই সম্পর্কটি লিখলেই অনুধাবন অংশ সম্পূর্ণ হয়।\n\nগ. ৩ নম্বর: উদ্দীপকের প্রাসঙ্গিক তথ্য হলো—${item.stimulus} প্রথমে তথ্যটি আলাদা করতে হবে। এরপর ${profile.method}। খাতায় ${visualEvidence} দেখিয়ে ফলটি ${profile.evidence}-এর সঙ্গে মিলিয়ে যাচাই করতে হবে। এভাবে উদ্দীপকের তথ্য, নিয়ম ও ফলের সরাসরি যোগ প্রতিষ্ঠিত হয়।\n\nঘ. ৪ নম্বর: ${item.change} বিচার করলে প্রথমে ${profile.evidence} সবচেয়ে গুরুত্বপূর্ণ প্রমাণ। এই প্রমাণ মূল সিদ্ধান্তকে সমর্থন করলে তা গ্রহণযোগ্য। বিকল্পভাবে অন্য শর্ত বা ব্যাখ্যায় ফল বদলাতে পারে—তাই সেই বিকল্পের সঙ্গে মূল ফল তুলনা করতে হবে। সীমাবদ্ধতা হলো, উদ্দীপকের বাইরে অনুপস্থিত তথ্য অনুমান করা যাবে না। অতএব “${chapter.titleBn}”-এর নিয়ম, দৃশ্যমান কার্যপ্রণালি ও প্রদত্ত প্রমাণ একই সিদ্ধান্ত সমর্থন করলেই ফলটি যুক্তিসংগত; অন্যথায় সিদ্ধান্ত সংশোধন করতে হবে।`,
     marks:10,
     sourceStatus:"authored-board-pattern" as const,
+    requiresVisual:Boolean(questionVisual),
+    visual:questionVisual,
   });});
 }
 
@@ -4492,8 +4665,8 @@ function markingTotal(points: string[] | undefined) {
 export const academicContentAssurance = {
   auditedOn: "13 October 2026",
   auditedOnBn: "১৩ অক্টোবর ২০২৬",
-  scope: "351 group learning-unit records · lessons, notes, MCQ, CQ, written practice and provenance",
-  scopeBn: "৩৫১টি গ্রুপভিত্তিক অধ্যায়ের নথি · পাঠ, নোট, MCQ, CQ, লিখিত অনুশীলন ও উৎস-পরিচয়",
+  scope: "356 group learning-unit records · lessons, notes, MCQ, CQ, written practice and provenance",
+  scopeBn: "৩৫৬টি গ্রুপভিত্তিক অধ্যায়ের নথি · পাঠ, নোট, MCQ, CQ, লিখিত অনুশীলন ও উৎস-পরিচয়",
   automatedStatus: "passed",
   academicStatus: "reviewer-sign-off-pending",
   checks: [
@@ -4597,7 +4770,7 @@ export const academicDatabaseIssues = (Object.keys(completeExamLibraryByGroup) a
   const curriculumGroup = curriculumCoverageRegistry.groups[group];
   if (curriculumGroup.chapterRecords !== expectedChapters) issues.push(`${group}: curriculum registry chapter total is stale`);
   if (curriculumGroup.subjects.map((subject) => subject.id).join("|") !== groupSubjectIds[group].join("|")) issues.push(`${group}: curriculum registry subject mapping is stale`);
-  if (curriculumGroup.subjects.some((subject) => subject.libraryScope !== "full-subject" || subject.officialPaperMapping !== "under-review")) issues.push(`${group}: subject-library scope or paper-review status is misleading`);
+  if (curriculumGroup.subjects.some((subject) => !["full-subject", "first-and-second-paper"].includes(subject.libraryScope) || !["under-review", "reference-structure-matched"].includes(subject.officialPaperMapping))) issues.push(`${group}: subject-library scope or paper-review status is misleading`);
   if (subjectsByGroup[group].some((subject) => !["Full Subject", "1st & 2nd Paper", "Paper mapping under review"].includes(subject.paper))) issues.push(`${group}: subject card makes an unsupported paper claim`);
   const objectivePool = practiceQuestionsByGroup[group];
   const uniqueObjectivePrompts = new Set(objectivePool.map((question) => question.question.toLocaleLowerCase("bn-BD").replace(/[^\p{L}\p{N}]+/gu, " ").trim()));
@@ -4650,6 +4823,16 @@ export const academicDatabaseIssues = (Object.keys(completeExamLibraryByGroup) a
     const mcqQuestions = questions.filter((question) => question.type === "MCQ");
     if (mcqQuestions.some((question) => question.optionsBn?.length !== 4 || question.correctIndex === undefined || question.correctIndex < 0 || question.correctIndex > 3)) issues.push(`${label}: MCQ must have four options and one valid answer index`);
     if (mcqQuestions.some((question) => !(resource.subject === "English" ? question.answerGuide : question.answerGuideBn)?.trim())) issues.push(`${label}: MCQ explanation is missing`);
+    if (questions.some((question) => question.requiresVisual && !question.visual)) issues.push(`${label}: a visual-dependent question is missing its visual`);
+    if (questions.some((question) => {
+      const visual = question.visual;
+      if (!visual) return false;
+      if (!visual.title.trim() || !visual.caption.trim() || !visual.alt.trim()) return true;
+      if (visual.kind === "table") return !visual.headers?.length || !visual.rows?.length || visual.rows.some((row) => row.length !== visual.headers!.length);
+      if (visual.kind === "flow") return (visual.steps?.length ?? 0) < 2;
+      if (visual.kind === "graph") return (visual.points?.length ?? 0) < 2 || !visual.xLabel?.trim() || !visual.yLabel?.trim();
+      return !visual.src?.trim();
+    })) issues.push(`${label}: question visual has incomplete accessible data`);
     const cqQuestions = questions.filter((question) => question.type === "CQ");
     if (cqQuestions.some((question) => question.marks !== 10)) issues.push(`${label}: CQ is not configured for 10 marks`);
     if (cqQuestions.some((question) => {
@@ -4702,7 +4885,7 @@ if (academicReviewGate.reviewerRoles.length !== curriculumCoverageRegistry.total
 if (questionProvenancePolicy.authenticPastBoardCount !== 0) academicDatabaseIssues.push("uncited previous-board questions are being claimed");
 if (previousBoardArchive.records.length !== questionProvenancePolicy.authenticPastBoardCount) academicDatabaseIssues.push("previous-board archive and provenance count disagree");
 if (previousBoardArchive.records.some((record) => previousBoardArchive.requiredFields.some((field) => !record[field as keyof PreviousBoardQuestion]))) academicDatabaseIssues.push("previous-board archive contains incomplete citations");
-if (boardSourceIntakeRegistry.sources.length !== boardSourceIntakeRegistry.summary.officialReferencesChecked) academicDatabaseIssues.push("board-source intake summary is stale");
+if (boardSourceIntakeRegistry.sources.length !== boardSourceIntakeRegistry.summary.sourcesChecked) academicDatabaseIssues.push("board-source intake summary is stale");
 if (boardSourceIntakeRegistry.sources.filter((source) => source.paperLocated).length !== boardSourceIntakeRegistry.summary.authenticPapersLocated) academicDatabaseIssues.push("board-source paper count is stale");
 if (boardSourceIntakeRegistry.summary.publishedQuestions !== previousBoardArchive.records.length) academicDatabaseIssues.push("board-source publication count disagrees with archive");
 if (boardArchiveCoverage.boards.length !== previousBoardArchive.boards.length) academicDatabaseIssues.push("board archive coverage does not include every supported board");

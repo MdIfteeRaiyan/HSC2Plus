@@ -57,7 +57,7 @@ test("release validation provides executable NCTB reviewer device and beta workf
   const page = fs.readFileSync(new URL("../app/release-readiness/page.tsx", import.meta.url), "utf8");
   const support = fs.readFileSync(new URL("../app/support/page.tsx", import.meta.url), "utf8");
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
-  for (const marker of ["DIRECT NCTB MAPPING", "QUALIFIED REVIEWER APPROVAL", "REAL-DEVICE & SCREEN-READER QA", "CONTROLLED TEACHER/STUDENT BETA", "15–20 representative chapters", "Go / No-go thresholds", "0/351 group learning-unit records signed off"]) assert.ok(page.includes(marker));
+  for (const marker of ["DIRECT NCTB MAPPING", "QUALIFIED REVIEWER APPROVAL", "REAL-DEVICE & SCREEN-READER QA", "CONTROLLED TEACHER/STUDENT BETA", "15–20 representative chapters", "Go / No-go thresholds", "0/356 group learning-unit records signed off"]) assert.ok(page.includes(marker));
   for (const file of ["hsc2plus-nctb-mapping-register.csv", "hsc2plus-reviewer-register.csv", "hsc2plus-chapter-signoff.csv", "hsc2plus-device-screenreader-run.csv", "hsc2plus-beta-session-log.csv", "hsc2plus-beta-issue-register.csv"]) assert.ok(fs.existsSync(new URL(`../public/templates/${file}`, import.meta.url)), `missing ${file}`);
   assert.match(support, /\/release-readiness/);
   assert.match(data, /nctb-2026-secondary-higher-catalogue|695b98afc4774958d7b7044c/);
@@ -444,7 +444,7 @@ test("every lesson receives chapter-specific Bangla teaching content", () => {
 test("question banks provide real options and board plus college-standard items", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
-  for (const term of ["optionsBn", "correctIndex", "marks", "sourceStatus", "নিজস্ব HSC অনুশীলন · বোর্ড-প্যাটার্ন"]) {
+  for (const term of ["optionsBn", "correctIndex", "marks", "sourceStatus"]) {
     assert.ok(data.includes(term) || dashboard.includes(term), `missing complete question-bank field: ${term}`);
   }
   assert.match(data, /উচ্চতর দক্ষতার উত্তরের সবচেয়ে গুরুত্বপূর্ণ বৈশিষ্ট্য/);
@@ -720,7 +720,7 @@ test("curriculum coverage registry exposes every subject without overstating off
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["curriculumCoverageRegistry", "totalUniqueSubjects: 13", "totalChapterRecords: 351", "chapterRecords: 150", "chapterRecords: 201", "subjectPaperMapping: \"under-review\"", "nctb-xi-xii-subject-structure"]) assert.match(data, new RegExp(term));
+  for (const term of ["curriculumCoverageRegistry", "totalUniqueSubjects: 13", "totalChapterRecords: 356", "chapterRecords: 150", "chapterRecords: 206", "subjectPaperMapping: \"under-review\"", "nctb-xi-xii-subject-structure"]) assert.match(data, new RegExp(term));
   for (const term of ["Curriculum coverage", "পাঠ্যক্রম কভারেজ", "Direct comparison pending", "নৈর্বাচনিক সংস্করণ যাচাই বাকি", "Coverage means every listed chapter has lessons, notes and practice"]) assert.match(dashboard, new RegExp(term));
   assert.match(css, /\.curriculum-coverage/);
   assert.match(css, /\.curriculum-subject-grid/);
@@ -758,11 +758,24 @@ test("official NCTB index confirms subject presence without approving chapter or
 test("academic sign-off and question provenance never imply unsupported approval", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
+  const release = fs.readFileSync(new URL("../app/release-readiness/page.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["academicReviewGate", "signedOffChapterRecords: 0", "pendingChapterRecords: 351", "Qualified HSC subject reviewer", "reviewerRoles", "requiredEvidence", "workflow", "acceptanceRules", "subjectChecklists", "CQ 1\\+2\\+3\\+4 marking accuracy", "questionProvenancePolicy", "authenticPastBoardCount: 0", "academic review gate overstates reviewer sign-off", "academic reviewer roster does not cover every subject", "uncited previous-board questions are being claimed"]) assert.match(data, new RegExp(term));
-  for (const term of ["questionSourceLabel", "নিজস্ব HSC অনুশীলন · ধারণাভিত্তিক", "নিজস্ব HSC অনুশীলন · প্রয়োগভিত্তিক", "নিজস্ব HSC অনুশীলন · বোর্ড-প্যাটার্ন", "প্রশ্নের উৎস ও সত্যতা", "একাডেমিক অনুমোদন গেট"]) assert.match(dashboard, new RegExp(term));
+  for (const term of ["academicReviewGate", "signedOffChapterRecords: 0", "pendingChapterRecords: 356", "Qualified HSC subject reviewer", "reviewerRoles", "requiredEvidence", "workflow", "acceptanceRules", "subjectChecklists", "CQ 1\\+2\\+3\\+4 marking accuracy", "questionProvenancePolicy", "authenticPastBoardCount: 0", "academic review gate overstates reviewer sign-off", "academic reviewer roster does not cover every subject", "uncited previous-board questions are being claimed"]) assert.match(data, new RegExp(term));
+  assert.doesNotMatch(dashboard, /questionSourceLabel|নিজস্ব HSC অনুশীলন · ধারণাভিত্তিক|নিজস্ব HSC অনুশীলন · প্রয়োগভিত্তিক|বর্তমান ব্যাংক: ১০০% নিজস্ব HSC অনুশীলন/);
+  assert.match(release, /review|যাচাই|approval|অনুমোদন/i);
   assert.match(css, /\.academic-review-gate/);
   assert.match(css, /\.question-provenance-panel/);
+});
+
+test("student study and practice screens hide internal source and mapping clutter", () => {
+  const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
+  const subjectPage = fs.readFileSync(new URL("../components/subject-page.tsx", import.meta.url), "utf8");
+  const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.doesNotMatch(dashboard, /<AcademicSourcePanel/);
+  assert.doesNotMatch(subjectPage, /chapter-source-evidence/);
+  assert.doesNotMatch(dashboard, /বর্তমান ব্যাংক: ১০০% নিজস্ব HSC অনুশীলন/);
+  assert.match(css, /\.subject-detail \.content-status/);
+  assert.match(css, /\.curriculum-mapping-stage/);
 });
 
 test("previous-board archive requires complete citations and exposes precise filters", () => {
@@ -779,7 +792,7 @@ test("official board-paper intake separates portal discovery from verified quest
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["boardSourceIntakeRegistry", "officialReferencesChecked: 3", "authenticPapersLocated: 0", "transcriptionReady: 0", "publishedQuestions: 0", "dhaka-board-official", "nctb-question-pattern", "nctb-hsc-curriculum-source", "board-source publication count disagrees with archive"]) assert.match(data, new RegExp(term));
+  for (const term of ["boardSourceIntakeRegistry", "sourcesChecked: 5", "authenticPapersLocated: 0", "transcriptionReady: 0", "publishedQuestions: 0", "dhaka-board-official", "nctb-question-pattern", "nctb-hsc-curriculum-source", "satt-bangla-board-index", "scribd-bangla-2-board-collection", "board-source publication count disagrees with archive"]) assert.match(data, new RegExp(term));
   for (const term of ["Official source intake queue", "অফিসিয়াল উৎস যাচাইয়ের তালিকা", "প্রশ্নপত্র পাওয়া যায়নি", "archive-stage-track", "archive-source-list", 'target="_blank" rel="noreferrer"']) assert.match(dashboard, new RegExp(term));
   assert.match(css, /\.archive-intake-ledger/);
   assert.match(css, /\.archive-source-list/);
@@ -793,6 +806,40 @@ test("board-paper discovery keeps official references separate from unaudited in
   for (const term of ["SOURCE REVIEW", "উৎস অনুসন্ধানের অগ্রগতি", "PDF এখন যাচাই চলছে", "স্ক্যান যাচাই বাকি", "মূল উৎস দেখো"]) assert.match(dashboard, new RegExp(term));
   assert.match(css, /archive-discovery-catalog/);
   assert.match(css, /archive-source-details/);
+});
+
+test("Bangla board-question discovery is matched to supplied first and second-paper guides", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of [
+    "boardQuestionMatchRegister",
+    'status: "secondary-source-match-complete"',
+    "sattInventory",
+    "secondPaperTaskMatches",
+    "01_Bangla_2nd_Question_1_Rules_of_Bangla_Pronunciation.pdf",
+    "12_Bangla_2nd_Question_12_Essay_and_Article_Writing.pdf",
+    "paper-index-matched-question-level-review-required",
+    "Original scan page and set/code are still required",
+  ]) assert.match(data, new RegExp(marker));
+});
+
+test("every live subject has a board-question discovery and supplied-material match record", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  const expected = ["bangla", "english", "ict", "accounting", "finance", "business", "economics", "civics", "geography", "logic", "statistics", "islamic_history", "history"];
+  for (const marker of ["allSubjectBoardQuestionSurvey", "subjectCount: 13", "coveredSubjectIds", "all-subject-discovery-and-reference-match-complete", "missingMaterialPriority", "original board-paper scans/PDFs"]) assert.match(data, new RegExp(marker));
+  for (const subjectId of expected) assert.match(data, new RegExp(`subjectId: "${subjectId}"`));
+  const survey = data.slice(data.indexOf("export const allSubjectBoardQuestionSurvey"), data.indexOf("export const boardArchiveCoverage"));
+  assert.equal((survey.match(/subjectId: "/g) || []).length, expected.length + 4, "survey must contain 13 subject records plus four material-priority records");
+  assert.equal((survey.match(/sattUrls: \[/g) || []).length, expected.length, "each live subject needs a Satt discovery URL list");
+  assert.equal((survey.match(/references: \[/g) || []).length, expected.length, "each live subject needs supplied-material references");
+});
+
+test("History uses the supplied eight plus nine chapter paper structure", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of ["historyFirstPaperReferenceChapters", "historySecondPaperReferenceChapters", "chaptersBySubject.history", "ভারতবর্ষে ইউরোপীয়দের আগমন: ইংরেজ আধিপত্য প্রতিষ্ঠা", "প্রবাসী বাঙালি ও বহির্বিশ্ব", "শিল্প বিপ্লব", "বর্ণবাদবিরোধী আন্দোলন", 'paper-chapter-lesson-and-question-family', 'chapters: 17']) assert.match(data, new RegExp(marker));
+  const first = data.slice(data.indexOf("const historyFirstPaperReferenceChapters"), data.indexOf("const historySecondPaperReferenceChapters"));
+  const second = data.slice(data.indexOf("const historySecondPaperReferenceChapters"), data.indexOf("const buildHistoryChapter"));
+  assert.equal((first.match(/title:/g) || []).length, 8);
+  assert.equal((second.match(/title:/g) || []).length, 9);
 });
 
 test("archive and mobile chapter navigation use progressive disclosure instead of stacked clutter", () => {
@@ -848,7 +895,7 @@ test("academic assurance checks every assessment structure without inventing tea
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   for (const term of ["academicContentAssurance", "markingTotal", "MCQ must have four options and one valid answer index", "CQ marking guide does not contain four parts totalling 10", "CQ model answer is not visibly divided", 'academicStatus: "reviewer-sign-off-pending"']) assert.match(data, new RegExp(term));
-  for (const term of ["351/351 group learning records passed automated assurance", "৩৫১/৩৫১টি গ্রুপভিত্তিক শেখার নথি স্বয়ংক্রিয় যাচাইয়ে উত্তীর্ণ", "ContentErrorReporter", "hsc2plus-content-issue-v1", "reportId", "subject-review", "qualified subject reviewer"]) assert.match(dashboard, new RegExp(term));
+  for (const term of ["356/356 group learning records passed automated assurance", "৩৫৬/৩৫৬টি গ্রুপভিত্তিক শেখার নথি স্বয়ংক্রিয় যাচাইয়ে উত্তীর্ণ", "ContentErrorReporter", "hsc2plus-content-issue-v1", "reportId", "subject-review", "qualified subject reviewer"]) assert.match(dashboard, new RegExp(term));
   for (const selector of ["automated-assurance", "content-error-reporter", "content-error-form", "report-action"]) assert.match(css, new RegExp(`\\.${selector}`));
 });
 
@@ -1254,7 +1301,7 @@ test("Bangla second paper, English second paper and Statistics follow supplied r
   for (const term of ["Phonetics and Bangla Phonology", "Morphology", "Report Writing", "Proof Correction", "Essay Writing"]) assert.match(banglaBlock, new RegExp(term));
   for (const term of ["Articles and Determiners", "Right Form of Verbs", "Sentence Transformation", "Formal email and application", "Composition"]) assert.match(englishBlock, new RegExp(term));
   for (const term of ["Data Collection, Summarisation and Presentation", "Measures of Central Tendency", "Moments, Skewness and Kurtosis", "Correlation and Regression", "Time Series"]) assert.match(statisticsBlock, new RegExp(term));
-  for (const term of ["chapters: 54", "chapters: 17", "Panjeree English 2nd Paper Digital Question Bank", "Higher Secondary Statistics First Paper supporting guide", "elective-curriculum", "totalChapterRecords: 351"]) assert.match(data, new RegExp(term));
+  for (const term of ["chapters: 54", "chapters: 17", "Panjeree English 2nd Paper Digital Question Bank", "Higher Secondary Statistics First Paper supporting guide", "elective-curriculum", "totalChapterRecords: 356"]) assert.match(data, new RegExp(term));
 });
 
 test("tutor notes use a focused recall structure, ICT code labs and paper-aware practice", () => {
@@ -1546,6 +1593,21 @@ test("Finance notes use a calculation and decision manual with traceable source 
   for (const marker of ["finance-note-manual", "FINANCE DECISION MANUAL", "DECISION ROADMAP", "CASH-FLOW & DECISION LAB", "CALCULATION + DECISION CQ", "সময়রেখা, সূত্রের শর্ত"]) assert.ok(page.includes(marker));
   for (const marker of [".finance-note-opening", ".finance-note-manual .subject-note-chapter", ".finance-note-manual .subject-workbook-scroll th"]) assert.ok(css.includes(marker));
   for (const marker of ["finance-1-scribd-guide", "finance-1-students-question-guide", "finance-1-students-reading", "finance-2-students-mcq", "finance-2-students-cq", "finance-2-students-reading", "direct content review pending"]) assert.ok(data.includes(marker));
+});
+
+test("question visuals remain complete across practice tests answers archive and print", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
+  const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  for (const marker of ["export type QuestionVisual", 'kind: "table" | "flow" | "graph" | "image"', "requiresVisual", "a visual-dependent question is missing its visual", "question visual has incomplete accessible data"]) assert.ok(data.includes(marker));
+  for (const marker of ["function QuestionVisual", "question-visual-table-wrap", 'surface="question"', 'surface="answer"', 'loading="lazy"']) assert.ok(dashboard.includes(marker));
+  for (const marker of [".question-visual", "overflow-x:auto", "page-break-inside:avoid", "@media print"]) assert.ok(css.includes(marker));
+});
+
+test("supplied Finance chapter packs stay supporting evidence rather than official curriculum claims", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of ["finance-1-chapter-pack-2026", "9 chapter PDFs · 250 scanned pages", "finance-2-chapter-pack-2026", "14 chapter PDFs · 220 scanned pages", "finance-2-mcq-pack-2026", "27 scanned pages"]) assert.ok(data.includes(marker));
+  assert.doesNotMatch(data, /finance-[12]-chapter-pack-2026[^\n]+role:"curriculum-evidence"/);
 });
 
 test("dense learning components contain horizontal growth on mobile and desktop", () => {

@@ -43,7 +43,7 @@ export default function ReleaseReadinessPage() {
       <span className="eyebrow">ACADEMIC & BETA VALIDATION</span>
       <h1>Release evidence centre</h1>
       <p>এই পেজটি শিক্ষার্থীর পড়ার অংশ নয়। NCTB mapping, reviewer sign-off, real-device QA এবং controlled beta—চারটি release gate-এর কাজ ও প্রমাণ এখানে আলাদা রাখা হয়েছে। ১৩/১৩ বিষয়ের official curriculum presence এখন নথিভুক্ত।</p>
-      <div className="release-status-row"><span className="passed"><CheckCircle2 size={14}/>Automated checks passing</span><span><Clock3 size={14}/>0/351 group learning-unit records signed off</span><span><Clock3 size={14}/>0 physical-device runs recorded</span><span><Clock3 size={14}/>Beta not started</span></div>
+      <div className="release-status-row"><span className="passed"><CheckCircle2 size={14}/>Automated checks passing</span><span><Clock3 size={14}/>0/356 group learning-unit records signed off</span><span><Clock3 size={14}/>0 physical-device runs recorded</span><span><Clock3 size={14}/>Beta not started</span></div>
     </header>
 
     <section className="release-workstream" id="nctb-mapping">
