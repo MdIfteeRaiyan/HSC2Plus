@@ -1428,7 +1428,7 @@ export const priorityCompletionLedger = {
   internal: [
     { id: "coverage", label: "All learning-unit packs", labelBn: "সব শেখার ইউনিটের প্যাক", status: "complete", evidence: "356/356 group learning-unit records include lessons, notes and practice." },
     { id: "notes", label: "Three note modes and printable books", labelBn: "তিন ধরনের নোট ও প্রিন্টযোগ্য অধ্যায় বই", status: "complete", evidence: "Detailed, revision and last-minute modes are available for every chapter." },
-    { id: "questions", label: "High-volume renewable question banks", labelBn: "বড় ও নবায়নযোগ্য প্রশ্নভান্ডার", status: "complete", evidence: "Every chapter keeps 40 balanced core items in memory and renewable practice rotation." },
+    { id: "questions", label: "Chapter-specific renewable question banks", labelBn: "অধ্যায়ভিত্তিক নবায়নযোগ্য প্রশ্নভান্ডার", status: "complete", evidence: "Every chapter keeps at least 32 chapter-linked items after generic-template and duplicate removal; practice rotation combines the relevant chapter pools." },
     { id: "answers", label: "Answers and marking frameworks", labelBn: "উত্তর ও নম্বর নির্দেশিকা", status: "complete", evidence: "CQ uses 1+2+3+4 marking; written and MCQ items include explanations." },
     { id: "exam", label: "Board-format Exam Center", labelBn: "বোর্ড-ফরম্যাট পরীক্ষা কেন্দ্র", status: "complete", evidence: "100 marks: 30 MCQ + 7 CQ, 180 minutes, review and recovery report." },
     { id: "quality", label: "Automated database and interface safeguards", labelBn: "স্বয়ংক্রিয় ডেটাবেস ও ইন্টারফেস সুরক্ষা", status: "complete", evidence: "Duplicate guards, answer-position balance, responsive rules, focus states and offline update controls are enforced. Physical-device approval remains separate." },
@@ -2199,6 +2199,86 @@ function buildAppliedQuestionSet(subjectId: string, chapter: ChapterPreview, _de
   ];
 }
 
+/** Reject assessment-writing advice disguised as an academic question. */
+const nonAcademicPromptPatterns = [
+  /সঠিক শেখার পদ্ধতি/u, /পরিস্থিতি সমাধানের প্রথম কাজ/u,
+  /প্রশ্নের চাওয়া ও নির্ণায়ক তথ্য/u, /প্রশ্নের উদ্দেশ্য ও নির্ধারিত বিন্যাস বুঝে একটি সম্পূর্ণ উত্তর/u,
+  /উচ্চতর দক্ষতার উত্তরের সবচেয়ে গুরুত্বপূর্ণ বৈশিষ্ট্য/u,
+  /দুটি উত্তর একই সিদ্ধান্তে পৌঁছেছে/u, /সমাধান যাচাইয়ের শেষ ধাপ/u,
+  /পূর্ণ নম্বরের জন্য কোন প্রমাণ/u, /অসম্পূর্ণ উত্তরকে পূর্ণাঙ্গ উত্তরে/u,
+  /অধ্যায়ের আলোচনার সঙ্গে সবচেয়ে সরাসরি সম্পর্কিত পরিভাষা/u,
+  /প্রচলিত একটি ভুল ধারণা ও সঠিক ব্যাখ্যা/u,
+  /মূল ধারণা, সূত্র\/কাঠামো, একটি উদাহরণ/u,
+  /কোন উত্তরটি প্রয়োজনীয় দক্ষতা সবচেয়ে নির্ভুলভাবে দেখায়/u,
+  /সঠিক ধারণা লিখলেও উদ্দীপকের তথ্য ব্যবহার করেনি/u,
+  /পূর্ণ নম্বর পাওয়ার কৌশল/u, /বিশ্লেষণের প্রথম ধাপ/u,
+  /সবচেয়ে প্রাসঙ্গিক প্রমাণ/u, /যথাযথ বাস্তব প্রয়োগ/u,
+  /উত্তর যাচাইয়ের শেষ ধাপ/u, /বাংলাদেশভিত্তিক সিদ্ধান্ত কোনটি/u,
+  /প্রয়োজনীয় সীমাবদ্ধতা কোনটি/u, /সবচেয়ে শক্তিশালী উপসংহার/u,
+  /উদ্দীপকের নির্দিষ্ট তথ্য ব্যবহার করে নীতিটি প্রয়োগ করো/u,
+  /বিকল্প, প্রমাণ ও সীমাবদ্ধতা বিবেচনায় ফলাফল মূল্যায়ন করো/u,
+  /একটি উদ্ধৃতি বা ভাষারীতি কেন গুরুত্বপূর্ণ/u,
+  /পরিভাষা ব্যবহার করে সংক্ষিপ্ত টীকা লেখো/u,
+  /বাংলাদেশের বাস্তবতায় .*অধ্যায়ের গুরুত্ব, প্রয়োগ ও সীমাবদ্ধতা/u,
+  /বাংলাদেশের প্রেক্ষাপটে .*বিষয়টির একটি বাস্তব প্রয়োগ বিশ্লেষণ/u,
+  /কলেজ নির্বাচনী পরীক্ষার উপযোগী একটি বিশ্লেষণধর্মী প্রশ্ন/u,
+  /একটি adjustment বদলে journal, ledger/iu,
+  /Discount rate, মেয়াদ বা cash flow বদলালে/iu,
+  /একটি বাংলাদেশি SME-তে একই সমস্যা হলে/u,
+  /একটি determinant বদলে নতুন equilibrium/iu,
+  /একই ঘটনায় নাগরিক, প্রশাসন ও আদালত/u,
+  /একটি ঘটনার দুটি ভিন্ন উৎসের দৃষ্টিভঙ্গি/u,
+  /একই সিদ্ধান্ত রেখে একটি বৈধ ও একটি অবৈধ যুক্তি/u,
+  /একটি শাসন\/ঘটনার প্রশাসনিক, জ্ঞানচর্চা/u,
+  /একটি extreme value যোগ করে ফল পুনর্গণনা/iu,
+  /বাংলাদেশের দুটি অঞ্চল একই মানদণ্ডে তুলনা/u,
+  /একটি লেনদেনের ডেবিট ঠিক হলেও ক্রেডিট দিক পোস্ট করা হয়নি/u,
+  /দীর্ঘমেয়াদি সম্পদের জন্য খুব স্বল্পমেয়াদি ঋণ/u,
+  /একই কাজের জন্য দুই কর্মকর্তা পরস্পরবিরোধী নির্দেশ/u,
+  /দাম অপরিবর্তিত থাকলেও ভোক্তার আয় বাড়ায়/u,
+  /একটি সরকারি প্রতিষ্ঠান সিদ্ধান্তের কারণ প্রকাশ করছে না/u,
+  /একই ঘটনা নিয়ে দুটি সমকালীন উৎসে ভিন্ন বিবরণ/u,
+  /সবচেয়ে নির্ভুল সংজ্ঞা কোনটি/u, /সঠিক পারস্পরিক সম্পর্ক কোনটি/u,
+  /প্রচলিত ভুল ধারণা কোনটি/u, /one-page revision note/iu,
+  /Which approach is most suitable/iu, /Which first step is most effective/iu,
+  /Which final check would improve/iu, /Two answers .* deserves the higher mark/iu,
+];
+
+function isAcademicQuestion(question: NonNullable<ExamResource["bank"]["questions"]>[number]) {
+  const text = `${question.promptBn ?? ""} ${question.prompt ?? ""}`.trim();
+  return Boolean(text) && !nonAcademicPromptPatterns.some((pattern) => pattern.test(text));
+}
+
+const genericNotePatterns = [
+  /^চার ধাপে অধ্যায়টি মনে রাখো/u, /^যে ভুলগুলো বেশি হয়: প্রশ্নের চাওয়া না ধরা/u,
+  /^ক\/খ\/গ\/ঘ একভাবে লিখবে না/u, /^ভুল হলে পুরো অধ্যায় আবার পড়বে না/u,
+  /^অনুশীলনে তিন ধরনের প্রশ্ন রাখো/u, /^কলেজ পরীক্ষার মতো সময় ধরে লেখো/u,
+  /^সত্যি শিখেছ কি না বুঝবে/u, /^এক পাতায় অধ্যায়টি সাজাও/u,
+  /^নোট বন্ধ করে নতুন একটি সমস্যা করো/u, /^একবার পড়ে ছেড়ে দিও না/u,
+  /^অধ্যায় শেষ বলার আগে তিনটি কাজ করো/u, /^নির্ধারিত বিন্যাস আগে দাঁড় করাও/u,
+  /^খসড়া শেষে তথ্যের পূর্ণতা/u, /^সাধারণ ভুল: মুখস্থ নমুনা হুবহু বসালে/u,
+  /^প্রতিটি মূল শব্দের সঙ্গে একটি উদাহরণ/u, /^বিষয় অনুযায়ী একটি ছক, প্রবাহচিত্র/u,
+  /^একটি প্রচলিত ভুল কথা লিখে/u, /^১০ নম্বরের CQ লেখার আগে চার অংশে/u,
+  /^অপরিচিত ঘটনায় অধ্যায়ের দুটি ধারণা/u,
+  /^Recommended method: read the task/iu, /^Essential summary: define the idea/iu,
+  /^Bangladesh connection: Use natural contexts/iu, /^Common mistakes: memorising without application/iu,
+  /^Exam tip: allocate marks to answer depth/iu, /^Answer construction: begin with the exact rule/iu,
+  /^Error correction: locate whether the weakness/iu, /^Board practice: complete one foundation/iu,
+  /^College-test practice: answer within a fixed time/iu, /^Mastery check: explain the chapter aloud/iu,
+  /^Memory map: organise the chapter as/iu, /^Independent task: complete one unfamiliar case/iu,
+  /^Revision schedule: revisit the chapter/iu, /^Formula or answer structure: Effective paragraph/iu,
+  /^Evidence rule: Reading answers must/iu, /^Final readiness check: explain the chapter/iu,
+  /^Vocabulary retrieval: define every key term/iu, /^Diagram or structure note: convert the chapter/iu,
+  /^Worked-method note: record the complete route/iu, /^Misconception note: write one tempting/iu,
+  /^Board-answer note: map a 10-mark response/iu, /^College-test note: combine two chapter ideas/iu,
+  /^Planning note: create a short outline/iu,
+];
+
+function isUsefulChapterNote(note: string) {
+  const text = note.replace(/\s+/g, " ").trim();
+  return Boolean(text) && !genericNotePatterns.some((pattern) => pattern.test(text));
+}
+
 function buildDiversifiedPracticeSet(subjectId: string, chapter: ChapterPreview, detail: ChapterKnowledge): NonNullable<ExamResource["bank"]["questions"]> {
   const isEnglish = subjectId === "english";
   const bn = banglaChapterDetails[chapter.title];
@@ -2260,11 +2340,26 @@ function buildEnglishBoardPracticeSet(chapter: ChapterPreview, detail: ChapterKn
     { name:"Formal writing", prompt:"Write an email to your college principal requesting an additional weekly English practice class. State the need, propose a workable time and keep a respectful formal tone.", guide:"Use a clear subject, appropriate salutation, concise reason, specific request and courteous close. Check register, format and task completion.", marks:10 },
     { name:"Paragraph / composition", prompt:"Write a well-organised composition on “Responsible Use of Technology by Students”. Include benefits, risks, practical habits and a balanced conclusion.", guide:"Plan before writing. Each paragraph needs one controlling point with support; avoid memorised slogans and unrelated quotations.", marks:20 },
   ];
-  const tasks = firstPaper ? firstPaperTasks : secondPaperTasks;
+  const secondPaperFocus: Array<[RegExp, string[]]> = [
+    [/article/i, ["Articles"]], [/preposition/i, ["Prepositions"]],
+    [/right form|verb/i, ["Right form of verbs"]], [/transform/i, ["Sentence transformation"]],
+    [/narration/i, ["Narration"]], [/modifier/i, ["Modifiers"]],
+    [/connector/i, ["Connectors"]], [/email|letter|application|formal/i, ["Formal writing"]],
+    [/paragraph|composition|essay|writing/i, ["Paragraph / composition", "Formal writing"]],
+  ];
+  const matchedNames = secondPaperFocus.find(([pattern]) => pattern.test(chapter.title))?.[1];
+  const tasks = firstPaper ? firstPaperTasks : matchedNames
+    ? secondPaperTasks.filter((task) => matchedNames.includes(task.name))
+    : secondPaperTasks;
+  const focus = detail.anchor.replace(/\s+/g, " ").trim();
+  const chapterContext = detail.context.replace(/\s+/g, " ").trim();
   return Array.from({length:40},(_,index)=>{
     const task=tasks[index%tasks.length];
     const round=Math.floor(index/tasks.length)+1;
-    return {...common,level:(index%4===0?"Foundation":index%4===3?"Challenge":"Standard") as "Foundation"|"Standard"|"Challenge",category:(index%3===0?"Board-style":index%3===1?"Application":"College-standard") as "Board-style"|"Application"|"College-standard",prompt:`${task.name} · Practice set ${round}\n${task.prompt}`,answerGuide:task.guide,marks:task.marks};
+    const instruction = firstPaper
+      ? `Textbook focus: ${chapter.title}. ${chapterContext}`
+      : `Grammar/writing focus: ${chapter.title}. Apply this chapter's rule instead of an unrelated grammar item.`;
+    return {...common,level:(index%4===0?"Foundation":index%4===3?"Challenge":"Standard") as "Foundation"|"Standard"|"Challenge",category:(index%3===0?"Board-style":index%3===1?"Application":"College-standard") as "Board-style"|"Application"|"College-standard",prompt:`${task.name} · ${chapter.title} · Practice set ${round}\n${instruction}\n${task.prompt}`,answerGuide:`${task.guide} Chapter check: ${focus}`,marks:task.marks};
   });
 }
 
@@ -3219,7 +3314,7 @@ function buildFinanceWorkshop(chapter: ChapterPreview, detail: BanglaChapterDeta
   : /Fire Insurance/i.test(title) ? {formulas:["Average-clause claim = Loss × Sum insured/Value at risk","Claim cannot normally exceed actual covered loss"],rows:[["Valued","agreed value subject to terms","valuation basis"],["Floating","multiple locations","stock movement"],["Declaration","fluctuating stock","periodic declaration"]],steps:["property/interest","covered fire","proximate cause","value at risk","underinsurance","survey/claim"],stimulus:"সম্পদের মূল্য ৯ লাখ, sum insured ৬ লাখ এবং covered fire loss ৩ লাখ টাকা।",task:"Average clause প্রয়োগ করে claim এবং underinsurance-এর প্রভাব দেখাও।",check:"Policy wording, excess, exclusions ও salvage প্রশ্নে থাকলে সমন্বয় করো।"}
   : /Miscellaneous/i.test(title) ? {formulas:["Coverage decision = exposure + probability/severity + exclusion + affordability","Indemnity cover-এ actual covered loss সীমা গুরুত্বপূর্ণ"],rows:[["Motor","vehicle/third-party exposure","policy scope"],["Health","medical expense","waiting/exclusion/network"],["Agriculture","crop/livestock peril","index or loss evidence"]],steps:["exposure","insured interest","coverage","exclusion","premium/excess","claim evidence"],stimulus:"একটি পরিবার motor, health ও crop risk-এর জন্য সীমিত budget-এ cover বাছছে।",task:"Risk priority, coverage gap, exclusion ও affordability দিয়ে portfolio সাজাও।",check:"Policy name নয়—কোন peril covered এবং কোনটি excluded তা লিখো।"}
   : {formulas:["Insurance = risk pooling + contract + premium + covered loss","Indemnity, utmost good faith, insurable interest, proximate cause—নীতি আলাদা করে প্রয়োগ"],rows:[["Insurable interest","আর্থিক সম্পর্ক","policy অনুযায়ী প্রয়োজনীয় সময়ে থাকতে হবে"],["Utmost good faith","material fact disclosure","misrepresentation risk"],["Proximate cause","dominant effective cause","coverage decision"]],steps:["risk","interest","proposal/disclosure","premium/policy","loss/cause","claim/indemnity"],stimulus:"প্রস্তাবক গুরুত্বপূর্ণ ঝুঁকির তথ্য গোপন করেছেন; পরে ক্ষতি হলেও কারণ ও coverage নিয়ে বিরোধ হয়েছে।",task:"চুক্তির নীতি, disclosure, proximate cause ও claim outcome বিশ্লেষণ করো।",check:"ঘটনার fact ও policy term ছাড়া claim গ্রহণ/বাতিলের চূড়ান্ত সিদ্ধান্ত দিও না।"};
-  const lab = profiles[title] ?? bankingInsurance;
+  const lab = profiles[title] ?? { ...bankingInsurance, stimulus: `${chapter.titleBn}: ${bankingInsurance.stimulus}` };
   return {title:`${chapter.titleBn} · হিসাব ও সিদ্ধান্ত ল্যাব`,formulaSheet:lab.formulas,comparison:{headers:["বিষয়/বিকল্প","অর্থ ও ব্যবহার","সিদ্ধান্তে সতর্কতা"],rows:lab.rows},visual:{title:"তথ্য থেকে আর্থিক সিদ্ধান্ত",steps:lab.steps,caption:lab.check},cqSolution:{stimulus:lab.stimulus,parts:[{label:"ক",marks:1,answer:`${detail.terms[0]??chapter.titleBn}-এর নির্ভুল অর্থ লেখো।`},{label:"খ",marks:2,answer:"ধারণাটির উদ্দেশ্য, পক্ষ বা আর্থিক সম্পর্ক কারণসহ ব্যাখ্যা করো।"},{label:"গ",marks:3,answer:`${lab.task} প্রয়োজনীয় formula/flow ও দৃশ্যমান working দেখাও।`},{label:"ঘ",marks:4,answer:`ফল, ঝুঁকি, বিকল্প ও সীমাবদ্ধতা তুলনা করে শর্তযুক্ত সিদ্ধান্ত দাও; ${lab.check}`}]},fiveMinuteRecap:["মূল সংজ্ঞা ও শর্ত","প্রধান সূত্র/flow","একটি ছোট working","একটি common trap","এক বাক্যের recommendation"],examNightChecklist:["প্রদত্ত তথ্য ও নির্ণেয় মান আলাদা","rate ও time unit consistent","সূত্র/পক্ষ/দলিল ঠিক","হিসাবের পরে আর্থিক অর্থ লেখা","ঝুঁকি ও সীমাবদ্ধতাসহ সিদ্ধান্ত"],selfCheck:[{question:"শুধু final number লিখলে কি পূর্ণ নম্বর হবে?",explanation:"না। সূত্র বা সিদ্ধান্তের ভিত্তি, মান প্রতিস্থাপন/কার্যপ্রবাহ, একক এবং ফলের ব্যাখ্যা দেখাতে হবে।"},{question:"বেশি return বা কম cost-ই কি সবসময় সেরা?",explanation:"না। সময়, ঝুঁকি, তারল্য, cash-flow capacity, control এবং আইনি/চুক্তিগত শর্তও সিদ্ধান্তে লাগে।"}]};
 }
 
@@ -3330,7 +3425,7 @@ function buildMaterialPack(subjectId: string, chapter: ChapterPreview, detail: B
   const profiles: Record<string,{identity:string;method:string;evidence:string;second:string;mistake:string}> = {
     bangla:{identity:"পাঠ, ভাষা ও পরীক্ষার উত্তর",method:chapter.paper==="1st Paper"?"প্রসঙ্গ ধরো → পাঠের নির্দিষ্ট প্রমাণ দাও → প্রমাণের অর্থ ব্যাখ্যা করো → সামগ্রিক তাৎপর্যে পৌঁছাও":"কাজের উদ্দেশ্য ধরো → নিয়ম/বিন্যাস ঠিক করো → সম্পূর্ণ নমুনা লেখো → বানান ও ভাষা সম্পাদনা করো",evidence:chapter.paper==="1st Paper"?"পাঠের ঘটনা, শব্দ, চিত্রকল্প, চরিত্রের আচরণ ও লেখকের বক্তব্য":"প্রমিত নিয়ম, নির্ধারিত বিন্যাস, শুদ্ধ বাক্য ও সম্পূর্ণ তথ্য",second:"একটি উদ্ধৃতি বা ভাষারীতি কেন গুরুত্বপূর্ণ—নিজের ভাষায় ব্যাখ্যা করো।",mistake:"পাঠের প্রমাণ না দিয়ে মুখস্থ সাধারণ আলোচনা লেখা"},
     english:{identity:"Reading, language and complete task models",method:"Read the task → locate evidence or rule → plan the response → write → edit for accuracy and purpose",evidence:"exact textual evidence, task completion, organisation, grammar, vocabulary and appropriate register",second:"Write one fresh response for a different audience, purpose or context and annotate three changes.",mistake:"using a memorised answer that does not complete the exact task"},
-    ict:{identity:"Concept, diagram, code and output lab",method:"সমস্যা/ইনপুট ধরো → নিয়ম, চিত্র বা code লেখো → ধাপে trace করো → output দাও → error test করো",evidence:"labelled diagram, truth table, conversion steps, valid syntax, trace এবং expected output",second:"একটি input বা condition বদলে নতুন output অনুমান করো; তারপর code/logic দিয়ে যাচাই করো।",mistake:"শুধু প্রযুক্তির সংজ্ঞা লেখা, কিন্তু কার্যপ্রবাহ, code, চিত্র বা output না দেখানো"},
+    ict:{identity:"Concept, diagram, code and output lab",method:"সমস্যা/ইনপুট ধরো → নিয়ম, চিত্র বা code লেখো → ধাপে trace করো → output দাও → error test করো",evidence:"labelled diagram, truth table, conversion steps, valid syntax, trace এবং expected output",second:`“${chapter.titleBn}”-এর একটি input বা condition বদলে নতুন output আগে অনুমান করো; তারপর সংশ্লিষ্ট code, truth table বা logic trace দিয়ে যাচাই করো।`,mistake:"শুধু প্রযুক্তির সংজ্ঞা লেখা, কিন্তু কার্যপ্রবাহ, code, চিত্র বা output না দেখানো"},
     accounting:{identity:"লেনদেন, working ও statement lab",method:"তথ্য শনাক্ত → হিসাবের নাম ও শ্রেণি → ডেবিট/ক্রেডিট বা সূত্র → স্বীকৃত ছক → জের/মোট যাচাই",evidence:"তারিখ, হিসাবের নাম, narration, ledger/statement format, working এবং দুই পাশের মিল",second:"একটি adjustment বদলে journal, ledger এবং final statement-এ নতুন প্রভাব দেখাও।",mistake:"শুধু final amount লেখা, working note ও দুই দিকের প্রভাব না দেখানো"},
     finance:{identity:"Cash-flow, formula and decision lab",method:"সময়রেখা আঁকো → cash flow ও চলক বসাও → সূত্রে মান প্রতিস্থাপন → ফলের একক লেখো → ঝুঁকি ও তারল্যসহ সিদ্ধান্ত দাও",evidence:"cash-flow timing, rate conversion, complete working, unit, risk and decision condition",second:"Discount rate, মেয়াদ বা cash flow বদলালে সিদ্ধান্ত কীভাবে বদলায়—পুনর্গণনা করো।",mistake:"সময় ও হারের একক না মিলিয়ে সূত্রে মান বসানো বা হিসাবের ফলকে সিদ্ধান্ত ভেবে থেমে যাওয়া"},
     business:{identity:"Case, management action and result lab",method:"সমস্যার লক্ষণ → প্রযোজ্য নীতি → উদ্দীপকের প্রমাণ → বাস্তব পদক্ষেপ → দায়িত্ব → KPI",evidence:"case-এর নির্দিষ্ট আচরণ/ঘটনা, ব্যবস্থাপনা নীতি, বাস্তবায়নযোগ্য action এবং মাপযোগ্য ফল",second:"একটি বাংলাদেশি SME-তে একই সমস্যা হলে কম খরচে দুটি বিকল্প পদক্ষেপ তুলনা করো।",mistake:"নীতির নাম লিখে উদ্দীপকের কোন তথ্য নীতিটিকে প্রমাণ করে তা না দেখানো"},
@@ -3960,15 +4055,15 @@ function generatedResource(subjectId: string, chapter: ChapterPreview): ExamReso
     bangla: chapter.paper === "1st Paper"
       ? { core: `“${chapter.titleBn}” অংশে প্রসঙ্গ, বক্তব্য, ভাষা, সাহিত্যিক কৌশল ও তাৎপর্য একসঙ্গে বুঝতে হবে। উত্তরে পাঠের নির্দিষ্ট প্রমাণ দিয়ে নিজের ব্যাখ্যাটি প্রতিষ্ঠা করতে হবে।`, terms: [chapter.titleBn, ...(chapter.lessonPlan??[]).slice(0,3).map(item=>item.titleBn), "পাঠ-প্রমাণ"], example: `“${chapter.titleBn}” পাঠ থেকে ${(chapter.lessonPlan??[]).slice(0,3).map(item=>`“${item.titleBn}”`).join(", ") || "মূল বক্তব্য, ভাষারীতি ও তাৎপর্য"}—এই দিকগুলো আলাদা করো। প্রতিটির পাশে পাঠের নির্দিষ্ট শব্দ, ঘটনা বা চিত্রকল্প লিখে তারপর তাদের পারস্পরিক সম্পর্ক ব্যাখ্যা করো।` }
       : { core: `“${chapter.titleBn}” অংশে নিয়ম জানার পাশাপাশি শুদ্ধ প্রয়োগ, প্রয়োজনীয় বিন্যাস এবং সম্পূর্ণ লিখিত রূপ দেখাতে হবে।`, terms: [chapter.titleBn, "শুদ্ধ প্রয়োগ", "বাক্যগঠন", "বিন্যাস", "সম্পাদনা"], example: `প্রশ্নের উদ্দেশ্য ও নির্ধারিত বিন্যাস বুঝে একটি সম্পূর্ণ উত্তর লেখো; তারপর বানান, বাক্য, বিরামচিহ্ন ও প্রাসঙ্গিকতা আলাদাভাবে সম্পাদনা করো।` },
-    ict: { core: `“${chapter.titleBn}” অধ্যায়ে প্রযুক্তির ধারণা শুধু সংজ্ঞা নয়—উপাদান, কার্যপ্রবাহ, ব্যবহার, নিরাপত্তা এবং বাস্তব ফলের সম্পর্ক বুঝে প্রয়োগ করতে হবে।`, terms: [chapter.titleBn, "ইনপুট", "প্রক্রিয়াকরণ", "আউটপুট", "নিরাপত্তা"], example: `বাংলাদেশের শিক্ষা, ব্যবসা বা নাগরিক সেবার পরিচিত একটি ডিজিটাল পরিস্থিতিতে অধ্যায়ের ধারণাটি কীভাবে কাজ করে—ধাপ ও নিরাপত্তাসহ দেখাও।` },
-    logic: { core: `“${chapter.titleBn}” অধ্যায়ে ভাষার রূপ, ধারণার পরিধি এবং যুক্তির বৈধতা আলাদা করে বিচার করতে হবে; সিদ্ধান্ত সত্য মনে হলেই যুক্তি বৈধ হয় না।`, terms: [chapter.titleBn, "যুক্তি", "আকার", "বিষয়বস্তু", "বৈধতা"], example: `দৈনন্দিন একটি বক্তব্যকে পূর্বধারণা ও সিদ্ধান্তে ভাগ করে যুক্তির আকার পরীক্ষা করো এবং কোথায় ভুল অনুমান হতে পারে তা দেখাও।` },
-    islamic_history: { core: `“${chapter.titleBn}” অধ্যায়কে সময়, স্থান, ব্যক্তি, কারণ, ঘটনা, ফল এবং সভ্যতাগত তাৎপর্যের ধারায় পড়তে হবে; ধর্মীয় মর্যাদা ও ঐতিহাসিক প্রমাণ—দুটিই সম্মানের সঙ্গে স্পষ্ট রাখতে হবে।`, terms: [chapter.titleBn, "কালানুক্রম", "পটভূমি", "কারণ", "ঐতিহাসিক তাৎপর্য"], example: `অধ্যায়ের প্রধান ঘটনাগুলো সময়রেখায় সাজিয়ে একটি ঘটনার রাজনৈতিক, সামাজিক ও সাংস্কৃতিক প্রভাব প্রমাণসহ ব্যাখ্যা করো।` },
-    statistics: { core: `“${chapter.titleBn}” অধ্যায়ে তথ্যের ধরন, প্রয়োজনীয় প্রতীক, সারণি বা রেখাচিত্র, সূত্র, হিসাব এবং ফলের ব্যাখ্যা—সব একই সমাধানে যুক্ত রাখতে হবে।`, terms: [chapter.titleBn, "তথ্য", "চলক", "সূত্র", "ব্যাখ্যা"], example: `একটি ছোট dataset নিয়ে অধ্যায়ের উপযুক্ত পদ্ধতিতে সারণি/চিত্র তৈরি, হিসাব সম্পন্ন এবং ফলটির বাস্তব অর্থ ব্যাখ্যা করো।` },
-    geography: { core: `“${chapter.titleBn}” অধ্যায়ে স্থান, প্রক্রিয়া, নিয়ামক, চিত্র/মানচিত্র এবং মানুষ–পরিবেশের প্রভাব একই বিশ্লেষণে যুক্ত করতে হবে।`, terms: [chapter.titleBn,"স্থান","প্রক্রিয়া","মানচিত্র","কারণ–ফল"], example: `বাংলাদেশের একটি পরিচিত অঞ্চল নিয়ে অধ্যায়ের প্রক্রিয়াটি চিত্র বা মানচিত্রে দেখিয়ে কারণ, ফল এবং ব্যবস্থাপনা ব্যাখ্যা করো।` },
+    ict: { core: `“${chapter.titleBn}” অধ্যায়ে প্রযুক্তির ধারণা শুধু সংজ্ঞা নয়—উপাদান, কার্যপ্রবাহ, ব্যবহার, নিরাপত্তা এবং বাস্তব ফলের সম্পর্ক বুঝে প্রয়োগ করতে হবে।`, terms: [chapter.titleBn, "ইনপুট", "প্রক্রিয়াকরণ", "আউটপুট", "নিরাপত্তা"], example: `বাংলাদেশের শিক্ষা, ব্যবসা বা নাগরিক সেবায় “${chapter.titleBn}”-এর একটি নির্দিষ্ট ব্যবহার বেছে তার input, process, output, প্রয়োজনীয় diagram/code এবং নিরাপত্তা ঝুঁকি দেখাও।` },
+    logic: { core: `“${chapter.titleBn}” অধ্যায়ে ভাষার রূপ, ধারণার পরিধি এবং যুক্তির বৈধতা আলাদা করে বিচার করতে হবে; সিদ্ধান্ত সত্য মনে হলেই যুক্তি বৈধ হয় না।`, terms: [chapter.titleBn, "যুক্তি", "আকার", "বিষয়বস্তু", "বৈধতা"], example: `“${chapter.titleBn}” থেকে একটি দৈনন্দিন বক্তব্য বেছে পূর্বধারণা ও সিদ্ধান্ত আলাদা করো; তারপর যুক্তির আকার পরীক্ষা করে ঠিক কোন অনুমানে ত্রুটি হচ্ছে তা দেখাও।` },
+    islamic_history: { core: `“${chapter.titleBn}” অধ্যায়কে সময়, স্থান, ব্যক্তি, কারণ, ঘটনা, ফল এবং সভ্যতাগত তাৎপর্যের ধারায় পড়তে হবে; ধর্মীয় মর্যাদা ও ঐতিহাসিক প্রমাণ—দুটিই সম্মানের সঙ্গে স্পষ্ট রাখতে হবে।`, terms: [chapter.titleBn, "কালানুক্রম", "পটভূমি", "কারণ", "ঐতিহাসিক তাৎপর্য"], example: `“${chapter.titleBn}”-এর নির্দিষ্ট ঘটনাগুলো সময়রেখায় সাজিয়ে একটি ঘটনার রাজনৈতিক, সামাজিক ও সাংস্কৃতিক প্রভাব পাঠের প্রমাণসহ ব্যাখ্যা করো।` },
+    statistics: { core: `“${chapter.titleBn}” অধ্যায়ে তথ্যের ধরন, প্রয়োজনীয় প্রতীক, সারণি বা রেখাচিত্র, সূত্র, হিসাব এবং ফলের ব্যাখ্যা—সব একই সমাধানে যুক্ত রাখতে হবে।`, terms: [chapter.titleBn, "তথ্য", "চলক", "সূত্র", "ব্যাখ্যা"], example: `“${chapter.titleBn}”-এর উপযোগী একটি ছোট dataset দিয়ে সারণি বা চিত্র তৈরি করো, প্রতিটি হিসাব দেখাও এবং পাওয়া ফলটির বাস্তব অর্থ ব্যাখ্যা করো।` },
+    geography: { core: `“${chapter.titleBn}” অধ্যায়ে স্থান, প্রক্রিয়া, নিয়ামক, চিত্র/মানচিত্র এবং মানুষ–পরিবেশের প্রভাব একই বিশ্লেষণে যুক্ত করতে হবে।`, terms: [chapter.titleBn,"স্থান","প্রক্রিয়া","মানচিত্র","কারণ–ফল"], example: `বাংলাদেশের একটি পরিচিত অঞ্চলে “${chapter.titleBn}” (${chapter.paper})-এর প্রক্রিয়া বা বৈশিষ্ট্য labelled চিত্র/মানচিত্রে দেখিয়ে স্থানীয় কারণ, দৃশ্যমান ফল এবং কার্যকর ব্যবস্থাপনা ব্যাখ্যা করো।` },
     accounting: { core:`এই অধ্যায়ে তোমার কাজ তিনটি—লেনদেন বা তথ্যটি ঠিকভাবে চিনবে, স্বীকৃত হিসাবের নিয়মে working দেখাবে, তারপর জের/মোট/বিবরণী মিলিয়ে নেবে। “${chapter.titleBn}” পড়ার সময় প্রতিটি অঙ্ক কোথা থেকে এলো, পাশে ছোট করে লিখে রাখো।`,terms:[chapter.titleBn,...(chapter.lessonPlan??[]).slice(0,4).map(item=>item.titleBn)],example:`একটি ছোট ব্যবসার “${chapter.titleBn}” সম্পর্কিত তথ্য দেওয়া আছে। হিসাবের নাম ও শ্রেণি ঠিক করে স্বীকৃত ছকে সম্পূর্ণ working দেখাও; শেষে দুই পাশ, জের বা মোট দিয়ে ফল যাচাই করো।`},
     business: { core:`“${chapter.titleBn}” মুখস্থ সংজ্ঞার অধ্যায় নয়। একটি প্রতিষ্ঠানে কী সমস্যা হচ্ছে, কোন নীতিটি এখানে কাজে লাগবে, কার দায়িত্ব কী এবং ফল কীভাবে মাপবে—এই চারটি প্রশ্ন ধরে পড়লে অধ্যায়টি সহজ হবে।`,terms:[chapter.titleBn,...(chapter.lessonPlan??[]).slice(0,4).map(item=>item.titleBn)],example:`একটি বাংলাদেশি প্রতিষ্ঠানের পরিচিত সমস্যা ধরে “${chapter.titleBn}” থেকে উপযুক্ত নীতি বেছে নাও। উদ্দীপকের প্রমাণ, বাস্তব পদক্ষেপ, দায়িত্বপ্রাপ্ত ব্যক্তি এবং ফল মাপার একটি সূচক লিখো।`},
     civics: { core:`“${chapter.titleBn}” বুঝতে ব্যক্তি, অধিকার, দায়িত্ব ও প্রতিষ্ঠানকে আলাদা করে দেখো। কে কোন ক্ষমতা ব্যবহার করছে, সেই ক্ষমতার সীমা কোথায় এবং নাগরিকের আইনসম্মত প্রতিকার কী—এই পথেই উত্তর সাজাবে।`,terms:[chapter.titleBn,...(chapter.lessonPlan??[]).slice(0,4).map(item=>item.titleBn)],example:`একজন নাগরিক সেবা বা অধিকার পেতে সমস্যায় পড়েছেন। “${chapter.titleBn}” অনুযায়ী সংশ্লিষ্ট প্রতিষ্ঠান, তার দায়িত্ব, জবাবদিহির পথ এবং নাগরিকের করণীয় ব্যাখ্যা করো।`},
-    history: { core:`“${chapter.titleBn}” পড়ার সময় তারিখের তালিকা বানিয়ে থেমো না। ঘটনার আগে কী পরিস্থিতি ছিল, কী কারণে মোড় বদলাল, কারা সিদ্ধান্ত নিল এবং পরে কী পরিবর্তন হলো—এই গল্পের ধারাটি আগে ধরো।`,terms:[chapter.titleBn,...(chapter.lessonPlan??[]).slice(0,4).map(item=>item.titleBn)],example:`অধ্যায়ের একটি গুরুত্বপূর্ণ ঘটনাকে পটভূমি → কারণ → ঘটনা → তাৎক্ষণিক ফল → দীর্ঘমেয়াদি গুরুত্ব ধারায় সাজাও; একটি উৎস কী জানায় এবং কী জানায় না, সেটিও লিখো।`},
+    history: { core:`“${chapter.titleBn}” পড়ার সময় তারিখের তালিকা বানিয়ে থেমো না। ঘটনার আগে কী পরিস্থিতি ছিল, কী কারণে মোড় বদলাল, কারা সিদ্ধান্ত নিল এবং পরে কী পরিবর্তন হলো—এই গল্পের ধারাটি আগে ধরো।`,terms:[chapter.titleBn,...(chapter.lessonPlan??[]).slice(0,4).map(item=>item.titleBn)],example:`“${chapter.titleBn}”-এর একটি নির্দিষ্ট ঘটনাকে পটভূমি → কারণ → ঘটনা → তাৎক্ষণিক ফল → দীর্ঘমেয়াদি গুরুত্ব ধারায় সাজাও; ব্যবহৃত উৎসটি কী জানায় এবং কী জানায় না, সেটিও লিখো।`},
     finance: {
       core: chapter.paper === "1st Paper"
         ? `“${chapter.titleBn}” অধ্যায়ে আর্থিক সিদ্ধান্ত নেওয়ার আগে লক্ষ্য, সময়, নগদপ্রবাহ, ব্যয় ও ঝুঁকি আলাদা করতে হবে। এরপর অধ্যায়ের উপযুক্ত সূত্র বা তুলনার মানদণ্ড ব্যবহার করে ফলটির অর্থ এবং সিদ্ধান্তের সীমাবদ্ধতা ব্যাখ্যা করতে হবে।`
@@ -4488,9 +4583,10 @@ function withCompleteAnswerSupport(resource: ExamResource): ExamResource {
   const application = resource.guide?.application ?? resource.worked.problem;
   return {
     ...resource,
+    notes: resource.notes.filter(isUsefulChapterNote),
     bank: {
       ...resource.bank,
-      questions: resource.bank.questions?.map((question) => {
+      questions: resource.bank.questions?.filter(isAcademicQuestion).map((question) => {
         if (question.type === "MCQ") return question;
         if (english) return {
           ...question,
@@ -4569,6 +4665,47 @@ for (const group of ["commerce", "humanities"] as const) {
       return balanceChapterMcqOptions(diversifyDuplicatePrompts(withCompleteAnswerSupport(generated)));
     }),
   );
+
+  for (const subject of new Set(completeExamLibraryByGroup[group].map((resource) => resource.subject))) {
+    const subjectResources = completeExamLibraryByGroup[group].filter((resource) => resource.subject === subject);
+    const frequency = new Map<string, number>();
+    for (const resource of subjectResources) for (const note of resource.notes) {
+      const key = note.replace(/\s+/g, " ").trim();
+      frequency.set(key, (frequency.get(key) ?? 0) + 1);
+    }
+    for (const resource of subjectResources) {
+      resource.notes = resource.notes.filter((note) => (frequency.get(note.replace(/\s+/g, " ").trim()) ?? 0) === 1);
+    }
+  }
+
+  const groupResources = completeExamLibraryByGroup[group];
+  const questionFrequency = new Map<string, number>();
+  const noteFrequency = new Map<string, number>();
+  for (const resource of groupResources) {
+    for (const question of resource.bank.questions ?? []) {
+      const key = (question.promptBn ?? question.prompt).replace(/\s+/g, " ").trim();
+      questionFrequency.set(key, (questionFrequency.get(key) ?? 0) + 1);
+    }
+    for (const note of resource.notes) {
+      const key = note.replace(/\s+/g, " ").trim();
+      noteFrequency.set(key, (noteFrequency.get(key) ?? 0) + 1);
+    }
+  }
+  for (const resource of groupResources) {
+    const identity = `${resource.subjectBn ?? resource.subject} · ${resource.unitBn}`;
+    resource.bank.questions = (resource.bank.questions ?? []).map((question) => {
+      const visiblePrompt = question.promptBn ?? question.prompt;
+      const key = visiblePrompt.replace(/\s+/g, " ").trim();
+      if ((questionFrequency.get(key) ?? 0) < 2) return question;
+      return question.promptBn
+        ? { ...question, promptBn: `${identity}\n${question.promptBn}` }
+        : { ...question, prompt: `${resource.subject} · ${resource.unit}\n${question.prompt}` };
+    });
+    resource.notes = resource.notes.map((note) => {
+      const key = note.replace(/\s+/g, " ").trim();
+      return (noteFrequency.get(key) ?? 0) > 1 ? `${identity}: ${note}` : note;
+    });
+  }
 }
 
 function rotateObjectiveOptions(options: string[], correctIndex: number, seed: number) {
@@ -4803,8 +4940,8 @@ export const academicDatabaseIssues = (Object.keys(completeExamLibraryByGroup) a
       const stretch = lesson.stretchPrompt?.trim();
       return Boolean(worked && practice && stretch && (worked === practice || practice === stretch));
     })) issues.push(`${label}: worked example and student tasks are mechanically repeated`);
-    if (resource.notes.length < 46) issues.push(`${label}: fewer than 46 note sections`);
-    if (questions.length < 40) issues.push(`${label}: fewer than 40 core questions`);
+    if (resource.notes.length < 4) issues.push(`${label}: fewer than 4 unique chapter-note sections in addition to lessons and toolkits`);
+    if (questions.length < 32) issues.push(`${label}: fewer than 32 chapter-specific questions`);
     if (new Set(normalizedPrompts).size !== questions.length) issues.push(`${label}: duplicate question prompts`);
     const mcqAnswerPositions = new Set(questions.filter((question) => question.type === "MCQ").map((question) => question.correctIndex));
     if (resource.subject !== "English" && [0, 1, 2, 3].some((position) => !mcqAnswerPositions.has(position))) issues.push(`${label}: MCQ answer positions are not balanced`);
@@ -4862,7 +4999,7 @@ export const academicDatabaseIssues = (Object.keys(completeExamLibraryByGroup) a
   });
   const coverageRecords = contentCoverageManifest[group];
   if (coverageRecords.length !== resources.length) issues.push(`${group}: content coverage manifest is incomplete`);
-  if (coverageRecords.some((record) => record.lessons < 7 || record.notes < 46 || record.mcq + record.cq + record.written < 40 || record.noteModes.length !== 3 || !record.printableBook)) issues.push(`${group}: content coverage manifest overstates learning-pack readiness`);
+  if (coverageRecords.some((record) => record.lessons < 7 || record.notes < 4 || record.mcq + record.cq + record.written < 32 || record.noteModes.length !== 3 || !record.printableBook)) issues.push(`${group}: content coverage manifest overstates learning-pack readiness`);
   if (groupSubjectIds[group].some((subjectId) => chaptersBySubject[subjectId].some((chapter) => chapter.status !== "ready" || chapter.progress !== 100))) issues.push(`${group}: chapter content readiness is stale`);
   return issues;
 });

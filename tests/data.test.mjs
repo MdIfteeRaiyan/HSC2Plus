@@ -516,7 +516,7 @@ test("the academic database enforces minimum depth and study progress", () => {
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["academicDatabaseSummary", "academicDatabaseIssues", "fewer than 40 core questions", "fewer than 46 note sections", "incomplete study package", "retrievalRounds", "buildExamSprintSet", "buildMistakeClinicSet", "buildDiversifiedPracticeSet", "detailedBanglaCqAnswer", "detailedEnglishCqAnswer", "buildMasteryDepthNotes", "buildExaminerRevisionNotes"]) assert.match(data, new RegExp(term));
+  for (const term of ["academicDatabaseSummary", "academicDatabaseIssues", "fewer than 32 chapter-specific questions", "fewer than 4 unique chapter-note sections", "incomplete study package", "retrievalRounds", "buildExamSprintSet", "buildMistakeClinicSet", "buildDiversifiedPracticeSet", "detailedBanglaCqAnswer", "detailedEnglishCqAnswer", "buildMasteryDepthNotes", "buildExaminerRevisionNotes"]) assert.match(data, new RegExp(term));
   for (const term of ["completedStudyModes", "studyProgressKey", "studySessionMinutes", "studySessionTrack", "studySessionStep", "chapterMasteryPercent", "continueChapterMastery", "RECOMMENDED NEXT", "পরবর্তী পরামর্শ"]) assert.match(dashboard, new RegExp(term));
   assert.match(css, /\.study-progress-control/);
   assert.match(css, /\.guided-study-session/);
@@ -873,6 +873,12 @@ test("question archive tolerates chapter records without optional source arrays"
   assert.match(dashboard, /subjectChecklistsBn\[subject\.id[^;]+\?\? \["অধ্যায় ও পত্রের বিন্যাস"/);
 });
 
+test("student banks and notes reject cross-subject template filler", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of ["nonAcademicPromptPatterns", "isAcademicQuestion", "genericNotePatterns", "isUsefulChapterNote", "filter(isAcademicQuestion)", "filter(isUsefulChapterNote)"]) assert.ok(data.includes(marker), `missing quality gate: ${marker}`);
+  for (const rejected of ["সঠিক শেখার পদ্ধতি", "পরিস্থিতি সমাধানের প্রথম কাজ", "প্রশ্নের চাওয়া ও নির্ণায়ক তথ্য", "Which first step is most effective", "Recommended method: read the task", "চার ধাপে অধ্যায়টি মনে রাখো"]) assert.ok(data.includes(rejected), `missing regression marker: ${rejected}`);
+});
+
 test("Bangla writing and English skills use task-specific worked models", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   for (const term of ["পূর্ণ নমুনা · ঘটনা নয়, দিনের ব্যক্তিগত উপলব্ধি", "আবেদনসহ প্রাতিষ্ঠানিক প্রতিবেদন", "পত্রিকায় প্রকাশের উপযোগী প্রতিবেদন", "কার্যকর বৈদ্যুতিন চিঠি", "Worked summary · select, compress, rewrite", "Worked flow chart · parallel phrases", "Model graph response · overview before detail", "Solved passage ·"]) assert.match(data, new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
@@ -960,7 +966,7 @@ test("chapter pathways and one-click exam presets diversify preparation", () => 
 test("all chapters provide deeper notes and renewable high-volume practice", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
-  for (const term of ["length: 60", "length: 48", "length: 24", "fewer than 46 note sections", "fewer than 40 core questions", "buildDiversifiedPracticeSet", "পড়া শুরুর আগে", "অপরিচিত ঘটনায়", "কথার সঙ্গে প্রমাণ মিলাও", "পরীক্ষা স্প্রিন্ট", "ভুল সংশোধন ক্লিনিক", "নম্বর পেতে সম্পর্কটি লিখে দেখাও"]) assert.match(data, new RegExp(term));
+  for (const term of ["length: 60", "length: 48", "length: 24", "fewer than 4 unique chapter-note sections", "fewer than 32 chapter-specific questions", "buildDiversifiedPracticeSet", "পড়া শুরুর আগে", "অপরিচিত ঘটনায়", "কথার সঙ্গে প্রমাণ মিলাও", "পরীক্ষা স্প্রিন্ট", "ভুল সংশোধন ক্লিনিক", "নম্বর পেতে সম্পর্কটি লিখে দেখাও"]) assert.match(data, new RegExp(term));
   for (const term of ["bankRound", "orderedVisibleQuestions", "নতুন অনুশীলন সেট", "New practice set"]) assert.match(dashboard, new RegExp(term));
 });
 
