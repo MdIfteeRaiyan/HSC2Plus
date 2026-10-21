@@ -2325,9 +2325,9 @@ function buildEnglishBoardPracticeSet(chapter: ChapterPreview, detail: ChapterKn
     { name:"Flow chart", prompt:`Complete a six-step flow chart showing how a careful reader answers an unseen passage: read the questions → … → … → … → … → check every answer.`, guide:"Expected middle stages: skim for central idea; scan for relevant evidence; infer only from textual clues; write concise answers in original wording.", marks:5 },
     { name:"Summary", prompt:`Write a concise summary of the practice text about independent learning. Keep only the central idea and essential supporting points.`, guide:"A strong summary combines understanding, testing and reflection in original wording; it omits examples and repetition.", marks:10 },
     { name:"Vocabulary in context", prompt:`From the practice text, explain the contextual meanings of “connect”, “reflects” and “independent”; then use each word in a new sentence.`, guide:"The meaning must fit the sentence. New sentences should show the same word sense and correct grammar.", marks:5 },
-    { name:"Paragraph", prompt:`Write a paragraph on “Learning from Mistakes” with a clear topic sentence, two developed examples and a concluding sentence.`, guide:"Keep one controlling idea. Develop rather than list points; use natural transitions and proofread tense, agreement and punctuation.", marks:10 },
-    { name:"Graph description", prompt:`A college reading survey records 42% regular readers in January, 55% in February, 63% in March and 71% in April. Describe the trend in about 120–150 words.`, guide:"Begin with an overview, compare significant figures accurately and avoid inventing causes not supplied by the data.", marks:10 },
-    { name:"Story completion", prompt:`Complete the story beginning: “Nabil found an envelope beside the college library. It contained examination fees and a student ID card…” Give the story a suitable title.`, guide:"Maintain past tense, develop one believable conflict and end with a clear resolution; the title should reflect the central idea.", marks:15 },
+    { name:"Paragraph", prompt:`Write a paragraph of 150–180 words on “Learning from Mistakes”. Use a clear topic sentence, two developed examples and a concluding sentence.`, guide:"Keep one controlling idea. Develop rather than list points; use natural transitions and proofread tense, agreement and punctuation.", marks:10 },
+    { name:"Graph description", prompt:`The graph shows the percentage of regular readers in a college: January 42%, February 55%, March 63% and April 71%. Describe the graph in 120–150 words.`, guide:"Begin with an overview, compare significant figures accurately and avoid inventing causes not supplied by the data.", marks:10 },
+    { name:"Story completion", prompt:`Complete the story in 180–220 words: “Nabil found an envelope beside the college library. It contained examination fees and a student ID card…” Give the story a suitable title.`, guide:"Maintain past tense, develop one believable conflict and end with a clear resolution; the title should reflect the central idea.", marks:15 },
   ];
   const secondPaperTasks = [
     { name:"Articles", prompt:"Complete with articles where necessary: Honesty is ___ quality that gives ___ person courage to speak ___ truth. ___ honest student does not seek an unfair advantage.", guide:"Expected: a, a, the, An. Decide from countability, specificity and pronunciation—not spelling alone.", marks:5 },
@@ -2337,8 +2337,8 @@ function buildEnglishBoardPracticeSet(chapter: ChapterPreview, detail: ChapterKn
     { name:"Narration", prompt:'Change into indirect speech: The teacher said to Rafi, “Have you checked your answer?” “No, sir,” he replied, “but I will check it now.”', guide:"Identify speakers and sentence types first. A suitable version: The teacher asked Rafi if he had checked his answer. Rafi respectfully replied in the negative and added that he would check it then.", marks:5 },
     { name:"Modifiers", prompt:"Use suitable modifiers: A ___ student reads a question ___ before writing and gives a ___ organised answer supported by ___ evidence.", guide:"Many answers are possible if grammar and meaning fit, e.g. careful, attentively, clearly, relevant.", marks:5 },
     { name:"Connectors", prompt:"Complete with connectors: Mina knew the rules; ___, she made errors under pressure. ___ she began timed practice, her accuracy improved. ___, knowing a rule is not enough; it must be applied calmly.", guide:"A coherent set is however, after/when, therefore. Accept alternatives only when the logical relation and punctuation remain correct.", marks:5 },
-    { name:"Formal writing", prompt:"Write an email to your college principal requesting an additional weekly English practice class. State the need, propose a workable time and keep a respectful formal tone.", guide:"Use a clear subject, appropriate salutation, concise reason, specific request and courteous close. Check register, format and task completion.", marks:10 },
-    { name:"Paragraph / composition", prompt:"Write a well-organised composition on “Responsible Use of Technology by Students”. Include benefits, risks, practical habits and a balanced conclusion.", guide:"Plan before writing. Each paragraph needs one controlling point with support; avoid memorised slogans and unrelated quotations.", marks:20 },
+    { name:"Formal writing", prompt:"Write an email of about 120–150 words to your college principal requesting an additional weekly English practice class. State the need, propose a workable time and keep a respectful formal tone.", guide:"Use a clear subject, appropriate salutation, concise reason, specific request and courteous close. Check register, format and task completion.", marks:10 },
+    { name:"Paragraph / composition", prompt:"Write a well-organised composition of 250–300 words on “Responsible Use of Technology by Students”. Include benefits, risks, practical habits and a balanced conclusion.", guide:"Plan before writing. Each paragraph needs one controlling point with support; avoid memorised slogans and unrelated quotations.", marks:20 },
   ];
   const secondPaperFocus: Array<[RegExp, string[]]> = [
     [/article/i, ["Articles"]], [/preposition/i, ["Prepositions"]],
@@ -2352,14 +2352,14 @@ function buildEnglishBoardPracticeSet(chapter: ChapterPreview, detail: ChapterKn
     ? secondPaperTasks.filter((task) => matchedNames.includes(task.name))
     : secondPaperTasks;
   const focus = detail.anchor.replace(/\s+/g, " ").trim();
-  const chapterContext = detail.context.replace(/\s+/g, " ").trim();
   return Array.from({length:40},(_,index)=>{
     const task=tasks[index%tasks.length];
     const round=Math.floor(index/tasks.length)+1;
-    const instruction = firstPaper
-      ? `Textbook focus: ${chapter.title}. ${chapterContext}`
-      : `Grammar/writing focus: ${chapter.title}. Apply this chapter's rule instead of an unrelated grammar item.`;
-    return {...common,level:(index%4===0?"Foundation":index%4===3?"Challenge":"Standard") as "Foundation"|"Standard"|"Challenge",category:(index%3===0?"Board-style":index%3===1?"Application":"College-standard") as "Board-style"|"Application"|"College-standard",prompt:`${task.name} · ${chapter.title} · Practice set ${round}\n${instruction}\n${task.prompt}`,answerGuide:`${task.guide} Chapter check: ${focus}`,marks:task.marks};
+    const variant = firstPaper
+      ? ["Answer only from the supplied text or data.", "Use original wording and preserve the required format.", "Complete the task under board-exam timing.", "Check relevance, evidence and language before submission."][round % 4]
+      : ["Follow the exact grammar or writing instruction.", "Preserve meaning and use natural English.", "Complete the item before consulting the explanation.", "Proofread the final response for form and accuracy."][round % 4];
+    const visual = task.name === "Graph description" ? {kind:"graph" as const,title:"Regular readers in a college",caption:"Percentage of surveyed students who reported reading regularly",alt:"A rising line graph from 42 percent in January to 71 percent in April",placement:"both" as const,xLabel:"Month",yLabel:"Regular readers (%)",points:[{x:1,y:42,label:"Jan · 42%"},{x:2,y:55,label:"Feb · 55%"},{x:3,y:63,label:"Mar · 63%"},{x:4,y:71,label:"Apr · 71%"}]} : undefined;
+    return {...common,level:(index%4===0?"Foundation":index%4===3?"Challenge":"Standard") as "Foundation"|"Standard"|"Challenge",category:(index%3===0?"Board-style":index%3===1?"Application":"College-standard") as "Board-style"|"Application"|"College-standard",prompt:`${task.name} · Set ${round}\n${task.prompt}\n${variant}`,answerGuide:`${task.guide} Skill focus: ${focus}`,marks:task.marks,visual,requiresVisual:Boolean(visual)};
   });
 }
 
@@ -2655,14 +2655,13 @@ function expandedQuestionSet(subjectId: string, chapter: ChapterPreview, detail:
       marks:10,sourceStatus:"authored-board-pattern" as const,
     })),
   ] : [];
-  const diversified = buildDiversifiedPracticeSet(subjectId, chapter, detail);
   // Topic CQs come first so every lesson exposes three distinct 1+2+3+4 examples
   // even on low-memory devices. Renewable sessions still reshuffle the larger pool.
   if (topicCqs.length) {
-    const nonCq = [...(subjectId==="ict"?buildIctSeedQuestions(chapter):[]), ...materialQuestions.filter(question=>question.type!=="CQ"), ...base, ...mcqs, ...written, ...retrievalRounds, ...buildAppliedQuestionSet(subjectId, chapter, detail), ...buildExamSprintSet(subjectId, chapter, detail), ...buildMistakeClinicSet(subjectId, chapter, detail), ...diversified].filter((question) => question.type !== "CQ");
+    const nonCq = [...(subjectId==="ict"?buildIctSeedQuestions(chapter):[]), ...materialQuestions.filter(question=>question.type!=="CQ"), ...base, ...mcqs, ...written, ...buildAppliedQuestionSet(subjectId, chapter, detail), ...buildExamSprintSet(subjectId, chapter, detail), ...buildMistakeClinicSet(subjectId, chapter, detail)].filter((question) => question.type !== "CQ");
     return [...topicCqs, ...materialQuestions.filter(question=>question.type==="CQ"), ...nonCq].slice(0, 72);
   }
-  return [...materialQuestions, ...topicCqs, ...base, ...mcqs, ...cqs, ...written, ...retrievalRounds, ...buildAppliedQuestionSet(subjectId, chapter, detail), ...buildExamSprintSet(subjectId, chapter, detail), ...buildMistakeClinicSet(subjectId, chapter, detail), ...diversified].slice(0, 72);
+  return [...materialQuestions, ...topicCqs, ...base, ...mcqs, ...cqs, ...written, ...buildAppliedQuestionSet(subjectId, chapter, detail), ...buildExamSprintSet(subjectId, chapter, detail), ...buildMistakeClinicSet(subjectId, chapter, detail)].slice(0, 72);
 }
 
 function buildMistakeClinicSet(subjectId: string, chapter: ChapterPreview, detail: ChapterKnowledge): NonNullable<ExamResource["bank"]["questions"]> {
@@ -4730,19 +4729,23 @@ function ensureChapterQuestionMinimums(resource: ExamResource): ExamResource {
 }
 
 function balanceChapterMcqOptions(resource: ExamResource): ExamResource {
+  let mcqIndex = 0;
   return {
     ...resource,
     bank: {
       ...resource.bank,
-      questions: resource.bank.questions?.map((question, questionIndex) => {
+      questions: resource.bank.questions?.map((question) => {
         if (question.type !== "MCQ" || !question.optionsBn?.length || question.correctIndex === undefined) return question;
-        const shift = questionIndex % question.optionsBn.length;
-        const indexed = question.optionsBn.map((text, optionIndex) => ({ text, correct: optionIndex === question.correctIndex }));
-        const rotated = [...indexed.slice(shift), ...indexed.slice(0, shift)];
+        const targetIndex = mcqIndex % question.optionsBn.length;
+        mcqIndex += 1;
+        const correctText = question.optionsBn[question.correctIndex];
+        const distractors = question.optionsBn.filter((_, optionIndex) => optionIndex !== question.correctIndex);
+        const rotated = [...distractors];
+        rotated.splice(targetIndex, 0, correctText);
         return {
           ...question,
-          optionsBn: rotated.map((option) => option.text),
-          correctIndex: Math.max(0, rotated.findIndex((option) => option.correct)),
+          optionsBn: rotated,
+          correctIndex: targetIndex,
         };
       }),
     },

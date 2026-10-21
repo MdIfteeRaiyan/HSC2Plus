@@ -3928,6 +3928,28 @@ h1 { max-width: 780px; margin: 7px 0 8px; font-family: Arial, "Noto Sans Bengali
 .ashen-shelf-fallback__row i:nth-child(4) { background-color:#b15a33; }
 .ashen-shelf-fallback__row i:nth-child(5) { background-color:#345178; }
 .ashen-shelf-fallback__row span { position:absolute; inset:10px 50% 10px auto; max-width:calc(100% - 8px); max-height:calc(100% - 20px); overflow:hidden; translate:50% 0; color:#f4e8d1; font:700 clamp(6px,.65vw,9px)/1 Georgia,serif; letter-spacing:.055em; text-transform:uppercase; text-overflow:clip; white-space:nowrap; writing-mode:vertical-rl; }
+
+/* Release clarity pass: keep Practice and Test setup compact and readable. */
+.practice-active-route { display:none; }
+.practice-workspace { margin-top:18px; }
+.bank-overview { display:grid; gap:14px; }
+.bank-stats { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.bank-stats span { padding:11px 8px; border:1px solid #e0ebe7; }
+.bank-stats strong { font-size:21px; line-height:1; }
+.bank-learning-progress { margin:0; padding:13px 14px; }
+.bank-presets { margin:0; padding:12px; grid-template-columns:minmax(150px,.65fr) minmax(280px,1.35fr); }
+.question-bank-list { gap:16px; }
+.question-bank-list article { padding:clamp(18px,2.5vw,26px); background:#fff; box-shadow:0 8px 24px rgba(19,58,49,.045); }
+.question-bank-list h3 { max-width:76ch; margin:15px 0; font-size:clamp(16px,1.7vw,20px); line-height:1.75; white-space:pre-line; }
+.test-center-page .test-setup-layout { grid-template-columns:minmax(0,1fr) minmax(270px,320px); }
+.test-center-page .test-setup-card { padding:clamp(20px,2.5vw,30px); }
+.test-center-page .test-setup-card fieldset { margin-block:15px; gap:8px; }
+.test-center-page .test-setup-card label { min-height:62px; padding:12px 13px; }
+.test-side-rail { position:sticky; top:80px; }
+@media (max-width:900px) {
+  .bank-presets { grid-template-columns:1fr; }
+  .test-side-rail { position:static; }
+}
 .humanities-row { filter:saturate(.84); }
 .gateway-scene-hint { position:absolute; left:24px; bottom:20px; z-index:2; padding:9px 12px; display:flex; align-items:center; gap:8px; color:#3f3520; background:rgba(253,241,214,.82); border:1px solid rgba(63,53,32,.18); border-radius:999px; box-shadow:0 12px 35px rgba(46,37,21,.12); backdrop-filter:blur(10px); font-size:12px; font-weight:800; letter-spacing:.03em; pointer-events:none; }
 .gateway-scene-hint span { width:7px; height:7px; background:#a8621f; border-radius:50%; box-shadow:0 0 0 4px rgba(168,98,31,.14); }

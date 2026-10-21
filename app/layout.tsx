@@ -10,7 +10,7 @@ export const metadata: Metadata = {
    verification: {
     google: "2A9GBDVUBb4EHR1uPaEhCVuAMNRIhvDUQdlgH9Vo6JY",
   },
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "HSC2Plus", statusBarStyle: "default" },
 };
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#ecdcbc",
+  themeColor: "#0a6b5c",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -15,24 +15,21 @@ test("mobile navigation and favicon are present", () => {
   assert.match(shell, /Public Beta|mobile-beta/);
 });
 
-test("the app is installable and preserves visited learning pages offline", () => {
+test("the app is installable and reports network loss without intercepting traffic", () => {
   const layout = fs.readFileSync(new URL("../app/layout.tsx", import.meta.url), "utf8");
   const support = fs.readFileSync(new URL("../components/offline-support.tsx", import.meta.url), "utf8");
-  const worker = fs.readFileSync(new URL("../public/sw.js", import.meta.url), "utf8");
   const manifest = fs.readFileSync(new URL("../public/manifest.webmanifest", import.meta.url), "utf8");
   assert.match(layout, /manifest\.webmanifest|OfflineSupport|appleWebApp/);
-  assert.match(support, /serviceWorker|navigator\.onLine|Offline mode/);
-  assert.match(worker, /hsc2plus-shell-v1|offline\.html|request\.mode === "navigate"/);
+  assert.match(support, /navigator\.onLine|offline/);
+  assert.ok(!fs.existsSync(new URL("../public/sw.js", import.meta.url)));
   assert.match(manifest, /"display": "standalone"|"lang": "bn-BD"/);
 });
 
-test("release QA covers target devices, accessibility and service-worker updates", () => {
+test("release QA covers target devices and accessibility", () => {
   const qa = fs.readFileSync(new URL("../docs/RELEASE-QA.md", import.meta.url), "utf8");
   const support = fs.readFileSync(new URL("../components/offline-support.tsx", import.meta.url), "utf8");
-  const worker = fs.readFileSync(new URL("../public/sw.js", import.meta.url), "utf8");
   for (const marker of ["Android Chrome", "iPhone Safari", "Desktop Chrome", "Desktop Edge", "macOS Safari", "Tablet portrait", "200%", "44 CSS pixels", "Fast 3G", "179,737 bytes"]) assert.match(qa, new RegExp(marker));
-  for (const marker of ["updatefound", "controllerchange", "Update ready", "SKIP_WAITING"]) assert.ok(support.includes(marker));
-  assert.match(worker, /hsc2plus-shell-v3|message|SKIP_WAITING/);
+  for (const marker of ["navigator.onLine", "online", "offline", 'aria-live="polite"']) assert.ok(support.includes(marker));
 });
 
 test("release assurance keeps manual and external launch gates honest", () => {
@@ -49,7 +46,7 @@ test("accessibility and language safeguards are wired into the interface", () =>
   const offline = fs.readFileSync(new URL("../components/offline-support.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   for (const marker of ["মূল অংশে যান", "aria-expanded", "aria-controls", "mainRef.current?.focus"]) assert.ok(shell.includes(marker));
-  for (const marker of ['aria-live="polite"', "Reload to use the latest version", "Previously opened lessons remain available"]) assert.ok(offline.includes(marker));
+  for (const marker of ['aria-live="polite"', "আপনি এখন offline", "সংযোগ ফিরলে আবার চেষ্টা করুন"]) assert.ok(offline.includes(marker));
   for (const marker of ["prefers-reduced-motion", "forced-colors", "safe-area-inset", "min-height: 44px", "release-assurance"]) assert.ok(css.includes(marker));
 });
 
@@ -1230,13 +1227,12 @@ test("release candidate preserves focus history and handles missing routes", () 
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const privacy = fs.readFileSync(new URL("../app/privacy/page.tsx", import.meta.url), "utf8");
   const notFound = fs.readFileSync(new URL("../app/not-found.tsx", import.meta.url), "utf8");
-  const serviceWorker = fs.readFileSync(new URL("../public/sw.js", import.meta.url), "utf8");
   const offlineSupport = fs.readFileSync(new URL("../components/offline-support.tsx", import.meta.url), "utf8");
   for (const term of ["focus-history", "focus-timer", "-recovered", "unlockAudio"]) assert.match(dashboard, new RegExp(term));
   assert.match(privacy, /Focus Timer-এর চলমান অবস্থা/);
   assert.match(notFound, /এই পেজটি পাওয়া যায়নি/);
-  assert.match(serviceWorker, /hsc2plus-shell-v1[6-9]/);
-  assert.match(offlineSupport, /updateViaCache:\s*"none"/);
+  assert.match(offlineSupport, /navigator\.onLine/);
+  assert.ok(!fs.existsSync(new URL("../public/sw.js", import.meta.url)));
 });
 
 test("release hardening covers navigation SEO overflow and trust routes", () => {

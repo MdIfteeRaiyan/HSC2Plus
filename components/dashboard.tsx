@@ -2693,11 +2693,12 @@ function TestCenter({ group, onNavigate }: { group: "commerce" | "humanities"; o
   const ictPaper = selectedTestSubject?.id === "ict";
   const blueprintKey = ictPaper ? "ict:all" : paperAwareSubject && testPaper !== "all" ? `${selectedTestSubject?.id}:${testPaper}` : "";
   const activePaperBlueprint = blueprintKey ? hscPaperBlueprints[blueprintKey] : undefined;
-  const paperCounts = paperSize === "focus"
+  const countsForSize = (size: "focus" | "standard" | "extended") => size === "focus"
     ? writtenPaper ? { mcq: 0, cq: 3 } : ictPaper ? { mcq: 10, cq: 1 } : { mcq: 10, cq: 1 }
-    : paperSize === "standard"
+    : size === "standard"
       ? writtenPaper ? { mcq: 0, cq: 6 } : ictPaper ? { mcq: 20, cq: 3 } : { mcq: 20, cq: 2 }
       : writtenPaper ? { mcq: 0, cq: activePaperBlueprint?.tasks?.length ?? 10 } : ictPaper ? { mcq: 25, cq: 5 } : { mcq: 30, cq: 7 };
+  const paperCounts = countsForSize(paperSize);
   const eligibleTestResources = useMemo(() => testResources.filter((resource) => resource.subject === testSubject && (
     !paperAwareSubject || testPaper === "all" || !selectedTestSubject || chaptersBySubject[selectedTestSubject.id]?.find((chapter) => chapter.title === resource.unit)?.paper === testPaper
   )), [paperAwareSubject, selectedTestSubject, testPaper, testResources, testSubject]);
@@ -2946,7 +2947,7 @@ function TestCenter({ group, onNavigate }: { group: "commerce" | "humanities"; o
             </fieldset>}
             <fieldset className="paper-size-picker">
               <legend>Paper length</legend>
-              {([['focus','Focused'],['standard','Standard'],['extended','Board Full Paper']] as const).map(([size,label]) => <label key={size} className={paperSize === size ? "active" : ""}><input type="radio" name="paper-size" checked={paperSize === size} onChange={() => setPaperSize(size)}/><span><strong>{label}</strong><small>{writtenPaper ? `${size==="focus"?3:size==="standard"?6:(activePaperBlueprint?.tasks?.length??10)} written tasks` : ictPaper ? `${size==="focus"?"10 MCQ + 1 CQ":size==="standard"?"20 MCQ + 3 CQ":"25 MCQ + 5 CQ · 75 theory marks"}` : testMode === "mcq" ? `${paperCounts.mcq} MCQ` : testMode === "cq" ? `${paperCounts.cq} CQ` : `${paperCounts.mcq} MCQ + ${paperCounts.cq} CQ`}</small></span></label>)}
+              {([['focus','Focused'],['standard','Standard'],['extended','Board Full Paper']] as const).map(([size,label]) => { const optionCounts=countsForSize(size); return <label key={size} className={paperSize === size ? "active" : ""}><input type="radio" name="paper-size" checked={paperSize === size} onChange={() => setPaperSize(size)}/><span><strong>{label}</strong><small>{writtenPaper ? `${optionCounts.cq} written tasks` : ictPaper && size==="extended" ? "25 MCQ + 5 CQ · 75 theory marks" : testMode === "mcq" ? `${optionCounts.mcq} MCQ` : testMode === "cq" ? `${optionCounts.cq} CQ` : `${optionCounts.mcq} MCQ + ${optionCounts.cq} CQ`}</small></span></label>; })}
             </fieldset>
             <div className="board-time-allocation"><Clock3 size={22}/><div><span>BOARD-PATTERN TIME</span><strong>{duration} মিনিট স্বয়ংক্রিয়ভাবে নির্ধারিত</strong><small>{writtenPaper ? "English/Bangla written paper · paper-specific task flow" : ictPaper && paperSize==="extended" ? "ICT theory: ২৫ MCQ + ৫ CQ · practical assessment আলাদা" : testMode === "full" && paperSize === "extended" ? "MCQ ৩০ মিনিট + CQ ১৫০ মিনিট · ৩০ + ৭০ = ১০০ নম্বর" : <>{mcqQuestions.length ? `${mcqQuestions.length} MCQ × ১ মিনিট` : ""}{mcqQuestions.length && cqQuestions.length ? " + " : ""}{cqQuestions.length ? `${cqQuestions.length} CQ × ২০ মিনিট` : ""}</>}</small></div></div>
             <div className="exam-start-checklist"><strong>শুরু করার আগে</strong>{mcqQuestions.length>0&&<span><Check size={14}/>MCQ-এর উত্তর সরাসরি নির্বাচন করবে</span>}<span><Check size={14}/>{writtenPaper?"প্রতিটি task-এর instruction, format ও marks দেখে উত্তর লিখবে":"CQ খাতায় লিখে ক, খ, গ ও ঘ সম্পন্ন হলে চিহ্ন দেবে"}</span><span><Check size={14}/>জমা দেওয়ার আগে চূড়ান্ত যাচাইয়ের পর্দায় বাদ পড়া প্রশ্ন দেখবে</span></div>
@@ -3151,6 +3152,19 @@ function ExamLibrary({ group, display = "full", target = null }: { group: "comme
       (resourceSubject === "All subjects" || item.subject === resourceSubject) &&
       (`${item.subject} ${item.subjectBn ?? ""} ${item.unit} ${item.unitBn}`.toLowerCase().includes(resourceQuery.trim().toLowerCase())),
     );
+  useEffect(() => {
+    const firstVisible = visibleResources[0]?.originalIndex;
+    if (firstVisible === undefined || visibleResources.some(({ originalIndex }) => originalIndex === selected)) return;
+    const timer = window.setTimeout(() => {
+      setSelected(firstVisible);
+      setCqSeconds(20 * 60);
+      setCqRunning(false);
+      setCqPdf(null);
+      setExamGuideVisible(false);
+      setBankPage(0);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [resourceQuery, resourceSubject, selected, visibleResources]);
   const displayedIndex = visibleResources.some(({ originalIndex }) => originalIndex === selected)
     ? selected
     : (visibleResources[0]?.originalIndex ?? selected);
@@ -3640,16 +3654,6 @@ function ExamLibrary({ group, display = "full", target = null }: { group: "comme
                     {attemptedBankQuestions.length > 0 && <button type="button" onClick={resetBankProgress}>{banglaMedium ? "অগ্রগতি রিসেট" : "Reset progress"}</button>}
                   </div>
                 </section>
-                <div className="bank-focus">
-                  <Target size={19} />
-                  <div>
-                    <small>{banglaMedium ? "প্রস্তুতির মূল ক্ষেত্র" : "FOCUS AREA"}</small>
-                    <strong>{resource.bank.focus}</strong>
-                  </div>
-                </div>
-                <p>
-                  {banglaMedium ? "প্রশ্নগুলো ভিত্তিমূলক, মানসম্মত ও চ্যালেঞ্জ—এই তিন স্তরে সাজানো। চেষ্টা করার সময় উত্তর লুকানো থাকবে এবং প্রতিটি প্রশ্নে সংক্ষিপ্ত ব্যাখ্যা বা মূল্যায়ন নির্দেশিকা থাকবে।" : "Questions are organised into Foundation, Standard and Challenge levels. Answers stay hidden while you attempt them, with an explanation or marking guide for every question."}
-                </p>
                 <section className="bank-presets" aria-label={banglaMedium ? "দ্রুত অনুশীলনের পথ" : "Quick practice paths"}>
                   <div><span className="mini-heading"><Target size={15}/>{banglaMedium ? "দ্রুত অনুশীলনের পথ" : "QUICK PRACTICE PATHS"}</span><p>{banglaMedium ? "এক ক্লিকে লক্ষ্য অনুযায়ী প্রশ্ন সাজাও; চাইলে নিচের ফিল্টার দিয়ে আরও নির্দিষ্ট করো।" : "Set the right filters for your goal in one click, then refine them below if needed."}</p></div>
                   <div>
