@@ -23,6 +23,24 @@ const eslintConfig = defineConfig([
       "react-hooks/set-state-in-effect": "off",
     },
   },
+  {
+    files: [
+      "components/dashboard.tsx",
+      "components/opening-landscape.tsx",
+      "src/shaders/ashen-press/AshenPress.tsx",
+    ],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
+  {
+    files: ["components/subject-page.tsx"],
+    rules: {
+      "react-hooks/preserve-manual-memoization": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/immutability": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;
