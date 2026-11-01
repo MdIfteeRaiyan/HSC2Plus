@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { BookOpen, CalendarDays, ChartNoAxesColumnIncreasing, ClipboardCheck, Cloud, Compass, FileScan, House, Menu, MoreHorizontal, NotebookPen, RotateCcw, Target, Timer, UserRound, X } from "lucide-react";
+import { BookOpen, CalendarDays, ChartNoAxesColumnIncreasing, ClipboardCheck, Cloud, FileScan, House, Menu, MoreHorizontal, NotebookPen, RotateCcw, Timer, UserRound, X } from "lucide-react";
 import Link from "next/link";
 
 const navSections = [
@@ -22,7 +22,7 @@ const navSections = [
 ];
 const nav = navSections.flatMap((section) => section.items);
 
-export function AppShell({ active, onChange, group, streak, children }: { active: string; onChange: (id: string) => void; group: "commerce" | "humanities"; streak: number; children: React.ReactNode }) {
+export function AppShell({ active, onChange, group, streak, pending = false, children }: { active: string; onChange: (id: string) => void; group: "commerce" | "humanities"; streak: number; pending?: boolean; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -61,7 +61,7 @@ export function AppShell({ active, onChange, group, streak, children }: { active
       <aside id="main-navigation" className={`sidebar ${open ? "sidebar-open" : ""}`} aria-label="Main navigation">
         <div className="brand-row">
           <Link className="brand-home-link" href={`/${group}`} aria-label="HSC2Plus dashboard home">
-            <span className="brand-mark"><Compass size={22} strokeWidth={2.4} /></span>
+            <span className="brand-mark"><img src="/hsc2plus-logo.svg" alt="" /></span>
             <span className="brand-copy"><strong>HSC2Plus <small className="beta-badge">Public Beta</small></strong><span>Learn. Practice. Repeat.</span></span>
           </Link>
           <button ref={closeButtonRef} type="button" className="icon-button mobile-only" onClick={() => { setOpen(false); menuButtonRef.current?.focus(); }} aria-label="মেনু বন্ধ করুন"><X size={20} /></button>
@@ -79,16 +79,19 @@ export function AppShell({ active, onChange, group, streak, children }: { active
           ))}
         </nav>
         <footer className="sidebar-footer">
-          <Link className="sidebar-account-row" href="/account"><span className="avatar">GL</span><span><strong>Student account</strong><small><Cloud size={11}/>Optional cloud backup</small></span></Link>
-          <Link className="switch-group" href="/"><RotateCcw size={13}/><span>Switch Group</span><small>{groupLabel}</small></Link>
-          <details className="sidebar-more"><summary><MoreHorizontal size={15}/>More</summary><nav aria-label="Support and policies"><Link href="/support">Support</Link><Link href="/maker"><UserRound size={12}/>Maker</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></nav><small>© {new Date().getFullYear()} HSC2Plus</small></details>
+          <nav className="sidebar-utility-bar" aria-label="Account and site options">
+            <Link className="sidebar-account-row" href="/account" aria-label="Student account · Optional cloud backup"><Cloud size={16}/><span>Account</span></Link>
+            <Link href="/" aria-label={`Switch Group. Current group: ${groupLabel}`}><RotateCcw size={16}/><span>Switch</span></Link>
+            <details className="sidebar-more"><summary><MoreHorizontal size={17}/><span>More</span></summary><nav aria-label="Support and policies"><Link href="/support">Support</Link><Link href="/maker"><UserRound size={12}/>Maker</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><small>© {new Date().getFullYear()} HSC2Plus</small></nav></details>
+          </nav>
         </footer>
       </aside>
       {open && <button type="button" className="scrim" onClick={() => { setOpen(false); menuButtonRef.current?.focus(); }} aria-label="মেনু বন্ধ করুন" />}
       <div className="main-column">
+        <div className={`route-progress${pending ? " is-visible" : ""}`} role="status" aria-live="polite" aria-label={pending ? "Section loading" : undefined}><span /></div>
         <header className="topbar">
           <button ref={menuButtonRef} type="button" className="icon-button mobile-only" onClick={() => setOpen(true)} aria-label="মেনু খুলুন" aria-expanded={open} aria-controls="main-navigation"><Menu size={21} /></button>
-          <Link className="mobile-brand" href={`/${group}`} aria-label="HSC2Plus dashboard home"><Target size={19} /><strong>HSC2Plus</strong><span className="mobile-beta">Beta</span></Link>
+          <Link className="mobile-brand" href={`/${group}`} aria-label="HSC2Plus dashboard home"><img src="/hsc2plus-logo.svg" alt=""/><strong>HSC2Plus</strong><span className="mobile-beta">Beta</span></Link>
           <div className="top-actions"><span className="streak">🔥 {streak} day streak</span></div>
         </header>
         <main ref={mainRef} id="main-content" tabIndex={-1}>{children}</main>

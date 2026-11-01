@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { flushSync } from "react-dom";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Banknote, BookMarked, BookOpen, Brain, BriefcaseBusiness, Calculator, CheckCircle2, ChevronRight, Clock3, Code2, FileDown, FileText, Globe2, Landmark, Languages, Lightbulb, PanelLeftClose, PanelLeftOpen, PenLine, Scale, ScrollText, Sparkles, Target } from "lucide-react";
 import { chaptersBySubject, completeExamLibraryByGroup, englishMarksDistribution2026, subjectsByGroup } from "@/lib/academic-data";
 
@@ -29,7 +30,7 @@ const noteBlueprints: Record<string,{label:string; promise:string; steps:[string
   accounting:{label:"ACCOUNTING WORKFLOW",promise:"লেনদেন থেকে চূড়ান্ত বিবরণী—প্রতিটি অঙ্কের কারণ, কার্য ও যাচাই একই ধারায়।",steps:[["বোঝো","লেনদেন, হিসাবের ধরন ও ডেবিট–ক্রেডিটের কারণ"],["সাজাও","জাবেদা, খতিয়ান, ছক বা বিবরণীর সঠিক ফরম্যাট"],["সমাধান করো","প্রতিটি হিসাব আলাদা কার্যসহ ধাপে ধাপে"],["মিলিয়ে দেখো","জের, সমীকরণ, পার্শ্ব-হিসাব ও চূড়ান্ত ফল যাচাই"]]},
   economics:{label:"ECONOMICS WORKFLOW",promise:"ধারণা, শর্ত, সূচি, সূত্র ও রেখাচিত্র—তারপর বাংলাদেশের বাস্তব প্রয়োগ।",steps:[["ধারণা","চলক ও ‘অন্যান্য অবস্থা অপরিবর্তিত’ শর্ত"],["হিসাব","সূত্র, একক ও সারণিতে মান বসানো"],["রেখাচিত্র","অক্ষ, রেখা, তীর ও ভারসাম্যবিন্দু"],["ব্যাখ্যা","কারণ–ফল ও বাংলাদেশ প্রেক্ষাপট"]]},
   logic:{label:"LOGIC WORKFLOW",promise:"নিয়ম মুখস্থ নয়—যুক্তির রূপ দেখা, পরীক্ষা করা এবং ভুলটি প্রমাণ করা।",steps:[["চেনো","পদ, বাক্য বা যুক্তির সঠিক রূপ"],["নিয়ম","প্রযোজ্য সূত্র ও শর্ত"],["পরীক্ষা","উদাহরণ ও বিপরীত উদাহরণ"],["সিদ্ধান্ত","বৈধতা এবং ভুলের সুনির্দিষ্ট কারণ"]]},
-  english:{label:"ENGLISH STUDY WORKFLOW",promise:"Read for meaning, notice the language, practise the task, then edit like an examiner.",steps:[["Read","Context, purpose and key evidence"],["Notice","Vocabulary, grammar and structure"],["Write","A guided response using the pattern"],["Edit","Accuracy, clarity, cohesion and task completion"]]},
+  english:{label:"ENGLISH STUDY WORKFLOW",promise:"Read for meaning, notice the language, practice the task, then edit like an examiner.",steps:[["Read","Context, purpose and key evidence"],["Notice","Vocabulary, grammar and structure"],["Write","A guided response using the pattern"],["Edit","Accuracy, clarity, cohesion and task completion"]]},
   bangla:{label:"BANGLA STUDY WORKFLOW",promise:"পাঠের অর্থ, ভাষা ও প্রেক্ষাপট বুঝে নিজের ভাষায় পরীক্ষাযোগ্য উত্তর তৈরি করো।",steps:[["পাঠ বোঝো","বক্তব্য, চরিত্র, প্রসঙ্গ ও মূল সুর"],["ভাষা দেখো","শব্দ, অলংকার, রীতি ও উদ্ধৃতির কাজ"],["যোগসূত্র","পাঠের প্রমাণের সঙ্গে প্রশ্ন মিলাও"],["উত্তর লেখো","ব্যাখ্যা, প্রমাণ, বিশ্লেষণ ও সিদ্ধান্ত"]]},
   ict:{label:"ICT WORKFLOW",promise:"ধারণা থেকে চিত্র, নিয়ম, কোড বা গণনা—প্রতিটি ধাপ হাতে-কলমে।",steps:[["Concept","পরিভাষা ও কার্যপ্রবাহ"],["Visualise","চিত্র, সারণি বা সত্যক সারণি"],["Build","রূপান্তর, কোড বা সমাধান"],["Debug","আউটপুট ও ভুলের কারণ যাচাই"]]},
   statistics:{label:"STATISTICS WORKFLOW",promise:"তথ্য সংগ্রহ থেকে সারণি, সূত্র, হিসাব, ব্যাখ্যা ও সিদ্ধান্ত—প্রতিটি ধাপ যাচাইসহ।",steps:[["তথ্য বোঝো","চলক, পরিমাপের স্কেল, উৎস ও একক"],["সাজাও","শ্রেণিবিভাগ, সারণি, রেখাচিত্র ও প্রয়োজনীয় প্রতীক"],["হিসাব করো","সূত্র লিখে মান বসানো ও ধাপে ধাপে সমাধান"],["ব্যাখ্যা করো","ফলটির অর্থ, সীমাবদ্ধতা ও বাস্তব সিদ্ধান্ত"]]},
@@ -205,6 +206,7 @@ const subjectWorkbook: Record<string,{label:string; title:string; columns:string
 };
 
 export function SubjectPage({ group, subjectId }: { group:"commerce"|"humanities"; subjectId:string }) {
+  const router = useRouter();
   const subject = subjectsByGroup[group].find(item=>item.id===subjectId) ?? subjectsByGroup[group][0];
   const chapters = chaptersBySubject[subject.id] ?? [];
   const resources = completeExamLibraryByGroup[group].filter(item=>
@@ -353,7 +355,7 @@ export function SubjectPage({ group, subjectId }: { group:"commerce"|"humanities
       localStorage.setItem(`hsc2plus-${group}-practice-target`,JSON.stringify({subject:resource.subject,unit:resource.unit,questionType:"All",source:"mission"}));
     }
     localStorage.setItem(`hsc2plus-${group}-last-section`,section);
-    location.href=`/${group}`;
+    router.push(`/${group}`);
   };
 
   return <main className={`subject-page-premium subject-${subject.id}`} style={{"--subject-accent":identity.accent,"--subject-accent-2":identity.accent2,"--subject-ink":identity.ink} as CSSProperties}>
@@ -543,7 +545,7 @@ export function SubjectPage({ group, subjectId }: { group:"commerce"|"humanities
           </div>}</>}
         </section>}
         {mode==="practice"&&<section className="subject-mode-panel"><span>PRACTICE</span><h3>{english?"Build confidence through fresh questions.":"নতুন প্রশ্নে নিজের প্রস্তুতি যাচাই করো।"}</h3><p>{english?"Choose MCQ, CQ or written practice. Answers remain hidden until submission.":"MCQ, CQ অথবা লিখিত প্রশ্ন বেছে নাও। উত্তর জমা দেওয়ার আগে সঠিক উত্তর দেখানো হবে না।"}</p><div className="subject-question-stats"><span><strong>{questionCounts.mcq}</strong><small>MCQ</small></span><span><strong>{questionCounts.cq}</strong><small>CQ</small></span><span><strong>{questionCounts.written}</strong><small>{english?"Written":"লিখিত"}</small></span></div><button type="button" onClick={()=>openDashboard("practice")}>{english?"Open Practice Studio":"Practice Studio খোলো"}<ArrowRight size={17}/></button></section>}
-        {mode==="revision"&&<section className="subject-mode-panel"><span>REVISION</span><h3>{english?"Recall first. Review only what you miss.":"আগে মনে করার চেষ্টা করো, তারপর প্রয়োজনীয় অংশ দেখো।"}</h3><p>{resource?.guide?.examChecklist.slice(0,5).join(" · ")}</p><div className="subject-revision-tags">{(resource?.guide?.terminology??[]).slice(0,8).map(item=><span key={item}>{item}</span>)}</div><button type="button" onClick={()=>openDashboard("practice")}>{english?"Practise this chapter":"এই অধ্যায়ের প্রশ্ন অনুশীলন করো"}<ArrowRight size={17}/></button></section>}
+        {mode==="revision"&&<section className="subject-mode-panel"><span>REVISION</span><h3>{english?"Recall first. Review only what you miss.":"আগে মনে করার চেষ্টা করো, তারপর প্রয়োজনীয় অংশ দেখো।"}</h3><p>{resource?.guide?.examChecklist.slice(0,5).join(" · ")}</p><div className="subject-revision-tags">{(resource?.guide?.terminology??[]).slice(0,8).map(item=><span key={item}>{item}</span>)}</div><button type="button" onClick={()=>openDashboard("practice")}>{english?"Practice this chapter":"এই অধ্যায়ের প্রশ্ন অনুশীলন করো"}<ArrowRight size={17}/></button></section>}
       </section>
     </div>
     <nav className="subject-mobile-actions"><Link href={`/${group}`}><ArrowLeft size={17}/>{english?"Dashboard":"ড্যাশবোর্ড"}</Link><button type="button" onClick={()=>chooseMode("notes")}><FileText size={17}/>{english?"Notes":"নোট"}</button></nav>

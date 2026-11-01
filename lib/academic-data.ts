@@ -14,7 +14,7 @@ export type Subject = {
 
 export const businessSubjects: Subject[] = [
   { id: "bangla", name: "Bangla", nameBn: "বাংলা", paper: "1st & 2nd Paper", progress: 0, mastery: 0, color: "#b34f5f", nextChapter: "বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন", chapters: 54 },
-  { id: "english", name: "English", nameBn: "ইংরেজি", paper: "1st & 2nd Paper", progress: 57, mastery: 68, color: "#7a4db1", nextChapter: "People or Institutions Making History", chapters: 25 },
+  { id: "english", name: "English", nameBn: "ইংরেজি", paper: "1st & 2nd Paper", progress: 57, mastery: 68, color: "#7a4db1", nextChapter: "People or Institutions Making History", chapters: 29 },
   { id: "ict", name: "Information & Communication Technology", nameBn: "তথ্য ও যোগাযোগ প্রযুক্তি", paper: "Full Subject", progress: 0, mastery: 0, color: "#087f8c", nextChapter: "বিশ্ব ও বাংলাদেশ প্রেক্ষিত", chapters: 6 },
   { id: "accounting", name: "Accounting", nameBn: "হিসাববিজ্ঞান", paper: "1st & 2nd Paper", progress: 64, mastery: 71, color: "#0a6b5c", nextChapter: "Journal & Ledger", chapters: 20 },
   { id: "finance", name: "Finance, Banking & Insurance", nameBn: "ফিন্যান্স, ব্যাংকিং ও বিমা", paper: "1st & 2nd Paper", progress: 48, mastery: 62, color: "#2456a6", nextChapter: "অর্থের সময়মূল্য", chapters: 23 },
@@ -23,7 +23,7 @@ export const businessSubjects: Subject[] = [
 
 export const humanitiesSubjects: Subject[] = [
   { id: "bangla", name: "Bangla", nameBn: "বাংলা", paper: "1st & 2nd Paper", progress: 0, mastery: 0, color: "#b34f5f", nextChapter: "বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন", chapters: 54 },
-  { id: "english", name: "English", nameBn: "ইংরেজি", paper: "1st & 2nd Paper", progress: 57, mastery: 68, color: "#7a4db1", nextChapter: "People or Institutions Making History", chapters: 25 },
+  { id: "english", name: "English", nameBn: "ইংরেজি", paper: "1st & 2nd Paper", progress: 57, mastery: 68, color: "#7a4db1", nextChapter: "People or Institutions Making History", chapters: 29 },
   { id: "ict", name: "Information & Communication Technology", nameBn: "তথ্য ও যোগাযোগ প্রযুক্তি", paper: "Full Subject", progress: 0, mastery: 0, color: "#087f8c", nextChapter: "বিশ্ব ও বাংলাদেশ প্রেক্ষিত", chapters: 6 },
   { id: "economics", name: "Economics", nameBn: "অর্থনীতি", paper: "1st & 2nd Paper", progress: 76, mastery: 82, color: "#0a6b5c", nextChapter: "মৌলিক অর্থনৈতিক সমস্যা", chapters: 20 },
   { id: "civics", name: "Civics & Good Governance", nameBn: "পৌরনীতি ও সুশাসন", paper: "1st & 2nd Paper", progress: 51, mastery: 64, color: "#2456a6", nextChapter: "Values, Law & Liberty", chapters: 20 },
@@ -61,6 +61,12 @@ export type ChapterPreview = {
 };
 
 export const suppliedCommerceEconomicsSources = [
+  { id:"bangla-2-udvash-question-bank-2026",subjectId:"bangla",paper:"2nd Paper",label:"Udvash HSC 2026 Bangla Second Paper Question Bank",labelBn:"উদ্ভাস HSC 2026 বাংলা দ্বিতীয় পত্র প্রশ্নব্যাংক",url:"user-supplied:hsc bangla 2nd.pdf",role:"question-pattern-reference",format:"208-page image-only scanned question bank · visually inspected 1 November 2026",use:["12-part grammar and writing sequence","pronunciation, spelling, syntax and usage drills","complete writing formats","model-test planning and answer-layout review"] },
+  { id:"english-2-udvash-question-bank-2026",subjectId:"english",paper:"2nd Paper",label:"Udvash HSC 2026 English Second Paper Question Bank",labelBn:"উদ্ভাস HSC 2026 English Second Paper question bank",url:"user-supplied:hsc english 2nd.pdf",role:"question-pattern-reference",format:"272-page image-only scanned question bank · visually inspected 1 November 2026",use:["verified 16-task full-paper sequence","60-mark grammar and 40-mark writing distribution","passage-level grammar sets","formal email, report, paragraph and composition formats"] },
+  { id:"english-1-anupam-2027-split",subjectId:"english",paper:"1st Paper",label:"Anupam HSC English Model Question First Paper Exam 2027",labelBn:"অনুপম HSC English First Paper model-question guide",url:"user-supplied:001-380.pdf + 381-753.pdf",role:"question-pattern-reference",format:"753-page scanned guide split into two uploaded PDFs · visually inspected 1 November 2026",use:["current 60+40 marks map","all twelve first-paper task families","item-wise reading practice","college and board-paper index comparison","model-answer depth and marking-language review"] },
+  { id:"bangla-1-college-questions-2026",subjectId:"bangla",paper:"1st Paper",label:"Bangla First Paper college-question collection",labelBn:"বাংলা প্রথম পত্র কলেজ প্রশ্ন সংগ্রহ",url:"https://drive.google.com/file/d/1S19IrjQzqfons-Nw9OcpMhFsF32Hi94w/view",role:"question-pattern-reference",format:"owner-restricted Drive PDF · direct download returned 403 on 1 November 2026",use:["pending direct upload","college-question comparison after access"] },
+  { id:"bangla-1-model-questions-2026",subjectId:"bangla",paper:"1st Paper",label:"Bangla First Paper sample model questions",labelBn:"বাংলা প্রথম পত্র নমুনা মডেল প্রশ্ন",url:"https://drive.google.com/file/d/1QGA7szfOxHzABJLzBYahdW9QAbihHex_/view",role:"question-pattern-reference",format:"owner-restricted Drive PDF · direct download returned 403 on 1 November 2026",use:["pending direct upload","model-paper structure comparison after access"] },
+  { id:"bangla-1-board-questions-all-2026",subjectId:"bangla",paper:"1st Paper",label:"Bangla First Paper all-board question collection",labelBn:"বাংলা প্রথম পত্র সকল বোর্ড প্রশ্ন সংগ্রহ",url:"https://drive.google.com/file/d/1F_rIQ63jVHvXX9pnVo3-Y7JdLfQ4MZPE/view",role:"question-pattern-reference",format:"owner-restricted Drive PDF · direct download returned 403 on 1 November 2026",use:["pending direct upload","board/year/question-number verification after original-scan comparison"] },
   { id:"hsc-curriculum-support",subjectId:"all",paper:"All",label:"Higher-secondary syllabus reference",labelBn:"উচ্চ মাধ্যমিক সিলেবাস সহায়ক নথি",url:"https://ctgcollege.gov.bd/resource/uploads/2021/01/%E0%A6%89%E0%A6%9A%E0%A7%8D%E0%A6%9A-%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A7%8D%E0%A6%AF%E0%A6%AE%E0%A6%BF%E0%A6%95-%E0%A6%8F%E0%A6%B0-%E0%A6%B8%E0%A6%BF%E0%A6%B2%E0%A7%87%E0%A6%AC%E0%A6%BE%E0%A6%B8.pdf",role:"curriculum-evidence",format:"college-hosted syllabus PDF",use:["subject and paper comparison","chapter-list cross-check","reviewer evidence intake"] },
   { id:"bangla-1-question-guide",subjectId:"bangla",paper:"1st Paper",label:"Bangla First Paper question and answer reference",labelBn:"বাংলা প্রথম পত্র প্রশ্ন ও উত্তর সহায়ক বই",url:"https://drive.google.com/file/d/1rWRQoT18O6uowWofJu51Y1OUgJMne0HN/view",role:"question-pattern-reference",format:"user-supplied guide scan",use:["literature stimulus patterns","1+2+3+4 response structure","chapter-specific practice planning"] },
   { id:"bangla-2-question-guide",subjectId:"bangla",paper:"2nd Paper",label:"Bangla Second Paper writing and question reference",labelBn:"বাংলা দ্বিতীয় পত্র লিখন ও প্রশ্ন সহায়ক বই",url:"https://drive.google.com/file/d/12ZArZL2rbgDGXJTFBU60OVKcwXEcb2lW/view",role:"question-pattern-reference",format:"user-supplied guide scan",use:["grammar task patterns","writing formats","original practice planning"] },
@@ -94,7 +100,14 @@ export const suppliedCommerceEconomicsSources = [
   { id:"ict-cq-scan-369",subjectId:"ict",paper:"Full Subject",label:"HSC ICT CQ collection",labelBn:"HSC ICT সৃজনশীল প্রশ্ন সংগ্রহ",url:"user-supplied:HSC ICT CQ.pdf",role:"question-pattern-reference",format:"369-page scanned guide · visually reviewed chapter by chapter",use:["stimulus and command-word patterns","1+2+3+4 answer-depth comparison","chapter-wise CQ variation","diagram, code and table placement"] },
   { id:"ict-mcq-guide-28",subjectId:"ict",paper:"Full Subject",label:"HSC ICT MCQ collection",labelBn:"HSC ICT বহুনির্বাচনি প্রশ্ন সংগ্রহ",url:"https://drive.google.com/file/d/1SVsXnfuiRQmFhxabG8Ea8M_961pYcvFX/preview",role:"question-pattern-reference",format:"28-page user-supplied guide · visually reviewed",use:["concept and application MCQ coverage","distractor-pattern audit","chapter-balance planning","original renewable practice"] },
   { id:"ict-akkharpatra-full-guide",subjectId:"ict",paper:"Full Subject",label:"Akkharpatra HSC ICT full guide",labelBn:"অক্ষরপত্র HSC ICT পূর্ণাঙ্গ গাইড",url:"https://drive.google.com/file/d/18X3SelmGgr8MxzNNOr81UtZ1H6BV7K6u/preview",role:"content-foundation",format:"545-page user-supplied guide · contents and all chapter ranges visually reviewed",use:["six-chapter depth map","worked conversion and logic examples","HTML and C practice sequence","database question and answer patterns"] },
+  { id:"ict-ch1-world-bd-2026",subjectId:"ict",paper:"Full Subject",label:"ICT chapter 1 · World and Bangladesh Perspective",labelBn:"ICT অধ্যায় ১ · বিশ্ব ও বাংলাদেশ প্রেক্ষিত",url:"https://drive.google.com/file/d/19W6MNW7xN2uSpTltFEj-Rtukv-Eubwgn/view",role:"content-foundation",format:"100.3 MB PDF · owner-disabled download · page review pending",use:["chapter-one concept comparison after access","technology-case and diagram review","chapter-specific question audit"] },
+  { id:"ict-ch2-networking-2026",subjectId:"ict",paper:"Full Subject",label:"ICT chapter 2 · Communication Systems and Networking",labelBn:"ICT অধ্যায় ২ · কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং",url:"https://drive.google.com/file/d/1tk58m_IDlHpIym2_svkwJKkuvfMFhz_1/view",role:"content-foundation",format:"123.3 MB PDF · owner-disabled download · page review pending",use:["network and topology diagram review after access","transmission calculation examples","chapter-specific question audit"] },
+  { id:"ict-ch3-number-digital-2026",subjectId:"ict",paper:"Full Subject",label:"ICT chapter 3 · Number Systems and Digital Devices",labelBn:"ICT অধ্যায় ৩ · সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস",url:"https://drive.google.com/file/d/11YowbS0eThNbApZ-TJIoaiSs1Wt1n4Wc/view",role:"worked-solution-reference",format:"124.4 MB PDF · owner-disabled download · page review pending",use:["conversion and complement workings after access","logic-gate and truth-table review","chapter-specific question audit"] },
+  { id:"ict-ch5-programming-2026",subjectId:"ict",paper:"Full Subject",label:"ICT chapter 5 · Programming Language",labelBn:"ICT অধ্যায় ৫ · প্রোগ্রামিং ভাষা",url:"https://drive.google.com/file/d/13wQtQIOyabyeZWbG5PVrCmqbL3sLUE6L/view",role:"worked-solution-reference",format:"93.1 MB PDF · owner-disabled download · page review pending",use:["algorithm, flowchart and C-code review after access","trace and output examples","chapter-specific question audit"] },
+  { id:"ict-college-question-pack-2026",subjectId:"ict",paper:"Full Subject",label:"Leading-college ICT question pack",labelBn:"শীর্ষস্থানীয় কলেজের ICT প্রশ্ন",url:"https://drive.google.com/file/d/1O0DsDE0NlScWOYEbnI7CahPKK0a1X-wo/view",role:"question-pattern-reference",format:"19.9 MB PDF · owner-disabled download · provenance review pending",use:["college-standard question intake after access","institution and exam metadata capture","diagram/code preservation audit"] },
+  { id:"ict-board-question-pack-2026",subjectId:"ict",paper:"Full Subject",label:"ICT board question and answer pack",labelBn:"ICT বোর্ড প্রশ্ন ও উত্তর",url:"https://drive.google.com/file/d/1IBngpLv-VtgcTG4NV5Y-PD1fQtzOTCuc/view",role:"question-pattern-reference",format:"33.7 MB PDF · owner-disabled download · board/year/page verification pending",use:["authentic-paper evidence intake after access","board/year/question-number capture","answer and figure fidelity audit"] },
   { id:"assessment-mistake-guidance",subjectId:"all",paper:"All",label:"MCQ and CQ mistake-avoidance guidance",labelBn:"MCQ ও CQ ভুল এড়ানোর নির্দেশিকা",url:"https://www.facebook.com/share/p/1J48ZYmjqw/",role:"question-pattern-reference",format:"login-gated social post · content review pending",use:["option-quality audit after access","CQ command-word and mark-depth audit","common-error checklist comparison"] },
+  { id:"english-1-anupam-solutions-2027",subjectId:"english",paper:"1st Paper",label:"Anupam HSC English First Paper model-question solutions",labelBn:"অনুপম HSC English প্রথম পত্র মডেল প্রশ্নের সমাধান",url:"user-supplied:আনুপম_Solution_To_HSC_English_Model_Question_Exam_2027.pdf",role:"worked-solution-reference",format:"257-page image-only scan · contents and model-question section visually reviewed 1 November 2026",use:["seen-passage MCQ and answering-question structure","cloze with and without clues","sentence rearranging","model, college and board-solution category comparison","answer-depth and marking-language audit"] },
 ] as const;
 
 export const supportingSourcePolicy = {
@@ -429,15 +442,15 @@ const banglaSecondPaperChapters: ChapterPreview[] = banglaSecondPaperReferenceCh
   lessonPlan: unit.lessons.map((titleBn, index) => ({ title: `${unit.title} · lesson ${index + 1}`, titleBn, minutes: index === unit.lessons.length - 1 ? 25 : 19, format: index === unit.lessons.length - 1 ? "Practice" as const : index > 1 ? "Worked example" as const : "Concept" as const })),
   examPlan: { mcq: 120, cq: 0, written: 40 },
   examPrep: ["নিয়ম বা কাঠামো আগে শনাক্ত করো", "শুদ্ধ উদাহরণ ও ভুলের কারণ পাশাপাশি লেখো", "লিখিত অংশে রূপরেখা, ভাষা ও শব্দসীমা যাচাই করো", "উত্তর জমা দেওয়ার আগে বানান ও বিরামচিহ্ন সম্পাদনা করো"],
-  sourceRef: { book: "Bangla Grammar & Composition 2nd Paper supporting guide", edition: "User-provided serial guide · current NCTB paper mapping under review", page: unit.page, evidence: "reference-guide", url: banglaSecondPaperGuideSources[index], role: "content-foundation", scopeNote: "Guide used for structure, examples and practice patterns; it does not establish official textbook approval." },
+  sourceRef: { book: "Udvash HSC 2026 Bangla 2nd Paper Question Bank + serial writing guides", edition: "208-page supplied scan · current NCTB paper mapping under review", page: unit.page, evidence: "reference-guide", url: "user-supplied:hsc bangla 2nd.pdf", role: "content-foundation", scopeNote: `Question-bank sequence and examples were checked together with serial guide ${index + 1}; the sources support lesson and practice design but do not establish official textbook approval.` },
 }));
 const englishSecondPaperChapters: ChapterPreview[] = englishSecondPaperReferenceChapters.map((unit) => ({
   title: unit.title, titleBn: unit.title, lessons: unit.lessons.length, questions: 140, status: "pending", progress: 0, paper: "2nd Paper",
   outcomes: ["Explain the rule through meaning and context", "Apply the pattern accurately in complete passages", "Diagnose errors and edit an answer under exam conditions"],
   lessonPlan: unit.lessons.map((title, index) => ({ title, titleBn: title, minutes: index === unit.lessons.length - 1 ? 26 : 20, format: index === unit.lessons.length - 1 ? "Practice" as const : index > 1 ? "Worked example" as const : "Concept" as const })),
-  examPlan: { mcq: 0, cq: 0, written: unit.title === "Composition" ? 80 : 120 },
+  examPlan: { mcq: 0, cq: 0, written: 120 },
   examPrep: ["Read the whole passage before choosing a form", "Use meaning, grammar and collocation together", "Keep writing task, tone and word limit visible", "Proofread agreement, punctuation and cohesion"],
-  sourceRef: { book: "Panjeree English 2nd Paper Digital Question Bank + Nobodoot HSC model-test collection", edition: "Supporting question-bank and writing-pattern references · not official textbook verification", page: unit.page, evidence: "reference-guide", url: "https://www.nobodoot.com/public/pdf/HSC_English_Special_Model_Test_Papers_2023.pdf", role: "question-pattern-reference", scopeNote: "Reading, grammar and writing task patterns were reviewed; student-facing questions and answers are independently authored." },
+  sourceRef: { book: "Udvash HSC 2026 English 2nd Paper Question Bank + supplied English 2nd materials", edition: "272-page supplied scan · supporting question-bank reference", page: unit.page, evidence: "reference-guide", url: "user-supplied:hsc english 2nd.pdf", role: "question-pattern-reference", scopeNote: "The 16-task, 100-mark sequence and answer formats were visually reviewed; student-facing sets are independently authored and still require qualified English-teacher approval." },
 }));
 chaptersBySubject.bangla = [...banglaFirstPaperChapters, ...banglaSecondPaperChapters];
 chaptersBySubject.english = [...englishFirstPaperChapters, ...englishSecondPaperChapters];
@@ -1028,9 +1041,9 @@ export const curriculumVerificationLedger = {
 } as const;
 
 export const academicReviewGate = {
-  totalChapterRecords: 356,
+  totalChapterRecords: 364,
   signedOffChapterRecords: 0,
-  pendingChapterRecords: 356,
+  pendingChapterRecords: 364,
   requiredReviewer: "Qualified HSC subject reviewer",
   requiredReviewerBn: "যোগ্য HSC বিষয়ভিত্তিক একাডেমিক পর্যালোচক",
   releaseRule: "A chapter can be marked Reviewed only when one named subject specialist records the source edition, completes every applicable check, records corrections, dates the decision and signs the final declaration.",
@@ -1426,7 +1439,7 @@ export const priorityCompletionLedger = {
   checkedOn: "8 October 2026",
   checkedOnBn: "৮ অক্টোবর ২০২৬",
   internal: [
-    { id: "coverage", label: "All learning-unit packs", labelBn: "সব শেখার ইউনিটের প্যাক", status: "complete", evidence: "356/356 group learning-unit records include lessons, notes and practice." },
+    { id: "coverage", label: "All learning-unit packs", labelBn: "সব শেখার ইউনিটের প্যাক", status: "complete", evidence: "364/364 group learning-unit records include lessons, notes and practice." },
     { id: "notes", label: "Three note modes and printable books", labelBn: "তিন ধরনের নোট ও প্রিন্টযোগ্য অধ্যায় বই", status: "complete", evidence: "Detailed, revision and last-minute modes are available for every chapter." },
     { id: "questions", label: "Chapter-specific renewable question banks", labelBn: "অধ্যায়ভিত্তিক নবায়নযোগ্য প্রশ্নভান্ডার", status: "complete", evidence: "Every chapter keeps at least 32 chapter-linked items after generic-template and duplicate removal; practice rotation combines the relevant chapter pools." },
     { id: "answers", label: "Answers and marking frameworks", labelBn: "উত্তর ও নম্বর নির্দেশিকা", status: "complete", evidence: "CQ uses 1+2+3+4 marking; written and MCQ items include explanations." },
@@ -1436,7 +1449,7 @@ export const priorityCompletionLedger = {
   ],
   external: [
     { id: "curriculum", label: "Direct NCTB paper, chapter and edition comparison", labelBn: "NCTB পত্র, অধ্যায়ক্রম ও সংস্করণ সরাসরি মিল", status: "evidence-required", owner: "Qualified subject reviewer + approved books/syllabi", progress: "13 subjects source-traced; 11 official-listing links recorded; paper/chapter/edition pending" },
-    { id: "reviewer", label: "Academic reviewer sign-off", labelBn: "একাডেমিক পর্যালোচকের অনুমোদন", status: "reviewer-required", owner: "Qualified HSC subject reviewers", progress: "0/356" },
+    { id: "reviewer", label: "Academic reviewer sign-off", labelBn: "একাডেমিক পর্যালোচকের অনুমোদন", status: "reviewer-required", owner: "Qualified HSC subject reviewers", progress: "0/364" },
     { id: "archive", label: "Authentic previous-board archive", labelBn: "যাচাইকৃত বিগত বোর্ড আর্কাইভ", status: "source-required", owner: "Legible original/official papers with complete citations", progress: "0 verified" },
     { id: "ai-pdf", label: "AI assessment of uploaded answer PDFs", labelBn: "আপলোড করা উত্তর PDF-এর AI মূল্যায়ন", status: "service-required", owner: "Secure AI service, consent and server-side file handling" },
     { id: "device-qa", label: "Real-device accessibility and performance approval", labelBn: "বাস্তব ডিভাইসে accessibility ও performance অনুমোদন", status: "evidence-required", owner: "Android, iPhone, tablet, Windows and macOS test runs", progress: "0 physical-device runs recorded" },
@@ -1487,7 +1500,7 @@ export const releaseReadinessAudit = {
     "Complete real-device, accessibility and PDF testing",
     "Run a controlled teacher-and-student beta",
     "Resolve academic and usability reports",
-    "Expand sign-off to all 356 group learning-unit records",
+    "Expand sign-off to all 364 group learning-unit records",
     "Build the authentic previous-board archive",
     "Complete operations and legal sign-off, then make the site public",
   ],
@@ -1495,16 +1508,16 @@ export const releaseReadinessAudit = {
 
 export const curriculumCoverageRegistry = {
   totalUniqueSubjects: 13,
-  totalChapterRecords: 356,
+  totalChapterRecords: 364,
   languagePolicy: "Bangla-first; English subject remains English",
   groups: {
     commerce: {
       label: "Commerce",
       labelBn: "ব্যবসায় শিক্ষা",
-      chapterRecords: 150,
+      chapterRecords: 154,
       subjects: [
         { id: "bangla", label: "Bangla", labelBn: "বাংলা", chapters: 54, libraryScope: "full-subject", officialPaperMapping: "under-review" },
-        { id: "english", label: "English", labelBn: "ইংরেজি", chapters: 25, libraryScope: "full-subject", officialPaperMapping: "under-review" },
+        { id: "english", label: "English", labelBn: "ইংরেজি", chapters: 29, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "ict", label: "Information & Communication Technology", labelBn: "তথ্য ও যোগাযোগ প্রযুক্তি", chapters: 6, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "accounting", label: "Accounting", labelBn: "হিসাববিজ্ঞান", chapters: 20, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "finance", label: "Finance, Banking & Insurance", labelBn: "ফিন্যান্স, ব্যাংকিং ও বিমা", chapters: 23, libraryScope: "full-subject", officialPaperMapping: "under-review" },
@@ -1514,10 +1527,10 @@ export const curriculumCoverageRegistry = {
     humanities: {
       label: "Humanities",
       labelBn: "মানবিক",
-      chapterRecords: 206,
+      chapterRecords: 210,
       subjects: [
         { id: "bangla", label: "Bangla", labelBn: "বাংলা", chapters: 54, libraryScope: "full-subject", officialPaperMapping: "under-review" },
-        { id: "english", label: "English", labelBn: "ইংরেজি", chapters: 25, libraryScope: "full-subject", officialPaperMapping: "under-review" },
+        { id: "english", label: "English", labelBn: "ইংরেজি", chapters: 29, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "ict", label: "Information & Communication Technology", labelBn: "তথ্য ও যোগাযোগ প্রযুক্তি", chapters: 6, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "economics", label: "Economics", labelBn: "অর্থনীতি", chapters: 20, libraryScope: "full-subject", officialPaperMapping: "under-review" },
         { id: "civics", label: "Civics & Good Governance", labelBn: "পৌরনীতি ও সুশাসন", chapters: 20, libraryScope: "full-subject", officialPaperMapping: "under-review" },
@@ -2319,48 +2332,101 @@ function buildDiversifiedPracticeSet(subjectId: string, chapter: ChapterPreview,
 function buildEnglishBoardPracticeSet(chapter: ChapterPreview, detail: ChapterKnowledge): NonNullable<ExamResource["bank"]["questions"]> {
   const common = { type: "Written" as const, sourceStatus: "authored-board-pattern" as const };
   const firstPaper = chapter.paper === "1st Paper";
+  const focus = detail.anchor.replace(/\s+/g, " ").trim();
+  const readingContexts = [
+    `A college reading circle explored ${chapter.title}. The learners first identified the central idea, then checked each claim against the text and finally explained the lesson in their own words.`,
+    `During a class on ${chapter.title}, students compared two viewpoints, selected the strongest textual evidence and revised answers that relied on personal opinion rather than the passage.`,
+    `A student project connected ${chapter.title} with a familiar issue in Bangladesh. The group gathered evidence, separated fact from assumption and presented a balanced conclusion.`,
+    `While revising ${chapter.title}, a learner used a three-step method: understand the context, locate exact evidence and express the answer clearly without copying unnecessary lines.`,
+  ];
   const firstPaperTasks = [
-    { name:"Comprehension", prompt:`Read this short practice text: “Young people learn best when they connect an idea with a real problem. A learner who asks why, tests an answer and reflects on mistakes gradually becomes independent.” Answer: (a) What helps young people learn best? (b) What does an independent learner do? (c) Explain “reflects on mistakes” in your own words.`, guide:"Answer each question directly from the text. Paraphrase instead of copying a complete sentence; keep the tense and reference clear.", marks:10 },
-    { name:"Information transfer", prompt:`Turn the following information into a table with the headings Activity, Purpose and Result: “Rina first skimmed the passage to understand its subject. She then scanned it for dates and names. Finally, she checked every answer against the exact line.”`, guide:"Include all three stages in the original order. Use short phrases, not full decorative sentences.", marks:5 },
-    { name:"Flow chart", prompt:`Complete a six-step flow chart showing how a careful reader answers an unseen passage: read the questions → … → … → … → … → check every answer.`, guide:"Expected middle stages: skim for central idea; scan for relevant evidence; infer only from textual clues; write concise answers in original wording.", marks:5 },
-    { name:"Summary", prompt:`Write a concise summary of the practice text about independent learning. Keep only the central idea and essential supporting points.`, guide:"A strong summary combines understanding, testing and reflection in original wording; it omits examples and repetition.", marks:10 },
-    { name:"Vocabulary in context", prompt:`From the practice text, explain the contextual meanings of “connect”, “reflects” and “independent”; then use each word in a new sentence.`, guide:"The meaning must fit the sentence. New sentences should show the same word sense and correct grammar.", marks:5 },
-    { name:"Paragraph", prompt:`Write a paragraph of 150–180 words on “Learning from Mistakes”. Use a clear topic sentence, two developed examples and a concluding sentence.`, guide:"Keep one controlling idea. Develop rather than list points; use natural transitions and proofread tense, agreement and punctuation.", marks:10 },
-    { name:"Graph description", prompt:`The graph shows the percentage of regular readers in a college: January 42%, February 55%, March 63% and April 71%. Describe the graph in 120–150 words.`, guide:"Begin with an overview, compare significant figures accurately and avoid inventing causes not supplied by the data.", marks:10 },
-    { name:"Story completion", prompt:`Complete the story in 180–220 words: “Nabil found an envelope beside the college library. It contained examination fees and a student ID card…” Give the story a suitable title.`, guide:"Maintain past tense, develop one believable conflict and end with a clear resolution; the title should reflect the central idea.", marks:15 },
+    { name:"MCQ from context", make:(round:number)=>`${readingContexts[round]}\nChoose the best answer for each item.\n1. The learners' first task was to— (a) memorise every line (b) identify the central idea (c) add personal stories (d) avoid the text\n2. “balanced” most nearly means— (a) one-sided (b) supported and fair (c) lengthy (d) emotional\n3. The method mainly develops— (a) evidence-based reading (b) decorative handwriting (c) guessing (d) translation only\n4. Which action checks reliability? (a) copying a full paragraph (b) matching a claim with evidence (c) ignoring context (d) choosing the longest option\n5. The best title is— (a) Reading with Evidence (b) A Day without Books (c) The Fastest Writer (d) Memorising in Silence`, guide:"Key: 1(b), 2(b), 3(a), 4(b), 5(a). For every item, return to the exact clue; do not choose an option merely because it repeats a word from the passage.", marks:5 },
+    { name:"Comprehension", make:(round:number)=>`${readingContexts[round]}\nAnswer in your own words.\n(a) What sequence did the learners follow?\n(b) Why did they check claims against the text?\n(c) How did the activity discourage unsupported opinion?\n(d) What can a student learn from this approach?\n(e) Explain the phrase “balanced conclusion” in context.`, guide:"Give five focused answers. Use passage evidence, paraphrase naturally and keep each answer proportionate to the question.", marks:10 },
+    { name:"Information transfer / flow chart", make:(round:number)=>round%2===0?`${readingContexts[round]}\nTransfer the process into a table with three columns: Stage | Learner's action | Purpose.`:`${readingContexts[round]}\nComplete a six-step flow chart beginning with “understanding the context” and ending with “presenting a supported conclusion”.`, guide:"Preserve the logical order and include every decisive stage. Use short noun or verb phrases; do not add facts absent from the passage.", marks:10 },
+    { name:"Summary", make:(round:number)=>`${readingContexts[round]}\nWrite a summary of the passage in no more than one-third of its length.`, guide:"State the central idea and essential process in connected original language. Omit examples, quotation, repetition and personal comment.", marks:10 },
+    { name:"Cloze with clues", make:(round:number)=>`Complete the text with words from the box. Change the form where necessary.\nBox: evidence, independent, revise, context, accurate, reflect, claim, organise, relevant, conclude\nA careful reader first understands the (a) ___. Next, the reader selects (b) ___ information, tests every (c) ___ against textual (d) ___ and (e) ___ the answer clearly. This habit makes the response more (f) ___ and helps the learner become (g) ___. Before submission, good learners (h) ___ weak sentences, (i) ___ on mistakes and (j) ___ only after checking the proof.\nPractice set ${round+1}: use each supplied word once.`, guide:"Key: context, relevant, claim, evidence, organises, accurate, independent, revise, reflect, conclude. Check grammatical form as well as meaning.", marks:5 },
+    { name:"Cloze without clues", make:(round:number)=>`Fill each gap with one suitable word.\nStudents often lose marks not because they know (a) ___, but because they fail to read the instruction (b) ___. A strong answer remains focused (c) ___ the task, uses evidence (d) ___ the passage and presents ideas (e) ___ a logical order. It avoids copying (f) ___ sentences when a short paraphrase is enough. After writing, the student should check reference, tense (g) ___ punctuation. This final review makes the response clearer (h) ___ more accurate. Regular practice also builds confidence (i) ___ examination pressure. Therefore, careful reading and purposeful revision work (j) ___.\nContext: ${chapter.title}. Set ${round+1}.`, guide:"One acceptable key: less, carefully, on, from, in, complete/whole, and, and, under, together. Accept alternatives only when both grammar and meaning remain sound.", marks:10 },
+    { name:"Rearranging", make:(round:number)=>`Rearrange the sentences to make a coherent story.\n(a) She checked the passage again and found the missing clue.\n(b) At first, Mitu answered an inference question from memory.\n(c) The corrected answer earned full credit in the class review.\n(d) Her partner asked her to point to the exact supporting line.\n(e) Mitu could not do so and realised that the answer was only an assumption.\n(f) She rewrote the answer in her own words using the clue.\n(g) From that day, she separated textual evidence from personal opinion.\n(h) The lesson came during a discussion of ${chapter.title}.\nSet ${round+1}: write the serial first, then the complete paragraph.`, guide:"A coherent order is h-b-d-e-a-f-c-g. The final version must read as one connected paragraph with consistent pronouns and tense.", marks:10 },
+    { name:"Question-guided paragraph", make:(round:number)=>`Write a paragraph of 180–200 words on “Responsible Learning through ${chapter.title}”. Consider: What is the central lesson? Why does it matter to young people? How can it influence action? What mistake should learners avoid?`, guide:"Answer the guiding questions through one connected paragraph—not four separate answers. Use a topic sentence, developed evidence and a purposeful conclusion.", marks:10 },
+    { name:"Completing a story", make:(round:number)=>`Complete the story in about 180–220 words and give it a suitable title: “On the morning of the college presentation, ${["Rafi found that the group's evidence file was missing", "Nadia noticed that the most popular claim had no reliable source", "Sami received credit for an idea that belonged to a quiet classmate", "Mina had to choose between an easy excuse and an honest explanation"][round]}…”`, guide:"Develop one believable conflict, a turning point and a meaningful resolution. Maintain past tense and ensure the title reflects the central idea.", marks:7 },
+    { name:"Informal letter / email", make:(round:number)=>`Write an email to a friend describing what you learned from ${chapter.title} and suggesting two practical ways to apply the lesson in college life.`, guide:"Use a relevant subject, natural greeting, focused opening, two developed suggestions and a warm close. Keep the tone personal but grammatically controlled.", marks:5 },
+    { name:"Graph / chart analysis", make:(round:number)=>`The chart shows participation in a college reading programme over four months. Describe and analyse the data in 120–150 words. Set ${round+1}.`, guide:"Open with an overview, compare the most significant figures and report numbers accurately. Do not invent causes that the chart does not provide.", marks:10 },
+    { name:"Appreciating stories / poems", make:(round:number)=>`Write an appreciation of the central idea of ${chapter.title}. Explain how one image, event, contrast or voice develops the subject and why it remains meaningful to a present-day reader.`, guide:`A complete appreciation identifies subject matter, central idea, one relevant textual feature and its effect. Avoid retelling the whole text. Chapter focus: ${focus}`, marks:8 },
+  ];
+  const grammarContexts = [
+    "responsible use of social media", "a college reading club", "safe drinking water", "voluntary work after a flood",
+  ];
+  const writingTopics = [
+    "Responsible Use of Technology by Students", "The Value of Voluntary Work", "Reading Habits in the Digital Age", "Climate Awareness among Young People",
   ];
   const secondPaperTasks = [
-    { name:"Articles", prompt:"Complete with articles where necessary: Honesty is ___ quality that gives ___ person courage to speak ___ truth. ___ honest student does not seek an unfair advantage.", guide:"Expected: a, a, the, An. Decide from countability, specificity and pronunciation—not spelling alone.", marks:5 },
-    { name:"Prepositions", prompt:"Complete with suitable prepositions: A learner should concentrate ___ the task, learn ___ mistakes and remain responsible ___ his or her own progress.", guide:"Expected: on, from, for. Learn each item as a natural combination and check the relationship expressed.", marks:5 },
-    { name:"Right form of verbs", prompt:"Complete the passage: If a student (plan) ___ regularly and (revise) ___ what has been learnt, confidence (grow) ___. Last-minute pressure then (become) ___ easier to manage.", guide:"Expected: plans, revises, grows, becomes. The general condition uses the present simple in both clauses.", marks:5 },
-    { name:"Sentence transformation", prompt:"Transform without changing meaning: (a) Very few habits are as useful as regular revision. (superlative) (b) A careful student checks every answer. (passive) (c) Though the task was difficult, she completed it. (compound)", guide:"Possible answers: Regular revision is one of the most useful habits; Every answer is checked by a careful student; The task was difficult, but she completed it.", marks:5 },
-    { name:"Narration", prompt:'Change into indirect speech: The teacher said to Rafi, “Have you checked your answer?” “No, sir,” he replied, “but I will check it now.”', guide:"Identify speakers and sentence types first. A suitable version: The teacher asked Rafi if he had checked his answer. Rafi respectfully replied in the negative and added that he would check it then.", marks:5 },
-    { name:"Modifiers", prompt:"Use suitable modifiers: A ___ student reads a question ___ before writing and gives a ___ organised answer supported by ___ evidence.", guide:"Many answers are possible if grammar and meaning fit, e.g. careful, attentively, clearly, relevant.", marks:5 },
-    { name:"Connectors", prompt:"Complete with connectors: Mina knew the rules; ___, she made errors under pressure. ___ she began timed practice, her accuracy improved. ___, knowing a rule is not enough; it must be applied calmly.", guide:"A coherent set is however, after/when, therefore. Accept alternatives only when the logical relation and punctuation remain correct.", marks:5 },
-    { name:"Formal writing", prompt:"Write an email of about 120–150 words to your college principal requesting an additional weekly English practice class. State the need, propose a workable time and keep a respectful formal tone.", guide:"Use a clear subject, appropriate salutation, concise reason, specific request and courteous close. Check register, format and task completion.", marks:10 },
-    { name:"Paragraph / composition", prompt:"Write a well-organised composition of 250–300 words on “Responsible Use of Technology by Students”. Include benefits, risks, practical habits and a balanced conclusion.", guide:"Plan before writing. Each paragraph needs one controlling point with support; avoid memorised slogans and unrelated quotations.", marks:20 },
+    { name:"Articles", make:(round:number)=>`Fill in the ten gaps with a, an, the or × where no article is needed.\n${round===0?"Honesty is ___ quality that gives ___ person courage to speak ___ truth. ___ honest learner does not seek ___ unfair advantage.":round===1?"A library is ___ place where ___ learner can develop ___ habit of independent reading and become ___ informed citizen.":round===2?"Bangladesh is ___ riverine country. ___ Padma and ___ Jamuna influence ___ lives of millions of people.":"Good health is ___ asset. ___ balanced diet, exercise and ___ adequate amount of sleep protect ___ body."}`, guide:"Read the complete passage first. Check countability, first/subsequent mention, unique reference, pronunciation and zero-article use; then reread for meaning.", marks:5 },
+    { name:"Prepositions", make:(round:number)=>`Fill in the ten gaps with suitable prepositions.\nA learner interested ___ ${grammarContexts[round]} should concentrate ___ reliable information, distinguish fact ___ opinion and remain accountable ___ every claim shared ___ others.`, guide:"Solve by relationship and collocation, not by translating one word. A defensible key begins: interested in, concentrate on, distinguish … from, accountable for, shared with.", marks:5 },
+    { name:"Special words and phrases", make:(round:number)=>`Complete the sentences with suitable phrases from the current HSC set.\n(a) ${round===0?"There is no denying that regular reading improves judgement.":round===1?"Had better revise the answer before submission.":round===2?"As soon as the warning reached the village, volunteers acted.":"It is high time we reduced unnecessary plastic use."}\n(b) Write four fresh sentences using would rather, let alone, what if and was born.`, guide:"The phrase must fit both structure and meaning. Do not alter a fixed expression; check the verb form that follows it.", marks:5 },
+    { name:"Completing sentences", make:(round:number)=>`Complete each sentence so that the meaning is logical and the grammar is correct.\n(a) Unless students verify online information, ___.\n(b) It is high time ___.\n(c) ${round===0?"Though the task looked difficult, ___.":"So that the audience could understand the report, ___."}\n(d) No sooner had the bell rung than ___.\n(e) Had I known the deadline, ___.`, guide:"Identify the clause relation first—condition, time, concession, purpose or result. Keep tense and meaning consistent across both halves.", marks:5 },
+    { name:"Right form of verbs", make:(round:number)=>`Complete the passage with the right forms of the verbs in brackets.\nIf a student (plan) regularly and (revise) what has been learnt, confidence (grow). While (prepare) for an examination, the learner should avoid (memorise) without understanding. The habits that (develop) through steady practice often (remain) useful long after the examination. Context: ${grammarContexts[round]}.`, guide:"Mark time references, subject–verb agreement, active/passive sense and non-finite patterns before filling a gap. Reread the whole passage after completion.", marks:5 },
+    { name:"Sentence transformation", make:(round:number)=>`Transform without changing meaning.\n(a) Very few habits are as useful as regular revision. (superlative)\n(b) A careful student checks every answer. (passive)\n(c) Though ${grammarContexts[round]} is challenging, young people can make a difference. (compound)\n(d) Everybody respects an honest person. (negative)\n(e) What a valuable habit reading is! (assertive)`, guide:"Preserve subject, tense, logical relation and degree of meaning. A change in form that changes the claim earns no credit.", marks:5 },
+    { name:"Narration", make:(round:number)=>`Change the dialogue into indirect speech.\nThe teacher said to ${["Rafi","Nadia","Sami","Mitu"][round]}, “Have you checked the evidence?” “No, sir,” the student replied, “but I will check it now.” The teacher said, “Do not submit the report until you verify the source.”`, guide:"Identify speaker, listener and sentence type. Change reporting verb, person, tense and time word only where the reporting context requires it.", marks:5 },
+    { name:"Pronoun reference", make:(round:number)=>`Rewrite the passage so that every pronoun has a clear antecedent.\nWhen ${["Rafi told Karim that he had copied the file, he became worried.","the committee gave the volunteers its instructions, they found it incomplete.","Mina discussed the report with Saba after she edited it.","the teacher returned the scripts to the students, they were marked carefully."][round]} Explain each replacement briefly.`, guide:"Replace an ambiguous pronoun with the intended noun, then check person, number and consistency throughout the passage.", marks:5 },
+    { name:"Modifiers", make:(round:number)=>`Use suitable modifiers in the ten blanks.\nA ___ learner reads a question ___, identifies the ___ instruction and writes an answer ___ supported by evidence. The learner revises the draft ___ submitting it and removes ___ repeated statements. Topic: ${grammarContexts[round]}.`, guide:"Decide what each blank modifies and which form is needed: determiner, adjective, adverb, participle phrase, infinitive or relative clause.", marks:5 },
+    { name:"Connectors", make:(round:number)=>`Complete the passage with suitable connectors.\nYoung people have quick access to information; ___, access alone does not ensure knowledge. ___ a source looks attractive, it may be unreliable. Learners should compare evidence; ___, they should identify the author and date. ___ these checks take time, they prevent serious errors. ___, responsible reading builds sound judgement. Set: ${grammarContexts[round]}.`, guide:"Name the relationship before choosing: contrast, concession, addition, sequence, cause, result or conclusion. Check punctuation with the connector.", marks:5 },
+    { name:"Synonyms and antonyms", make:(round:number)=>`Read the short context on ${grammarContexts[round]}. Give a contextual synonym for reliable, careful, improve, relevant and benefit; then give a contextual antonym for each. Keep the same part of speech.`, guide:"Meaning is controlled by context. A dictionary neighbour is not automatically acceptable if it changes tone, grammar or the sentence's claim.", marks:5 },
+    { name:"Punctuation and capitalisation", make:(round:number)=>`Rewrite with correct punctuation and capitalisation:\n${round===0?"the teacher said rafi have you checked the source no sir he replied i will check it now":round===1?"on 21 february 1952 students gathered in dhaka they demanded recognition of bangla":round===2?"mina asked why should we believe every post online her friend replied we shouldnt": "our principal said honesty accuracy and respect are essential qualities arent they"}`, guide:"Mark sentence boundaries first; then capitals, commas, quotation marks, apostrophes and end punctuation. Preserve the intended speech and meaning.", marks:5 },
+    { name:"Formal letter and email", make:(round:number)=>`Write a formal email of about 120–150 words to your college principal requesting ${["an additional weekly English practice class","a safe drinking-water station","extended library hours before the examination","a campus waste-separation programme"][round]}. State the need, offer a workable proposal and request a specific action.`, guide:"Use a precise subject line, appropriate salutation, purpose in the opening, relevant evidence/proposal in the body and a courteous close with identity.", marks:8 },
+    { name:"Newspaper report", make:(round:number)=>`Write a newspaper report of about 150 words on ${["a college book fair","a tree-plantation programme","a road-safety awareness campaign","a relief drive for flood-affected families"][round]}. Include headline, byline, place/date, a fact-rich lead, key details, one attributed comment and a factual ending.`, guide:"Report verifiable facts in neutral language. Do not use application format, a personal diary voice or unsupported statistics.", marks:8 },
+    { name:"Paragraph writing", make:(round:number)=>`Write a unified paragraph of about 200 words on “${writingTopics[round]}” using a ${["cause-and-effect","comparison-and-contrast","listing","narrative-to-reflection"][round]} pattern.`, guide:"One topic sentence should control the paragraph. Develop each point with explanation or example; use transitions and finish without introducing a new argument.", marks:10 },
+    { name:"Free writing composition", make:(round:number)=>`Write a well-organised composition of about 250–300 words on “${writingTopics[round]}”. Present a clear focus, developed paragraphs, relevant Bangladesh-based examples and a balanced conclusion.`, guide:"Plan first. Build introduction, logically ordered body paragraphs and conclusion; reward development and coherence, not memorised slogans or unrelated quotations.", marks:14 },
   ];
   const secondPaperFocus: Array<[RegExp, string[]]> = [
     [/article/i, ["Articles"]], [/preposition/i, ["Prepositions"]],
     [/right form|verb/i, ["Right form of verbs"]], [/transform/i, ["Sentence transformation"]],
     [/narration/i, ["Narration"]], [/modifier/i, ["Modifiers"]],
-    [/connector/i, ["Connectors"]], [/email|letter|application|formal/i, ["Formal writing"]],
-    [/paragraph|composition|essay|writing/i, ["Paragraph / composition", "Formal writing"]],
+    [/connector/i, ["Connectors"]], [/special words|phrases/i, ["Special words and phrases"]],
+    [/completing/i, ["Completing sentences"]], [/pronoun/i, ["Pronoun reference"]],
+    [/synonym|antonym/i, ["Synonyms and antonyms"]], [/punctuation|capital/i, ["Punctuation and capitalisation"]],
+    [/email|letter|application|formal/i, ["Formal letter and email"]], [/report/i, ["Newspaper report"]],
+    [/paragraph/i, ["Paragraph writing"]], [/composition|free writing|essay/i, ["Free writing composition"]],
   ];
   const matchedNames = secondPaperFocus.find(([pattern]) => pattern.test(chapter.title))?.[1];
   const tasks = firstPaper ? firstPaperTasks : matchedNames
     ? secondPaperTasks.filter((task) => matchedNames.includes(task.name))
     : secondPaperTasks;
-  const focus = detail.anchor.replace(/\s+/g, " ").trim();
-  return Array.from({length:40},(_,index)=>{
+  return Array.from({length: firstPaper ? 48 : 40},(_,index)=>{
     const task=tasks[index%tasks.length];
     const round=Math.floor(index/tasks.length)+1;
     const variant = firstPaper
       ? ["Answer only from the supplied text or data.", "Use original wording and preserve the required format.", "Complete the task under board-exam timing.", "Check relevance, evidence and language before submission."][round % 4]
       : ["Follow the exact grammar or writing instruction.", "Preserve meaning and use natural English.", "Complete the item before consulting the explanation.", "Proofread the final response for form and accuracy."][round % 4];
-    const visual = task.name === "Graph description" ? {kind:"graph" as const,title:"Regular readers in a college",caption:"Percentage of surveyed students who reported reading regularly",alt:"A rising line graph from 42 percent in January to 71 percent in April",placement:"both" as const,xLabel:"Month",yLabel:"Regular readers (%)",points:[{x:1,y:42,label:"Jan · 42%"},{x:2,y:55,label:"Feb · 55%"},{x:3,y:63,label:"Mar · 63%"},{x:4,y:71,label:"Apr · 71%"}]} : undefined;
-    return {...common,level:(index%4===0?"Foundation":index%4===3?"Challenge":"Standard") as "Foundation"|"Standard"|"Challenge",category:(index%3===0?"Board-style":index%3===1?"Application":"College-standard") as "Board-style"|"Application"|"College-standard",prompt:`${task.name} · Set ${round}\n${task.prompt}\n${variant}`,answerGuide:`${task.guide} Skill focus: ${focus}`,marks:task.marks,visual,requiresVisual:Boolean(visual)};
+    const graphRound=(round-1)%4;
+    const graphSets=[[[1,42],[2,55],[3,63],[4,71]],[[1,35],[2,48],[3,60],[4,68]],[[1,64],[2,59],[3,73],[4,81]],[[1,28],[2,46],[3,58],[4,76]]];
+    const visual = task.name === "Graph / chart analysis" ? {kind:"graph" as const,title:"Participation in a college reading programme",caption:"Percentage of registered learners completing the monthly reading task",alt:"A four-month line graph for a college reading programme",placement:"both" as const,xLabel:"Month",yLabel:"Participants (%)",points:graphSets[graphRound].map(([x,y],pointIndex)=>({x,y,label:`${["Jan","Feb","Mar","Apr"][pointIndex]} · ${y}%`}))} : undefined;
+    const taskPrompt=task.make((round-1)%4);
+    return {...common,level:(index%4===0?"Foundation":index%4===3?"Challenge":"Standard") as "Foundation"|"Standard"|"Challenge",category:(index%3===0?"Board-style":index%3===1?"Application":"College-standard") as "Board-style"|"Application"|"College-standard",prompt:`${task.name} · Practice set ${round}\n${taskPrompt}\n${variant}`,answerGuide:`${task.guide} Skill focus: ${focus}`,marks:task.marks,visual,requiresVisual:Boolean(visual)};
   });
+}
+
+type EnglishSecondPaperRoute = { marks:number; identity:string; rule:string; method:string[]; modelTask:string; modelAnswer:string; checks:string[]; trap:string };
+
+function englishSecondPaperRoute(title:string): EnglishSecondPaperRoute {
+  const routes: Array<[RegExp,EnglishSecondPaperRoute]> = [
+    [/Articles/,{marks:5,identity:"Meaning-first article lab",rule:"Choose a/an from sound, the from definite or shared reference, and × for a genuine zero-article use.",method:["Read the complete passage.","Mark countable singular nouns.","Decide first mention, later mention or unique reference.","Check pronunciation before a/an.","Reread for meaning."],modelTask:"___ honest learner reads ___ newspaper and checks ___ source of ___ report.",modelAnswer:"An honest learner reads a newspaper and checks the source of the report.",checks:["An follows the vowel sound in honest.","A introduces one non-specific newspaper.","The points to the specific source and report already meant."],trap:"Putting the before every abstract or institutional noun."}],
+    [/Prepositions/,{marks:5,identity:"Relationship and collocation lab",rule:"A preposition expresses a precise relationship and often forms a fixed combination with the word before it.",method:["Read beyond the gap.","Name the relationship.","Recall the natural collocation.","Reject literal translation.","Reread the full sentence."],modelTask:"Students should concentrate ___ the task and learn ___ their mistakes.",modelAnswer:"Students should concentrate on the task and learn from their mistakes.",checks:["concentrate on is the governing combination.","learn from expresses the source of learning."],trap:"Choosing a Bangla-equivalent word without checking English usage."}],
+    [/Special Words/,{marks:5,identity:"Fixed phrase and clause-pattern lab",rule:"Each special phrase controls a particular clause pattern and verb form.",method:["Identify the meaning required.","Choose the fixed phrase.","Apply its required verb form.","Complete a logical sentence.","Check punctuation and tense."],modelTask:"It is high time we ___ unnecessary plastic use.",modelAnswer:"It is high time we reduced unnecessary plastic use.",checks:["It is high time is followed here by a past-form verb.","The sentence expresses a present overdue action."],trap:"Changing the wording of a fixed phrase or using the wrong verb form."}],
+    [/Completing Sentences/,{marks:5,identity:"Meaning-to-clause lab",rule:"A completed sentence must be grammatically connected and logically complete.",method:["Name the clause relation.","Fix the tense frame.","Supply a complete subject–verb unit.","Keep the idea plausible.","Read both halves together."],modelTask:"Unless students verify online information, ___.",modelAnswer:"Unless students verify online information, they may spread false claims.",checks:["Unless already carries a negative condition.","The result clause is complete and logical."],trap:"Writing a grammatical clause that has no logical connection with the first half."}],
+    [/Right Form/,{marks:5,identity:"Passage-level verb reasoning lab",rule:"Verb form follows time, subject, voice, clause relation and non-finite pattern together.",method:["Read the passage for time.","Find each subject.","Decide active or passive.","Check modal and non-finite patterns.","Reread the completed passage."],modelTask:"If a learner (plan) regularly and (revise) daily, confidence (grow).",modelAnswer:"If a learner plans regularly and revises daily, confidence grows.",checks:["The general condition uses present simple.","Each singular subject takes the singular verb."],trap:"Solving one blank at a time without reading the passage."}],
+    [/Transformation/,{marks:5,identity:"Meaning-preserving transformation lab",rule:"Change structure, not the proposition, tense or emphasis required by the instruction.",method:["Identify the target form.","Underline the original meaning.","Choose the matching structure.","Rebuild the sentence.","Compare both meanings."],modelTask:"Very few habits are as useful as regular revision. (superlative)",modelAnswer:"Regular revision is one of the most useful habits.",checks:["Very few … as … as maps to one of the most.","The comparison class remains habits."],trap:"Producing a grammatical sentence that changes degree or meaning."}],
+    [/Narration/,{marks:5,identity:"Speaker, intention and tense lab",rule:"Narration changes must follow speaker, listener, sentence type and reporting context.",method:["Identify every speaker.","Classify statement, question or command.","Select a reporting verb.","Adjust person, tense and time words where necessary.","Combine the whole dialogue coherently."],modelTask:'The teacher said to Rafi, “Have you checked the answer?” Rafi said, “No, sir.”',modelAnswer:"The teacher asked Rafi if he had checked the answer. Rafi respectfully replied in the negative.",checks:["asked introduces the yes/no question with if.","The reply is reported by meaning, not copied mechanically."],trap:"Applying tense backshift without first identifying sentence type and speaker."}],
+    [/Pronoun/,{marks:5,identity:"Antecedent clarity lab",rule:"Every pronoun must point clearly to an antecedent and agree in person and number.",method:["Circle every pronoun.","Draw its link to the antecedent.","Find ambiguity or distance.","Replace only the unclear item.","Check consistency."],modelTask:"Mina discussed the report with Saba after she edited it.",modelAnswer:"After Mina edited the report, she discussed it with Saba.",checks:["Mina is now the clear antecedent of she.","It clearly refers to the report."],trap:"Changing all pronouns even when only one reference is unclear."}],
+    [/Modifiers/,{marks:5,identity:"Form, position and meaning lab",rule:"A modifier must sit close to the word it modifies and use the grammatical form required by the gap.",method:["Find the head word.","Decide pre- or postmodifier.","Choose the needed form.","Place it next to the head.","Check meaning and agreement."],modelTask:"A ___ student reads the question ___ and gives a ___ organised answer.",modelAnswer:"A careful student reads the question attentively and gives a clearly organised answer.",checks:["careful modifies student.","attentively modifies reads.","clearly modifies organised."],trap:"Choosing a meaningful word in the wrong grammatical form or position."}],
+    [/Connectors/,{marks:5,identity:"Paragraph logic lab",rule:"A connector must express the exact relationship between neighbouring ideas and fit the punctuation.",method:["Read the previous and next sentences.","Name the relationship.","Choose a connector.","Check punctuation.","Read the whole paragraph for flow."],modelTask:"The source looked reliable; ___, it had no author or date.",modelAnswer:"The source looked reliable; however, it had no author or date.",checks:["The second clause contrasts with the first.","However is punctuated as a conjunctive adverb."],trap:"Choosing a connector because it sounds formal rather than because it fits the logic."}],
+    [/Synonyms/,{marks:5,identity:"Contextual vocabulary lab",rule:"The replacement must preserve contextual meaning, tone and part of speech.",method:["Read the entire sentence.","Infer the target meaning.","Identify part of speech.","Test the replacement in place.","Reject any change in tone or claim."],modelTask:"Give a contextual synonym and antonym of reliable in: ‘Students need reliable evidence.’",modelAnswer:"Synonym: dependable. Antonym: unreliable.",checks:["Both choices remain adjectives.","The sentence meaning stays natural."],trap:"Giving a dictionary neighbour that does not fit the sentence."}],
+    [/Punctuation/,{marks:5,identity:"Sentence-boundary and speech lab",rule:"Punctuation reveals sentence structure, quotation, ownership and emphasis; capitals mark beginnings and proper names.",method:["Find sentence boundaries.","Mark proper names.","Identify direct speech.","Insert internal punctuation.","Read aloud for final sense."],modelTask:"the teacher said rafi have you checked the source no sir he replied",modelAnswer:'The teacher said, “Rafi, have you checked the source?” “No, sir,” he replied.',checks:["Rafi is a vocative and takes commas.","The question mark belongs inside the quotation.","The reply and reporting clause share one sentence."],trap:"Adding commas by pauses alone without identifying sentence structure."}],
+    [/Formal Letter/,{marks:8,identity:"Purpose-led formal communication",rule:"A formal letter or email must make the recipient, purpose, evidence and requested action immediately clear.",method:["Write a precise subject.","Use an appropriate salutation.","State purpose in the opening.","Develop only relevant details and proposal.","Close courteously with identity."],modelTask:"Write to the principal requesting one weekly English practice class.",modelAnswer:"Subject: Request for a weekly English practice class\nSir/Madam,\nMany students need regular guided practice in grammar and writing before the HSC examination. We request one additional class on Thursday during the activity period. A weekly error-review and timed writing task would make the class practical. We would be grateful if the arrangement could begin next month.\nYours faithfully,\nA Student Representative, Class XII",checks:["The requested action is specific.","The reason and workable time are stated.","Tone and closing fit the recipient."],trap:"Writing a memorised application that ignores the task's recipient or requested action."}],
+    [/Newspaper Report/,{marks:8,identity:"Fact-first newspaper report",rule:"A newspaper report uses a headline, byline, place/date, factual lead, verified detail and neutral ending.",method:["Create an informative headline.","Add byline and dateline.","Answer key facts in the lead.","Develop events in a clear order with attribution.","End with outcome or next step."],modelTask:"Report a college book fair held on campus.",modelAnswer:"COLLEGE BOOK FAIR DRAWS YOUNG READERS\nBy a Staff Reporter\nDhaka, 12 October: A three-day book fair opened at Sunrise College on Thursday with 18 publishers and two student-run stalls. The principal inaugurated the event at 10 a.m. Students attended author talks, exchanged used books and joined a reading quiz. According to the organising teacher, more than 1,200 visitors entered during the first two days. The fair ended on Saturday with prizes for the student reviewers and a pledge to expand the college library.",checks:["The lead gives event, place and time.","Details are attributed and ordered.","No application-style address or personal diary voice appears."],trap:"Using ‘I/we’, inventing dramatic facts or writing an application instead of a report."}],
+    [/Paragraph Writing/,{marks:10,identity:"One controlling idea, fully developed",rule:"A paragraph is one connected unit built around a topic sentence, ordered development and a closing insight.",method:["Choose one controlling idea.","Select a development pattern.","Order supporting points.","Use transitions and examples.","Close without adding a new topic."],modelTask:"Write a cause-and-effect paragraph on reading habits in the digital age.",modelAnswer:"Digital devices have changed how students read, but they have not removed the need for sustained attention. Short posts encourage quick scanning, so many learners struggle to follow a long argument or remember evidence. Notifications also interrupt concentration and make revision slower. Yet the same devices can widen access to books, dictionaries and lectures when used deliberately. Students can protect deep reading by silencing alerts, setting a fixed reading period and recording key ideas after each section. Thus, technology weakens reading only when convenience replaces purpose; controlled use can make reading more accessible and effective.",checks:["Every sentence develops the same central idea.","Causes, effects and responses are linked.","The ending completes rather than repeats the topic."],trap:"Breaking the answer into multiple titled sections or listing points without development."}],
+    [/Free Writing/,{marks:14,identity:"Planned multi-paragraph composition",rule:"A composition needs a focused position, developed paragraphs, relevant evidence and a conclusion earned by the discussion.",method:["Interpret the exact title.","Draft a one-line thesis.","Plan three or four body paragraphs.","Develop each with explanation and example.","Revise cohesion, repetition and conclusion."],modelTask:"Write a composition on Responsible Use of Technology by Students.",modelAnswer:"Plan: purpose and benefits → risks → responsible habits → shared responsibility → balanced conclusion.\nModel opening: Technology gives students immediate access to information, communication and creative tools, but access without judgement can damage attention, privacy and trust. Responsible use therefore means choosing tools for a clear purpose, checking sources and controlling the habits that compete with learning.\nDevelopment: explain each benefit or risk in a separate paragraph, support it with a realistic student example, and connect the response to that problem.\nConclusion: technology should remain a tool directed by human judgement, not a routine that directs the learner.",checks:["The opening establishes a position.","Each paragraph has one function and developed support.","The conclusion follows from the discussion."],trap:"Filling pages with slogans, quotations or memorised paragraphs unrelated to the exact title."}],
+  ];
+  return routes.find(([pattern])=>pattern.test(title))?.[1] ?? routes[0][1];
 }
 
 function buildTopicCqSet(subjectId: string, chapter: ChapterPreview, detail: ChapterKnowledge, workshop?: ExamResource["chapterWorkshop"]): NonNullable<ExamResource["bank"]["questions"]> {
@@ -3764,6 +3830,27 @@ function buildGraphPractice(subjectId: string, chapter: ChapterPreview): ExamRes
 
 function buildSubjectDepthNotes(subjectId: string, chapter: ChapterPreview, english = false): string[] {
   const title = english ? chapter.title : chapter.titleBn;
+  const englishDepth = chapter.paper === "1st Paper"
+    ? [
+        `Task control: for ${title}, record speaker or writer, situation, central idea, decisive evidence and the change or insight at the end.`,
+        `Evidence notebook: pair each important claim with an exact event, image, contrast or line-level clue; then paraphrase the evidence instead of copying a full sentence.`,
+        `Reading-task route: contextual MCQ → short comprehension → information transfer or flow chart → summary. Each task needs a different answer form even when it uses the same passage.`,
+        `Vocabulary in context: infer meaning from surrounding words, grammar and tone; verify that the chosen meaning still fits when the sentence is reread.`,
+        `Literary appreciation: name the subject, central idea and one technique or image, explain its effect and connect it to the text rather than retelling the plot.`,
+        `Writing transfer: use the chapter idea in a paragraph, story, informal email or graph response only when the task asks for it; respect the stated word limit and format.`,
+      ]
+    : /article/i.test(title) ? ["Task control: decide whether the following sound begins with a vowel or consonant, then check countability and whether the noun is specific.","Use a/an for one non-specific countable noun, the for a specific or unique reference and no article for suitable plural or uncountable general meaning.","Read the completed passage again because a locally plausible article may break the wider reference.","Keep an error pair: original sentence → governing reason → corrected sentence.","Practice article choice inside connected passages, not isolated blanks only.","Final check: pronunciation, number, specificity, previous mention and fixed expression."]
+    : /preposition/i.test(title) ? ["Meaning first: identify the relationship of time, place, direction, cause or association before choosing a preposition.","Learn high-frequency combinations as complete chunks and test them inside a sentence.","Distinguish a grammatical collocation from a literal spatial meaning.","Record one correct example and one tempting wrong form for each combination.","In a passage, use the surrounding verb, adjective and noun to narrow the choice.","Final check: meaning, collocation and consistency across the complete sentence."]
+    : /verb|right form/i.test(title) ? ["Find the time reference and subject before changing the verb.","Mark the clause type, auxiliary and voice; then decide tense, agreement and non-finite form.","Use the whole passage to maintain sequence of tense rather than solving each blank alone.","After filling, read for both grammar and meaning.","Keep a correction log for tense shift, missing auxiliary and subject-verb disagreement.","Final check: subject, time, condition, voice and parallel structure."]
+    : /email|letter|application|formal|report|paragraph|composition|essay|writing/i.test(title) ? ["Task card: underline purpose, audience, format, required points, tone and word limit before drafting.","Outline first: one controlling idea per paragraph with concrete support rather than memorised filler.","Use the exact format required by the task; do not mix email, application, report and composition conventions.","Model paragraph: topic sentence → explanation → evidence or example → link to the task.","Edit in three passes: task completion, organisation, then grammar-spelling-punctuation.","Final check: relevant content, natural language, correct register, complete ending and word limit."]
+    : [
+        `Rule map: for ${title}, write the governing rule, two correct examples, one tempting error and the corrected form.`,
+        "Solve connected passages before isolated sentences so reference, tense and cohesion remain visible.",
+        "Explain why the correction works; a memorised answer without the rule is not dependable.",
+        "Keep meaning unchanged whenever the instruction requires transformation or rewriting.",
+        "Use a short error log: original form → diagnosis → correction → final reread.",
+        "Final check: task instruction, grammatical form, meaning, punctuation and full-sentence accuracy.",
+      ];
   const packs: Record<string, { en: string[]; bn: string[] }> = {
     bangla: {
       en: [],
@@ -3918,14 +4005,7 @@ function buildSubjectDepthNotes(subjectId: string, chapter: ChapterPreview, engl
       ],
     },
     english: {
-      en: [
-        `Task control: identify the audience, purpose, format, tone and required content before answering ${title}.`,
-        "Planning note: create a short outline with one controlling idea and supporting detail for each paragraph.",
-        "Language control: check tense consistency, subject–verb agreement, reference, sentence boundaries and punctuation.",
-        "Model improvement: compare a weak and improved response, then name the exact change that earns more marks.",
-        "Timed writing: reserve time for planning, drafting and a final task-completion and accuracy check.",
-        "Proofreading pass: inspect content first, organisation second and grammar, spelling and punctuation last.",
-      ],
+      en: englishDepth,
       bn: [],
     },
   };
@@ -4366,7 +4446,55 @@ function generatedResource(subjectId: string, chapter: ChapterPreview): ExamReso
       questions: expandedQuestionSet(subjectId, chapter, detail, generatedQuestions(subjectId, chapter, blueprint, detail), chapterWorkshop, materialPack),
     },
   };
-  if (subjectId === "english") return resource;
+  if (subjectId === "english") {
+    if (chapter.paper !== "2nd Paper") return resource;
+    const route = englishSecondPaperRoute(chapter.title);
+    const lessonDetails = (resource.lessonDetails ?? []).map((lesson,index)=>({
+      ...lesson,
+      concept:`${route.rule} This lesson focuses on ${lesson.title.toLowerCase()} and the complete ${route.marks}-mark task—not an isolated sentence trick.`,
+      steps:route.method,
+      application:index===0?route.modelTask:`Apply the same method to a fresh passage on ${["student wellbeing","community service","digital citizenship","the environment"][index%4]}; keep the output and mark value unchanged.`,
+      checkpoint:`Complete one item without notes, then explain which meaning, structure or format clue controlled each choice.`,
+      workedSnapshot:`Task: ${route.modelTask}\nModel: ${route.modelAnswer}`,
+      practicePrompt:`Create and complete a second ${route.identity.toLowerCase()} task. Annotate the clue that justifies every answer or paragraph decision.`,
+      answerCheck:route.checks.join(" "),
+      recallQuestions:[`What does this ${route.marks}-mark task require?`,`Which clue controls the first decision?`,`What final check catches the most common error?`],
+      commonTrap:route.trap,
+      stretchPrompt:`Change the context, audience or one controlling clue and rewrite the response. Explain why the answer had to change.`,
+      foundation:{question:`What is the governing rule for ${chapter.title}?`,answer:route.rule},
+      advanced:{focus:"Accuracy under a changed context",explanation:`A strong answer follows this route: ${route.method.join(" → ")} It remains accurate when the topic changes because each choice is justified by meaning, structure and task purpose.`,transfer:`Turn the model into a new ${route.marks}-mark task, complete it under time and write a one-line justification for every changed choice.`},
+    }));
+    return {
+      ...resource,
+      lessonDetails,
+      guide:{
+        concept:route.rule,
+        terminology:[route.identity,"task instruction","context clue","accuracy check","exam timing"],
+        method:route.method,
+        structures:[`Marks: ${route.marks}`,`Model task: ${route.modelTask}`,`Model response: ${route.modelAnswer}`],
+        application:route.modelTask,
+        selfCheck:route.checks,
+        examChecklist:["Read the full task before answering.","Preserve meaning, audience and required format.","Complete every gap or requested component.","Use the final minute for one focused accuracy check."],
+      },
+      notes:[
+        `${route.identity}: ${route.rule}`,
+        `Full-mark route: ${route.method.join(" → ")}.`,
+        `Worked task: ${route.modelTask}`,
+        `Model response: ${route.modelAnswer}`,
+        ...route.checks.map(item=>`Why it works: ${item}`),
+        `Common mark-loser: ${route.trap}`,
+        `Timed practice: complete one fresh ${route.marks}-mark task, then spend one minute checking only the governing clues.`,
+        `Revision card: write the rule on the front; on the back write one correct example, one tempting error and the reason it is wrong.`,
+        `Exam-night check: can you name the required output, marks, format, first decision and final check without opening the note?`,
+      ],
+      worked:{problem:route.modelTask,steps:route.method,answer:route.modelAnswer},
+      examToolkit:{
+        essentials:[route.rule,`Task value: ${route.marks} marks`,...route.checks],
+        mistakes:[route.trap,"Ignoring one part of the instruction","Using memorised wording that does not fit the context"],
+        scoringMoves:["Make the governing clue visible in the answer.","Complete the exact number of required items or format parts.","Use one final check targeted to this task type."],
+      },
+    };
+  }
 
   const banglaWritingLessons = subjectId === "bangla" && chapter.paper === "2nd Paper"
     ? buildBanglaWritingLessons(chapter, bnDetail, resource.modelExamples ?? [])
@@ -4924,8 +5052,8 @@ function markingTotal(points: string[] | undefined) {
 export const academicContentAssurance = {
   auditedOn: "13 October 2026",
   auditedOnBn: "১৩ অক্টোবর ২০২৬",
-  scope: "356 group learning-unit records · lessons, notes, MCQ, CQ, written practice and provenance",
-  scopeBn: "৩৫৬টি গ্রুপভিত্তিক অধ্যায়ের নথি · পাঠ, নোট, MCQ, CQ, লিখিত অনুশীলন ও উৎস-পরিচয়",
+  scope: "364 group learning-unit records · lessons, notes, MCQ, CQ, written practice and provenance",
+  scopeBn: "৩৬৪টি গ্রুপভিত্তিক অধ্যায়ের নথি · পাঠ, নোট, MCQ, CQ, লিখিত অনুশীলন ও উৎস-পরিচয়",
   automatedStatus: "passed",
   academicStatus: "reviewer-sign-off-pending",
   checks: [
@@ -4962,10 +5090,10 @@ export const englishMarksDistribution2026 = {
     total: 100,
     sections: [
       { name:"Grammar", marks:60, items:["Articles · 5", "Prepositions · 5", "Gap filling with clues · 5", "Completing sentences · 5", "Right form of verbs · 5", "Sentence transformation · 5", "Narration · 5", "Pronoun reference · 5", "Modifiers · 5", "Connectors · 5", "Synonym & antonym · 5", "Punctuation · 5"] },
-      { name:"Composition", marks:40, items:["Formal letter / email · 8", "Report writing · 8", "Paragraph · 10", "Free writing (200–250 words) · 14"] },
+      { name:"Composition", marks:40, items:["Formal letter / email · 8", "Newspaper report · 8", "Paragraph · 10", "Free writing (composition) · 14"] },
     ],
   },
-  source: { label:"Skylark Education · Marks Distribution for HSC 2026", url:"https://skylarkeducation.com/marks-distribution-for-hsc-2026/", checkedOn:"11 October 2026" },
+  source: { label:"Supplied Udvash HSC 2026 English 2nd Paper question bank + Skylark preparation distribution", url:"user-supplied:hsc english 2nd.pdf", checkedOn:"1 November 2026" },
 } as const;
 
 export type HscPaperTask = { label: string; marks: number; instruction: string };
@@ -4999,7 +5127,7 @@ export const hscPaperBlueprints: Record<string,HscPaperBlueprint> = {
       {label:"উচ্চারণ",marks:5,instruction:"নিয়ম লেখা অথবা প্রদত্ত শব্দের শুদ্ধ উচ্চারণ"},{label:"বানান",marks:5,instruction:"নিয়ম লেখা অথবা প্রদত্ত অশুদ্ধ বানানের শুদ্ধরূপ"},{label:"ব্যাকরণিক শব্দশ্রেণি",marks:5,instruction:"বর্ণনা অথবা বাক্যে শব্দের শ্রেণি নির্ণয়"},{label:"শব্দগঠন",marks:5,instruction:"উপসর্গ, সমাস অথবা প্রকৃতি–প্রত্যয়"},{label:"বাক্যতত্ত্ব",marks:5,instruction:"বাক্যের বৈশিষ্ট্য অথবা রূপান্তর"},{label:"অপপ্রয়োগ ও শুদ্ধ প্রয়োগ",marks:5,instruction:"বাক্য অথবা অনুচ্ছেদের শুদ্ধরূপ"},
       {label:"পারিভাষিক রূপ / অনুবাদ",marks:10,instruction:"দুটি বিকল্প থেকে একটি"},{label:"দিনলিপি / প্রতিবেদন",marks:10,instruction:"দুটি বিকল্প থেকে একটি"},{label:"ই-মেইল / আবেদনপত্র",marks:10,instruction:"দুটি বিকল্প থেকে একটি"},{label:"সারাংশ–সারমর্ম / ভাবসম্প্রসারণ",marks:10,instruction:"দুটি বিকল্প থেকে একটি"},{label:"সংলাপ / খুদে গল্প",marks:10,instruction:"দুটি বিকল্প থেকে একটি"},{label:"প্রবন্ধ–নিবন্ধ",marks:20,instruction:"পাঁচটি বিকল্প থেকে একটি"},
     ],
-    evidence:{status:"secondary-reference",label:"Byakoron School · HSC 2026 Bangla Second Paper distribution",url:"https://byakoronschool.com/%E0%A6%8F%E0%A6%87%E0%A6%9A%E0%A6%8F%E0%A6%B8%E0%A6%B8%E0%A6%BF-%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE-%E0%A6%B8%E0%A6%BF%E0%A6%B2%E0%A7%87%E0%A6%AC%E0%A6%BE%E0%A6%B8/",checkedOn:"11 October 2026"},
+    evidence:{status:"secondary-reference",label:"Supplied Udvash HSC 2026 Bangla 2nd Paper question bank + Byakoron School preparation distribution",url:"user-supplied:hsc bangla 2nd.pdf",checkedOn:"1 November 2026"},
     warning:"Preparation blueprint: grammar 30 + composition 70. Official notice and Bangla reviewer confirmation pending.",
   },
   "english:1st Paper": {
@@ -5011,8 +5139,8 @@ export const hscPaperBlueprints: Record<string,HscPaperBlueprint> = {
   "english:2nd Paper": {
     total:100,minutes:180,
     tasks:englishMarksDistribution2026.secondPaper.sections.flatMap(section=>section.items.map(item=>{const match=item.match(/^(.*?)\s*·\s*(\d+)$/);return {label:match?.[1]??item,marks:Number(match?.[2]??0),instruction:section.name};})),
-    evidence:{status:"secondary-reference",label:"English Second Paper model-question and answer sets + HSC 2026 preparation distribution",checkedOn:"11 October 2026"},
-    warning:"Preparation blueprint reconstructed from supplied model questions and secondary distribution; English reviewer confirmation pending.",
+    evidence:{status:"secondary-reference",label:"Supplied Udvash HSC 2026 English Second Paper question bank · 16-task marks table",url:"user-supplied:hsc english 2nd.pdf",checkedOn:"1 November 2026"},
+    warning:"Preparation blueprint transcribed from the supplied 16-task question-bank marks table; official board notice and qualified English reviewer confirmation remain pending.",
   },
   "ict:all": {
     total:100,minutes:150,theoryMarks:75,practicalMarks:25,

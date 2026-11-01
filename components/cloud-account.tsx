@@ -5,12 +5,15 @@ import { CheckCircle2, Cloud, CloudDownload, CloudUpload, LogOut, Mail, ShieldCh
 import type { User } from "@supabase/supabase-js";
 import { collectProgressSnapshot, markLocalProgressChanged, restoreProgressSnapshot, type ProgressSnapshot } from "@/lib/cloud-progress";
 import { getSupabaseBrowserClient, supabaseConfigured } from "@/lib/supabase";
+import { saveStudentDisplayName, useStudentDisplayName } from "@/lib/student-profile";
 
 export function CloudAccount() {
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
+  const storedName = useStudentDisplayName();
+  const [displayName, setDisplayName] = useState("");
   const configured = supabaseConfigured();
 
   useEffect(() => {
@@ -22,6 +25,16 @@ export function CloudAccount() {
     window.addEventListener("hsc2plus-progress", mark);
     return () => { data.subscription.unsubscribe(); window.removeEventListener("hsc2plus-progress", mark); };
   }, []);
+
+  useEffect(() => { setDisplayName(storedName); }, [storedName]);
+
+  const saveName = async () => {
+    const name = saveStudentDisplayName(displayName);
+    setDisplayName(name);
+    const client = getSupabaseBrowserClient();
+    const { error } = user && client ? await client.auth.updateUser({ data: { display_name: name } }) : { error: null };
+    setNotice(error ? `নাম সংরক্ষণ হয়নি: ${error.message}` : name ? "তোমার নাম সংরক্ষণ হয়েছে।" : "নাম সরানো হয়েছে।");
+  };
 
   const sendLink = async () => {
     const client = getSupabaseBrowserClient();
@@ -54,10 +67,10 @@ export function CloudAccount() {
     setBusy(false);
   };
 
-  if (!configured) return <section className="cloud-account-card"><Cloud size={28}/><div><span>OPTIONAL CLOUD SAVE</span><h1>Supabase connection প্রস্তুত</h1><p>Guest mode ও offline progress এখনই কাজ করবে। Vercel-এ দুইটি environment variable এবং SQL migration যোগ করলে login ও cross-device sync চালু হবে।</p></div><code>NEXT_PUBLIC_SUPABASE_URL<br/>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></section>;
+  if (!configured) return <section className="cloud-account-card"><Cloud size={28}/><div><span>YOUR PROFILE</span><h1>নামটি শুধু তোমার জন্য</h1><p>নাম না দিলে dashboard-এ নিরপেক্ষ greeting দেখাবে। এই device-এ রাখা নাম অন্য শিক্ষার্থীর জন্য দেখাবে না।</p></div><label><span>তোমার নাম (ঐচ্ছিক)</span><input value={displayName} onChange={(event)=>setDisplayName(event.target.value)} autoComplete="name" placeholder="যেমন: নাবিলা" maxLength={60}/></label><button type="button" onClick={saveName}><CheckCircle2 size={16}/>নাম সংরক্ষণ</button>{notice&&<p role="status" className="cloud-notice">{notice}</p>}<small>Cloud login চালু করলে নাম ও progress একাধিক device-এ রাখা যাবে।</small></section>;
 
   if (!user) return <section className="cloud-account-card"><Mail size={28}/><div><span>STUDENT LOGIN</span><h1>একটি email, কোনো password নয়</h1><p>Secure magic link দিয়ে login করো। Login বাধ্যতামূলক নয়—Guest হিসেবে পড়া ও offline progress আগের মতোই থাকবে।</p></div><label><span>Email address</span><input type="email" autoComplete="email" value={email} onChange={(event)=>setEmail(event.target.value)} placeholder="student@example.com"/></label><button type="button" disabled={busy||!email.trim()} onClick={sendLink}><Mail size={16}/>{busy?"পাঠানো হচ্ছে…":"Login link পাঠাও"}</button>{notice&&<p role="status" className="cloud-notice">{notice}</p>}</section>;
 
-  return <section className="cloud-account-card signed-in"><CheckCircle2 size={28}/><div><span>CLOUD SAVE READY</span><h1>{user.email}</h1><p>কোন data Cloud-এ যাবে তা তুমি নিয়ন্ত্রণ করবে। Upload বর্তমান device-এর progress সংরক্ষণ করে; Restore Cloud copy ফিরিয়ে আনে।</p></div><div className="cloud-actions"><button type="button" disabled={busy} onClick={upload}><CloudUpload size={16}/>Backup now</button><button type="button" disabled={busy} onClick={download}><CloudDownload size={16}/>Restore</button><button type="button" disabled={busy} onClick={()=>getSupabaseBrowserClient()?.auth.signOut()}><LogOut size={16}/>Sign out</button></div><small><ShieldCheck size={13}/>প্রতিটি student কেবল নিজের row পড়তে ও পরিবর্তন করতে পারে।</small>{notice&&<p role="status" className="cloud-notice">{notice}</p>}</section>;
+  return <section className="cloud-account-card signed-in"><CheckCircle2 size={28}/><div><span>CLOUD SAVE READY</span><h1>{user.email}</h1><p>কোন data Cloud-এ যাবে তা তুমি নিয়ন্ত্রণ করবে।</p></div><label><span>তোমার নাম (ঐচ্ছিক)</span><input value={displayName} onChange={(event)=>setDisplayName(event.target.value)} autoComplete="name" placeholder="যেমন: নাবিলা" maxLength={60}/></label><button type="button" disabled={busy} onClick={saveName}><CheckCircle2 size={16}/>নাম সংরক্ষণ</button><div className="cloud-actions"><button type="button" disabled={busy} onClick={upload}><CloudUpload size={16}/>Backup now</button><button type="button" disabled={busy} onClick={download}><CloudDownload size={16}/>Restore</button><button type="button" disabled={busy} onClick={()=>getSupabaseBrowserClient()?.auth.signOut()}><LogOut size={16}/>Sign out</button></div><small><ShieldCheck size={13}/>প্রতিটি student কেবল নিজের row পড়তে ও পরিবর্তন করতে পারে।</small>{notice&&<p role="status" className="cloud-notice">{notice}</p>}</section>;
 }
 

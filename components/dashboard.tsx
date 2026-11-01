@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState, useTransition } from "react";
 import {
   ArrowRight,
   BarChart3,
@@ -37,6 +37,8 @@ import {
   Trash2,
   Upload,
 } from "lucide-react";
+import { useStudentDisplayName } from "@/lib/student-profile";
+import { useRouter } from "next/navigation";
 import {
   businessMissions,
   boardSourceIntakeRegistry,
@@ -336,7 +338,7 @@ function AcademicSourcePanel({ english = false, group }: { english?: boolean; gr
           <p>{english ? officialAcademicSources.policy.questionStatement : officialAcademicSources.policy.questionStatementBn}</p>
         </div>
         <section className="review-handoff-tools" aria-label={english ? "Academic review handoff tools" : "একাডেমিক রিভিউ হ্যান্ডঅফ টুলস"}>
-          <div><span className="eyebrow">REVIEW HANDOFF</span><strong>{english ? "Move all 356 group learning-unit records into qualified review" : "৩৫৬টি গ্রুপভিত্তিক শেখার ইউনিট যোগ্য পর্যালোচকের কাছে দাও"}</strong><p>{english ? "The register keeps every decision attached to a record ID. The evidence manifest preserves sources, blockers and current status without claiming approval." : "পর্যালোচনা তালিকায় প্রতিটি সিদ্ধান্ত নির্দিষ্ট নথি নম্বরের সঙ্গে থাকবে। প্রমাণপত্রে উৎস, প্রতিবন্ধকতা ও বর্তমান অবস্থা সংরক্ষিত থাকবে—অনুমোদনের কোনো অযাচাইকৃত দাবি ছাড়া।"}</p></div>
+          <div><span className="eyebrow">REVIEW HANDOFF</span><strong>{english ? "Move all 364 group learning-unit records into qualified review" : "৩৬৪টি গ্রুপভিত্তিক শেখার ইউনিট যোগ্য পর্যালোচকের কাছে দাও"}</strong><p>{english ? "The register keeps every decision attached to a record ID. The evidence manifest preserves sources, blockers and current status without claiming approval." : "পর্যালোচনা তালিকায় প্রতিটি সিদ্ধান্ত নির্দিষ্ট নথি নম্বরের সঙ্গে থাকবে। প্রমাণপত্রে উৎস, প্রতিবন্ধকতা ও বর্তমান অবস্থা সংরক্ষিত থাকবে—অনুমোদনের কোনো অযাচাইকৃত দাবি ছাড়া।"}</p></div>
           <div className="review-handoff-actions">
             <button type="button" onClick={downloadReviewerPacket}><Download size={15}/>{english ? "Reviewer register (.csv)" : "পর্যালোচকের তালিকা (.csv)"}</button>
             <button type="button" onClick={downloadNctbComparisonRegister}><Download size={15}/>{english ? "NCTB comparison (.csv)" : "NCTB তুলনা তালিকা (.csv)"}</button>
@@ -345,7 +347,7 @@ function AcademicSourcePanel({ english = false, group }: { english?: boolean; gr
           <small><ShieldCheck size={13}/>{english ? "Downloading a pack does not change any chapter status. Only a named qualified reviewer can sign off a record." : "পর্যালোচনা ফাইল ডাউনলোড করলে কোনো অধ্যায়ের অবস্থা বদলাবে না। কেবল পরিচয়-উল্লেখিত যোগ্য বিষয় পর্যালোচক একটি নথি অনুমোদন করতে পারবেন।"}</small>
         </section>
         <section className="automated-assurance" aria-label={english ? "Automated content assurance" : "স্বয়ংক্রিয় কনটেন্ট যাচাই"}>
-          <div className="automated-assurance-head"><span><CheckCircle2 size={18}/><strong>{english ? "356/356 group learning records passed automated assurance" : "৩৫৬/৩৫৬টি গ্রুপভিত্তিক শেখার নথি স্বয়ংক্রিয় যাচাইয়ে উত্তীর্ণ"}</strong></span><small>{english ? academicContentAssurance.auditedOn : academicContentAssurance.auditedOnBn}</small></div>
+          <div className="automated-assurance-head"><span><CheckCircle2 size={18}/><strong>{english ? "364/364 group learning records passed automated assurance" : "৩৬৪/৩৬৪টি গ্রুপভিত্তিক শেখার নথি স্বয়ংক্রিয় যাচাইয়ে উত্তীর্ণ"}</strong></span><small>{english ? academicContentAssurance.auditedOn : academicContentAssurance.auditedOnBn}</small></div>
           <p>{english ? academicContentAssurance.scope : academicContentAssurance.scopeBn}</p>
           <div>{academicContentAssurance.checks.map((check)=><span key={check.id}><Check size={13}/>{english ? check.label : check.labelBn}</span>)}</div>
           <aside><CircleAlert size={16}/><p>{english ? academicContentAssurance.limitation : academicContentAssurance.limitationBn}</p></aside>
@@ -886,10 +888,12 @@ function Today({
   group: "commerce" | "humanities";
   onNavigate: (id: string) => void;
 }) {
+  const router = useRouter();
   const initialMissions =
     group === "commerce" ? businessMissions : humanitiesMissions;
   const subjects = subjectsByGroup[group];
   const metrics = useStudentMetrics(group);
+  const studentName = useStudentDisplayName();
   const [items, setItems] = useState(initialMissions);
   const now = new Date();
   const missionDateKey = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Dhaka" }).format(now);
@@ -963,7 +967,7 @@ function Today({
   const openSubject = (subjectId?: string) => {
     if (subjectId) {
       window.localStorage.setItem(`hsc2plus-${group}-subject-resume`, JSON.stringify({ subjectId }));
-      window.location.href = `/${group}/subjects/${subjectId}`;
+      router.push(`/${group}/subjects/${subjectId}`);
       return;
     }
     onNavigate("subjects");
@@ -974,8 +978,8 @@ function Today({
       <section className="welcome-row today-welcome">
         <div>
           <span className="eyebrow">{dateLabel}</span>
-          <h1>{greeting}, রাইয়ান।</h1>
-          <p>একটি কাজ দিয়ে শুরু করো। বাকিটা ধীরে ধীরে এগোবে।</p>
+          <h1>{greeting}{studentName ? `, ${studentName}` : ""}।</h1>
+          <p>আজকের প্রথম কাজটি বেছে নাও।</p>
         </div>
         <div className="calm-score">
           <Ring value={metrics.readiness} />
@@ -4288,6 +4292,8 @@ function Progress({
 }
 
 function SubjectLibrary({ group }: { group: "commerce" | "humanities"; onNavigate: (id: string) => void }) {
+  const router = useRouter();
+  const [openingSubject, setOpeningSubject] = useState<string | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   useEffect(() => {
     const sync = () => { try { setSelected(JSON.parse(localStorage.getItem(`hsc2plus-${group}-syllabus-subjects`) ?? "[]")); } catch { setSelected([]); } };
@@ -4302,7 +4308,7 @@ function SubjectLibrary({ group }: { group: "commerce" | "humanities"; onNavigat
     <div className="subject-card-grid compact-grid">{subjects.map((item) => {
       const chapterCount = (chaptersBySubject[item.id] ?? []).length;
       const lessonCount = (chaptersBySubject[item.id] ?? []).reduce((sum,chapter)=>sum+chapter.lessons,0);
-      return <button type="button" key={item.id} className="subject-card selectable" onClick={() => { window.localStorage.setItem(`hsc2plus-${group}-subject-resume`, JSON.stringify({subjectId:item.id})); window.location.href=`/${group}/subjects/${item.id}`; }}><div className="subject-card-head"><span className="subject-icon large" style={{color:item.color,background:`${item.color}14`}}><BookOpen/></span><span className="status-pill">{item.paper === "1st & 2nd Paper" ? (item.id === "english" ? "1st + 2nd Paper" : "১ম + ২য় পত্র") : (item.id === "english" ? "Full subject" : "সম্পূর্ণ বিষয়")}</span></div><h2>{item.id === "english" ? item.name : item.nameBn}</h2><p>{item.id === "english" ? `${chapterCount} chapters · ${lessonCount} lessons` : `${chapterCount} অধ্যায় · ${lessonCount} পাঠ`}</p><div className="group-enter">{item.id === "english" ? "Enter studio" : "Studio-তে যাও"}<ArrowRight size={16}/></div></button>;
+      return <button type="button" key={item.id} className="subject-card selectable" aria-busy={openingSubject === item.id} onMouseEnter={() => router.prefetch(`/${group}/subjects/${item.id}`)} onFocus={() => router.prefetch(`/${group}/subjects/${item.id}`)} onClick={() => { setOpeningSubject(item.id); window.localStorage.setItem(`hsc2plus-${group}-subject-resume`, JSON.stringify({subjectId:item.id})); router.push(`/${group}/subjects/${item.id}`); }}><div className="subject-card-head"><span className="subject-icon large" style={{color:item.color,background:`${item.color}14`}}><BookOpen/></span><span className="status-pill">{openingSubject === item.id ? (item.id === "english" ? "Opening…" : "খোলা হচ্ছে…") : item.paper === "1st & 2nd Paper" ? (item.id === "english" ? "1st + 2nd Paper" : "১ম + ২য় পত্র") : (item.id === "english" ? "Full subject" : "সম্পূর্ণ বিষয়")}</span></div><h2>{item.id === "english" ? item.name : item.nameBn}</h2><p>{item.id === "english" ? `${chapterCount} chapters · ${lessonCount} lessons` : `${chapterCount} অধ্যায় · ${lessonCount} পাঠ`}</p><div className="group-enter">{item.id === "english" ? "Enter studio" : "Studio-তে যাও"}<ArrowRight size={16}/></div></button>;
     })}</div>
   </div>;
 }
@@ -4342,6 +4348,7 @@ function SyllabusSetup({ group, onNavigate }: { group: "commerce" | "humanities"
 
 export function Dashboard({ group }: { group: "commerce" | "humanities" }) {
   const [active, setActive] = useState("today");
+  const [isSectionPending, beginSectionTransition] = useTransition();
   const navigationResumeReady = useRef(false);
   const metrics = useStudentMetrics(group);
   useEffect(() => {
@@ -4354,9 +4361,10 @@ export function Dashboard({ group }: { group: "commerce" | "humanities" }) {
     if (navigationResumeReady.current) window.localStorage.setItem(`hsc2plus-${group}-last-section`, active);
   }, [active, group]);
   const navigate = useCallback((id: string) => {
-    setActive(id);
-    window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
-  }, []);
+    if (id === active) return;
+    beginSectionTransition(() => setActive(id));
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "auto" }));
+  }, [active]);
   const content = useMemo(
     () =>
       ({
@@ -4372,7 +4380,7 @@ export function Dashboard({ group }: { group: "commerce" | "humanities" }) {
     [active, group, navigate],
   );
   return (
-    <AppShell active={active} onChange={navigate} group={group} streak={metrics.streak}>
+    <AppShell active={active} onChange={navigate} group={group} streak={metrics.streak} pending={isSectionPending}>
       {content}
     </AppShell>
   );
