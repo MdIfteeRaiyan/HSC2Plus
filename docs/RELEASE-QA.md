@@ -55,7 +55,7 @@ Print one Accounting, Economics/Civics and English chapter plus one full model p
 
 ## Production operations
 
-The current deployment is an owner-private preview. Public release remains blocked until the final domain, public access policy, production analytics disclosure, error-monitoring service, named support owner, broken-link monitor, rollback drill and backup/recovery drill are recorded. Version history provides a rollback source, but a successful rollback must be rehearsed rather than assumed.
+The current deployment is a public beta on the OpenAI Sites URL. Access is public, but general-release sign-off remains pending until the final domain decision, production analytics disclosure, error-monitoring service, named support owner, broken-link monitor and backup/recovery drill are recorded. A real rollback was completed successfully on 6 November 2026 after an incomplete static archive omitted compiled CSS/JavaScript assets; the working version was restored before the corrected remote build was published. Future releases must use a verified framework build or the remote-build fallback—never a source-only static archive.
 
 ## Legal and trust review
 

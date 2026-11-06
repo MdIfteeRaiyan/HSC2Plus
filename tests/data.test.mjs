@@ -97,7 +97,7 @@ test("release validation provides executable NCTB reviewer device and beta workf
   const page = fs.readFileSync(new URL("../app/release-readiness/page.tsx", import.meta.url), "utf8");
   const support = fs.readFileSync(new URL("../app/support/page.tsx", import.meta.url), "utf8");
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
-  for (const marker of ["DIRECT NCTB MAPPING", "QUALIFIED REVIEWER APPROVAL", "REAL-DEVICE & SCREEN-READER QA", "CONTROLLED TEACHER/STUDENT BETA", "15–20 representative chapters", "Go / No-go thresholds", "0/364 group learning-unit records signed off"]) assert.ok(page.includes(marker));
+  for (const marker of ["DIRECT NCTB MAPPING", "QUALIFIED REVIEWER APPROVAL", "REAL-DEVICE & SCREEN-READER QA", "CONTROLLED TEACHER/STUDENT BETA", "15–20 representative chapters", "Go / No-go thresholds", "0/384 group learning-unit records signed off"]) assert.ok(page.includes(marker));
   for (const file of ["hsc2plus-nctb-mapping-register.csv", "hsc2plus-reviewer-register.csv", "hsc2plus-chapter-signoff.csv", "hsc2plus-device-screenreader-run.csv", "hsc2plus-beta-session-log.csv", "hsc2plus-beta-issue-register.csv"]) assert.ok(fs.existsSync(new URL(`../public/templates/${file}`, import.meta.url)), `missing ${file}`);
   assert.match(support, /\/release-readiness/);
   assert.match(data, /nctb-2026-secondary-higher-catalogue|695b98afc4774958d7b7044c/);
@@ -473,7 +473,7 @@ test("chapter workspace pairs lesson navigation with unique lesson-level teachin
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   for (const term of ["chapter-workspace", "বিস্তারিত অধ্যয়ন", "activeLessonDetail", "lesson-checkpoint", "BEFORE YOU CONTINUE"]) assert.match(dashboard, new RegExp(term));
-  for (const term of ["lessonDetails", "lesson.format === \"Practice\"", "বই বন্ধ করে বলো", "Edit once for missing content"]) assert.match(data, new RegExp(term, "i"));
+  for (const term of ["lessonDetails", "lesson.format === \"Practice\"", "পাঠের নির্ণায়ক নিয়ম", "Edit once for missing content"]) assert.match(data, new RegExp(term, "i"));
 });
 
 test("Bangla-medium subjects use Bangla board-pattern practice", () => {
@@ -645,7 +645,7 @@ test("test center supports configurable papers and mark-by-mark CQ assessment", 
 test("exam report separates provisional MCQ results from the final 100-mark score", () => {
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["cqAssessmentComplete", "এটি এখন শুধু MCQ-এর ফল", "CHAPTER BREAKDOWN", "অধ্যায়ভিত্তিক MCQ ফল", "mcq-answer-comparison", "দুর্বল অধ্যায়ের প্রশ্ন অনুশীলন করো"]) assert.match(dashboard, new RegExp(term));
+  for (const term of ["cqAssessmentComplete", "এটি এখন শুধু MCQ-এর ফল", "CHAPTER BREAKDOWN", "অধ্যায়ভিত্তিক MCQ ফল", "mcq-answer-comparison", "আরও অনুশীলন দরকার—এমন অধ্যায় খুলে দেখো"]) assert.match(dashboard, new RegExp(term));
   for (const term of ["provisional-result-note", "chapter-performance-table", "mcq-answer-comparison", "exam-review-legend"]) assert.match(css, new RegExp(term));
 });
 
@@ -777,7 +777,7 @@ test("curriculum coverage registry exposes every subject without overstating off
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["curriculumCoverageRegistry", "totalUniqueSubjects: 13", "totalChapterRecords: 364", "chapterRecords: 154", "chapterRecords: 210", "subjectPaperMapping: \"under-review\"", "nctb-xi-xii-subject-structure"]) assert.match(data, new RegExp(term));
+  for (const term of ["curriculumCoverageRegistry", "totalUniqueSubjects: 14", "totalChapterRecords: 384", "chapterRecords: 174", "chapterRecords: 210", "subjectPaperMapping: \"under-review\"", "nctb-xi-xii-subject-structure"]) assert.match(data, new RegExp(term));
   for (const term of ["Curriculum coverage", "পাঠ্যক্রম কভারেজ", "Direct comparison pending", "নৈর্বাচনিক সংস্করণ যাচাই বাকি", "Coverage means every listed chapter has lessons, notes and practice"]) assert.match(dashboard, new RegExp(term));
   assert.match(css, /\.curriculum-coverage/);
   assert.match(css, /\.curriculum-subject-grid/);
@@ -797,7 +797,7 @@ test("subject audit ledger separates NCTB core-book evidence from elective editi
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["curriculumVerificationLedger", "subjectsTraced: 13", "officialSubjectListingsConfirmed: 13", "officialCoreTextbooksLinked: 3", "electiveSyllabusReviewsRemaining: 10", "official-core-textbook", "elective-curriculum", "curriculum-located", "under-comparison", "curriculum verification ledger does not cover every unique subject", "subject ledger mapping stage is inconsistent"]) assert.match(data, new RegExp(term));
+  for (const term of ["curriculumVerificationLedger", "subjectsTraced: 14", "officialSubjectListingsConfirmed: 14", "officialCoreTextbooksLinked: 3", "electiveSyllabusReviewsRemaining: 11", "official-core-textbook", "elective-curriculum", "curriculum-located", "under-comparison", "curriculum verification ledger does not cover every unique subject", "subject ledger mapping stage is inconsistent"]) assert.match(data, new RegExp(term));
   for (const term of ["বিষয় যাচাই খতিয়ান", "NCTB মূল বই সংযুক্ত", "নৈর্বাচনিক সংস্করণ যাচাই বাকি", "পত্র ও অধ্যায়ক্রম: সরাসরি যাচাই বাকি"]) assert.match(dashboard, new RegExp(term));
   assert.match(css, /\.curriculum-audit/);
   assert.match(css, /\.subject-audit-list/);
@@ -806,7 +806,7 @@ test("subject audit ledger separates NCTB core-book evidence from elective editi
 test("official NCTB index confirms subject presence without approving chapter order", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
-  for (const term of ["nctb-hsc-subject-syllabus-index", "nctb-hsc-2026-full-syllabus", "officialSubjectListingsConfirmed: 13", 'subjectPresence: "verified"', "13 subjects source-traced", "official subject-listing verification total is stale"]) assert.match(data, new RegExp(term));
+  for (const term of ["nctb-hsc-subject-syllabus-index", "nctb-hsc-2026-full-syllabus", "officialSubjectListingsConfirmed: 14", 'subjectPresence: "verified"', "official subject-listing verification total is stale"]) assert.match(data, new RegExp(term));
   assert.match(dashboard, /subjects on official index|অফিসিয়াল সূচিতে বিষয়/);
   assert.match(data, /paperMapping: "pending"/);
   assert.match(data, /chapterSequence: "pending"/);
@@ -817,7 +817,7 @@ test("academic sign-off and question provenance never imply unsupported approval
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const release = fs.readFileSync(new URL("../app/release-readiness/page.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  for (const term of ["academicReviewGate", "signedOffChapterRecords: 0", "pendingChapterRecords: 364", "Qualified HSC subject reviewer", "reviewerRoles", "requiredEvidence", "workflow", "acceptanceRules", "subjectChecklists", "CQ 1\\+2\\+3\\+4 marking accuracy", "questionProvenancePolicy", "authenticPastBoardCount: 0", "academic review gate overstates reviewer sign-off", "academic reviewer roster does not cover every subject", "uncited previous-board questions are being claimed"]) assert.match(data, new RegExp(term));
+  for (const term of ["academicReviewGate", "signedOffChapterRecords: 0", "pendingChapterRecords: 384", "Qualified HSC subject reviewer", "reviewerRoles", "requiredEvidence", "workflow", "acceptanceRules", "subjectChecklists", "CQ 1\\+2\\+3\\+4 marking accuracy", "questionProvenancePolicy", "authenticPastBoardCount: 0", "academic review gate overstates reviewer sign-off", "academic reviewer roster does not cover every subject", "uncited previous-board questions are being claimed"]) assert.match(data, new RegExp(term));
   assert.doesNotMatch(dashboard, /questionSourceLabel|নিজস্ব HSC অনুশীলন · ধারণাভিত্তিক|নিজস্ব HSC অনুশীলন · প্রয়োগভিত্তিক|বর্তমান ব্যাংক: ১০০% নিজস্ব HSC অনুশীলন/);
   assert.match(release, /review|যাচাই|approval|অনুমোদন/i);
   assert.match(css, /\.academic-review-gate/);
@@ -881,11 +881,11 @@ test("Bangla board-question discovery is matched to supplied first and second-pa
 
 test("every live subject has a board-question discovery and supplied-material match record", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
-  const expected = ["bangla", "english", "ict", "accounting", "finance", "business", "economics", "civics", "geography", "logic", "statistics", "islamic_history", "history"];
-  for (const marker of ["allSubjectBoardQuestionSurvey", "subjectCount: 13", "coveredSubjectIds", "all-subject-discovery-and-reference-match-complete", "missingMaterialPriority", "original board-paper scans/PDFs"]) assert.match(data, new RegExp(marker));
+  const expected = ["bangla", "english", "ict", "accounting", "finance", "business", "production_marketing", "economics", "civics", "geography", "logic", "statistics", "islamic_history", "history"];
+  for (const marker of ["allSubjectBoardQuestionSurvey", "subjectCount: 14", "coveredSubjectIds", "all-subject-discovery-and-reference-match-complete", "missingMaterialPriority", "original board-paper scans/PDFs"]) assert.match(data, new RegExp(marker));
   for (const subjectId of expected) assert.match(data, new RegExp(`subjectId: "${subjectId}"`));
   const survey = data.slice(data.indexOf("export const allSubjectBoardQuestionSurvey"), data.indexOf("export const boardArchiveCoverage"));
-  assert.equal((survey.match(/subjectId: "/g) || []).length, expected.length + 4, "survey must contain 13 subject records plus four material-priority records");
+  assert.equal((survey.match(/subjectId: "/g) || []).length, expected.length + 4, "survey must contain 14 subject records plus four material-priority records");
   assert.equal((survey.match(/sattUrls: \[/g) || []).length, expected.length, "each live subject needs a Satt discovery URL list");
   assert.equal((survey.match(/references: \[/g) || []).length, expected.length, "each live subject needs supplied-material references");
 });
@@ -958,8 +958,17 @@ test("academic assurance checks every assessment structure without inventing tea
   const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   for (const term of ["academicContentAssurance", "markingTotal", "MCQ must have four options and one valid answer index", "CQ marking guide does not contain four parts totalling 10", "CQ model answer is not visibly divided", 'academicStatus: "reviewer-sign-off-pending"']) assert.match(data, new RegExp(term));
-  for (const term of ["364/364 group learning records passed automated assurance", "৩৬৪/৩৬৪টি গ্রুপভিত্তিক শেখার নথি স্বয়ংক্রিয় যাচাইয়ে উত্তীর্ণ", "ContentErrorReporter", "hsc2plus-content-issue-v1", "reportId", "subject-review", "qualified subject reviewer"]) assert.match(dashboard, new RegExp(term));
+  for (const term of ["384/384 records passed structural checks — academic approval pending", "৩৮৪/৩৮৪টি নথির কাঠামোগত যাচাই সম্পন্ন—একাডেমিক অনুমোদন বাকি", "ContentErrorReporter", "hsc2plus-content-issue-v1", "reportId", "subject-review", "qualified subject reviewer"]) assert.match(dashboard, new RegExp(term));
   for (const selector of ["automated-assurance", "content-error-reporter", "content-error-form", "report-action"]) assert.match(css, new RegExp(`\\.${selector}`));
+});
+
+test("MCQ feedback explains every option without claiming human approval", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
+  const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  for (const term of ["optionRationales", "withMcqOptionRationales", "subject-specialist approval remains separate", "subjectExamValidationMatrix", "preparation-blueprints-pending-official-and-specialist-confirmation"]) assert.ok(data.includes(term));
+  for (const term of ["mcq-option-rationales", "Why each option is right or wrong", "প্রতিটি বিকল্পের ব্যাখ্যা"]) assert.ok(dashboard.includes(term));
+  assert.match(css, /\.mcq-option-rationales/);
 });
 
 test("exam sessions survive refresh, enforce unique full papers and use a real deadline", () => {
@@ -1166,7 +1175,7 @@ test("chapter completion celebrates progress and Bangla lessons use natural memo
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   for (const term of ["completion-celebration", "অধ্যায় সম্পন্ন—অভিনন্দন!", "পাঠটি আয়ত্ত হয়েছে!", "মনে রাখার ধাপ", "সম্পন্ন অধ্যয়ন ধাপ", "অধ্যায় দক্ষতা", "পাঠ আয়ত্ত", "শেষ মুহূর্তের ঝালাই"]) assert.match(dashboard, new RegExp(term));
-  for (const term of ["আজকের বিষয়", "এখানে কোন ভুলটি বেশি হয়"]) assert.match(data, new RegExp(term));
+  for (const term of ["পাঠের ভিত্তি", "সবচেয়ে সাধারণ ভুলটি"]) assert.match(data, new RegExp(term));
   for (const term of ["lesson-memory-cue", "completion-card", "celebration-rise"]) assert.match(css, new RegExp(term));
 });
 
@@ -1317,8 +1326,8 @@ test("ICT and Business first-paper libraries follow the supplied reference books
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   for (const term of ["ictReferenceChapters", "ICT: World and Bangladesh Perspective", "Number Systems and Digital Devices", "Introduction to Web Design and HTML", "Database Management System", "Programming Language"]) assert.match(source, new RegExp(term));
   for (const term of ["businessFirstPaperReferenceChapters", "Fundamental Concepts of Business", "Sole Proprietorship", "Joint Stock Company", "Legal Aspects of Business", "Business Ethics and Social Responsibility"]) assert.match(source, new RegExp(term));
-  for (const term of ["NCTB তথ্য ও যোগাযোগ প্রযুক্তি", "user-supplied-nctb-ict-scan", "Cambridge Publications Business Organisation & Management First Paper guide", "current official mapping under review", "chapters: 6"]) assert.match(data, new RegExp(term));
-  for (const range of ["১–৩৮", "৩৯–৭৪", "৭৫–১১৪", "১১৫–১৪৮", "১৪৯–১৯৮", "১৯৯–২২৬"]) assert.ok(source.includes(range));
+  for (const term of ["NCTB তথ্য ও যোগাযোগ প্রযুক্তি", "user-supplied-nctb-ict-scan", "ব্যবসায় সংগঠন ও ব্যবস্থাপনা ১ম পত্র · পূর্ণ সহায়ক স্ক্যান", "222-page image-only supporting scan", "chapters: 6"]) assert.match(data, new RegExp(term));
+  for (const range of ["১–৪৮", "৪৯–৯৮", "৯৯–১৫২", "১৫৩–২২১", "২২২–২৮৮", "২৮৯–৩৩৮"]) assert.ok(source.includes(range));
   assert.match(data, /id: "business", name: "Business Organisation"/);
 });
 
@@ -1363,7 +1372,7 @@ test("Bangla second paper, English second paper and Statistics follow supplied r
   for (const term of ["Phonetics and Bangla Phonology", "Morphology", "Report Writing", "Proof Correction", "Essay Writing"]) assert.match(banglaBlock, new RegExp(term));
   for (const term of ["Articles and Determiners", "Right Form of Verbs", "Sentence Transformation", "Formal Letter and Email", "Newspaper Report", "Paragraph Writing", "Free Writing: Composition"]) assert.match(englishBlock, new RegExp(term));
   for (const term of ["Data Collection, Summarisation and Presentation", "Measures of Central Tendency", "Moments, Skewness and Kurtosis", "Correlation and Regression", "Time Series"]) assert.match(statisticsBlock, new RegExp(term));
-  for (const term of ["chapters: 54", "chapters: 17", "Udvash HSC 2026 English 2nd Paper Question Bank", "Higher Secondary Statistics First Paper supporting guide", "elective-curriculum", "totalChapterRecords: 364"]) assert.match(data, new RegExp(term));
+  for (const term of ["chapters: 54", "chapters: 17", "Udvash HSC 2026 English 2nd Paper Question Bank", "Higher Secondary Statistics First Paper supporting guide", "elective-curriculum", "totalChapterRecords: 384"]) assert.match(data, new RegExp(term));
 });
 
 test("tutor notes use a focused recall structure, ICT code labs and paper-aware practice", () => {
@@ -1388,6 +1397,32 @@ test("supplied Bangla sample chapters use chapter-specific tutor lessons", () =>
   for (const term of ["banglaLiteratureLessons", "Aparichita", "Manab-Kalyan", "গয়না যাচাই", "মর্যাদাসম্পন্ন মানব-কল্যাণ", "curatedLessons ? [...curatedLessons"]) assert.ok(data.includes(term));
 });
 
+test("every Bangla first-paper literary work replaces the generic lesson fallback", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const title of ["An Appeal to the New Writers of Bengal", "Bilasi", "Ardhangi", "Sahitye Khela", "Gontobbo Kabul", "Masi-Pisi", "Jouboner Gaan", "Jiban O Brikkha", "Raincoat", "Kapildas Murmur Shesh Kaj", "The Necklace (Guy de Maupassant)", "Bibhishoner Proti Meghnad", "Sonar Tori", "Bidrohi", "Protidan", "Suchetana", "Taharei Pore Mone", "Padma", "February 1969", "Atharo Bachhar Boyos", "Ami Kingbadantir Katha Bolchi", "Ritu-Barnan", "Protyabartoner Lojja", "Sirajuddaula", "Lalsalu"]) {
+    assert.ok(data.includes(`"${title}":{`), `missing literature profile: ${title}`);
+  }
+  for (const marker of ["completeBanglaLiteratureLessonSet", "জীবনের গ্রহণ সার্থক হয় সৃষ্টিশীল দানে", "MCQ evidence ও distractor audit", "পূর্ণাঙ্গ CQ—ক/খ/গ/ঘ সমাধান"]) assert.ok(data.includes(marker));
+  for (const generic of ["ভাষাশৈলী ও গুরুত্বপূর্ণ উদ্ধৃতির তাৎপর্য", "লেখক ও রচনাপ্রেক্ষাপট", "পাঠের সহজ ব্যাখ্যা"]) assert.equal(data.includes(generic), false, `generic Bangla lesson remains: ${generic}`);
+});
+
+test("every non-English subject uses its own lesson evidence and output workflow", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of ["function enrichGeneratedLesson", "হিসাবের working lesson", "আর্থিক হিসাব ও সিদ্ধান্ত lesson", "সূচি–গ্রাফ–ব্যাখ্যা lesson", "তথ্য–সারণি–ফল lesson", "code–logic–output lesson", "প্রতিষ্ঠানভিত্তিক case lesson", "অধিকার–প্রতিষ্ঠান–প্রতিকার lesson", "কালানুক্রম–উৎস–তাৎপর্য lesson", "সময়–ব্যক্তি–সভ্যতা lesson", "স্থান–প্রক্রিয়া–মানচিত্র lesson", "নিয়ম–আকার–বৈধতা lesson", "পাঠ–প্রমাণ–তাৎপর্য lesson"]) assert.ok(data.includes(marker));
+  assert.ok(data.includes('enrichGeneratedLesson(subjectId, chapter, lesson, lessonIndex, chapterWorkshop, bnDetail)'));
+  for (const generic of ["আজকের বিষয় “${lesson.titleBn}”", "বই বন্ধ করে বলো—“${lesson.titleBn}” কী"]) assert.equal(data.includes(generic), false, `generic lesson shell remains: ${generic}`);
+});
+
+test("visible question banks are rebuilt from chapter evidence rather than legacy meta drills", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  assert.match(data, /Only chapter evidence enters the visible bank/);
+  assert.match(data, /return \[\.\.\.topicCqs, \.\.\.materialQuestions\.filter\(question => question\.type === "CQ"\), \.\.\.nonCq\]\.filter\(isAcademicQuestion\)/);
+  for (const rejected of ["ভুল সংশোধন ক্লিনিক", "পরীক্ষা স্প্রিন্ট", "কোন সংশোধনটি সবচেয়ে যথাযথ", "সবচেয়ে নির্ভুল ব্যবহার কোনটি"]) {
+    assert.match(data, new RegExp(rejected));
+  }
+  assert.doesNotMatch(data, /const nonCq = \[[^;]*buildExamSprintSet\(subjectId, chapter, detail\)/s);
+});
+
 test("priority Accounting and Civics chapters use worked subject-specific tutor notes", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   for (const term of ["prioritySubjectLessons", "Introduction to Accounting", "হিসাব সমীকরণ—অঙ্ক নয়, ঘটনার মানচিত্র", "Civics reference chapter 1", "রাষ্ট্র, সরকার, সমাজ ও নাগরিক—পার্থক্য এবং যোগসূত্র", "পূর্ণ ১+২+৩+৪ উত্তর"]) assert.ok(data.includes(term));
@@ -1408,8 +1443,41 @@ test("Business and Civics second papers plus both Geography papers follow the su
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const page = fs.readFileSync(new URL("../components/subject-page.tsx", import.meta.url), "utf8");
   for (const marker of ["businessSecondPaperReferenceChapters", "civicsSecondPaperReferenceChapters", "geographyReferenceChapters", "ব্যবস্থাপনার ধারণা", "ব্রিটিশ ভারতে প্রতিনিধিত্বশীল সরকারের বিকাশ", "প্রাকৃতিক ভূগোল", "মানচিত্র অভিক্ষেপ ও জরিপ"]) assert.ok(curriculum.includes(marker));
-  for (const marker of ['id: "geography"', 'chapters: 18', 'paper: "1st & 2nd Paper"', "Students.bd scan", "User-supplied Business Organisation", "User-supplied Civics"]) assert.ok(data.includes(marker));
+  for (const marker of ['id: "geography"', 'chapters: 18', 'paper: "1st & 2nd Paper"', "supplied image scan", "ব্যবসায় সংগঠন ও ব্যবস্থাপনা ২য় পত্র · পূর্ণ সহায়ক স্ক্যান", "User-supplied Civics"]) assert.ok(data.includes(marker));
   for (const marker of ["GEOGRAPHY WORKFLOW", "MAP & PROCESS SHEET", 'geography: { accent']) assert.ok(page.includes(marker));
+});
+
+test("both uploaded Business guides replace generic notes across all 22 chapters", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of ["business-1-full-guide-scan-2026", "business-2-full-guide-scan-2026", "buildBusinessGuideMaterialPack", "ব্যবসায়ের গঠন, পরিবেশ ও উদ্যোগ—কেসভিত্তিক পাঠ", "ব্যবস্থাপনা সিদ্ধান্ত, মানুষ ও ফল—প্রয়োগভিত্তিক পাঠ"]) assert.ok(data.includes(marker), `missing business guide marker: ${marker}`);
+  for (const chapter of ["Fundamental Concepts of Business", "Business Environment", "Sole Proprietorship", "Partnership Business", "Joint Stock Company", "Cooperative Society", "State Enterprise", "Legal Aspects of Business", "Business Support Services", "Entrepreneurship", "Use of ICT in Business", "Business Ethics and Social Responsibility", "Concepts of Management", "Principles of Management", "Planning and Decision Making", "Organising", "Staffing", "Leadership", "Motivation", "Communication", "Coordination", "Controlling"]) assert.match(data, new RegExp(`\\"${chapter}\\":\\{definition:`));
+  assert.match(data, /if \(subjectId === "business"\) return buildBusinessGuideMaterialPack\(chapter\)/);
+});
+
+test("Production Management and Marketing is a complete source-honest Commerce subject", () => {
+  const source = fs.readFileSync(new URL("../lib/source-book-curriculum.ts", import.meta.url), "utf8");
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of ["productionMarketingFirstPaperReferenceChapters", "Introduction to Production", "Work Study and Productivity", "Quality Management", "productionMarketingSecondPaperReferenceChapters", "Consumer Behaviour", "Market Segmentation and Targeting", "Marketing Planning and Control"]) assert.ok(source.includes(marker));
+  for (const marker of ['id: "production_marketing"', "production-marketing-1-test-paper-pack", "128-page PDF", "Productivity = Output ÷ Input", "Capacity utilisation = Actual output ÷ Design capacity × 100", "STP = Segmentation → Targeting → Positioning", "question-pattern-reference"]) assert.ok(data.includes(marker));
+});
+
+test("final site pass keeps recovery advice specific and release status truthful", () => {
+  const dashboard = fs.readFileSync(new URL("../components/dashboard.tsx", import.meta.url), "utf8");
+  const subject = fs.readFileSync(new URL("../components/subject-page.tsx", import.meta.url), "utf8");
+  const qa = fs.readFileSync(new URL("../docs/RELEASE-QA.md", import.meta.url), "utf8");
+  const audit = fs.readFileSync(new URL("../docs/FINAL-SITE-AUDIT-2026-11-06.md", import.meta.url), "utf8");
+  for (const marker of ["firstRecoveryPoint", "প্রথম recovery cue", "শুধু ভুলগুলো আবার দাও"]) assert.ok(dashboard.includes(marker));
+  assert.doesNotMatch(subject, /নীতি, পদক্ষেপ ও KPI মিলাও/);
+  for (const marker of ["public beta", "6 November 2026", "source-only static archive"]) assert.ok(qa.includes(marker));
+  for (const marker of ["Automated product checks", "Evidence-gated work", "Qualified subject-specialist approval"]) assert.ok(audit.includes(marker));
+});
+
+test("both uploaded Civics guides drive chapter-specific notes practice and exam answers", () => {
+  const curriculum = fs.readFileSync(new URL("../lib/source-book-curriculum.ts", import.meta.url), "utf8");
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of ["পৌরনীতির অর্থ, পরিধি ও বিষয়বস্তু", "ডিজিটাল বিভাজন, গোপনীয়তা ও নিরাপত্তা", "১৭৭৩–১৮৫৮ সালের সাংবিধানিক পদক্ষেপ", "নির্বাচনী এলাকা ও আচরণবিধি"]) assert.ok(curriculum.includes(marker));
+  for (const marker of ["civics-1-panjeree-guide-2026", "civics-2-panjeree-guide-2026", "Hsc Civics 1st Paper Guide 2026.pdf", "hsc Civics 2nd Paper Guide 2026.pdf", "function buildCivicsWorkshop", 'if (subjectId === "civics") return buildCivicsWorkshop', "শুধু ভোটের দিন শান্ত থাকাই সুষ্ঠু নির্বাচন নয়", "রাষ্ট্র স্থায়ী; সরকার রাষ্ট্র পরিচালনার পরিবর্তনশীল যন্ত্র"]) assert.ok(data.includes(marker));
+  assert.equal((curriculum.match(/titleBn:/g) ?? []).length > 100, true);
 });
 
 test("Statistics second paper and Islamic History use separate complete paper maps", () => {
@@ -1424,7 +1492,7 @@ test("Bangla notes use direct, student-friendly tutor language", () => {
   for (const stale of ["এই পাঠে আমরা", "প্রমাণের সিঁড়ি", "উত্তরের মিতব্যয়িতা", "দুর্বল থেকে শক্তিশালী", "final checking"]) {
     assert.doesNotMatch(source, new RegExp(stale));
   }
-  for (const natural of ["আজকের বিষয়", "বাস্তবে কোথায় লাগবে", "বই বন্ধ করে বলো", "নিজেই খাতা দেখো", "একটি তথ্য বদলে দেখো"]) {
+  for (const natural of ["পাঠের ভিত্তি", "বাস্তবে কোথায় লাগবে", "না দেখে ব্যাখ্যা করে", "নিজেই খাতা দেখো", "একটি তথ্য বদলে দেখো"]) {
     assert.match(source, new RegExp(natural));
   }
 });
@@ -1454,7 +1522,7 @@ test("Accounting keeps ten chapters per paper with source-honest worked formats"
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const page = fs.readFileSync(new URL("../components/subject-page.tsx", import.meta.url), "utf8");
   for (const marker of ["Cost and Cost Classification", "Introduction to Management Accounting", "ব্যয় ও ব্যয়ের শ্রেণিবিভাগ", "ব্যবস্থাপনা হিসাববিজ্ঞান পরিচিতি"]) assert.ok(source.includes(marker));
-  for (const marker of ["chapters: 20", "HSC Accounting First Paper supporting book", "HSC Accounting Second Paper supporting book", "441-page user-supplied scan", "369-page user-supplied solution scan", "buildAccountingWorkshop"]) assert.ok(data.includes(marker));
+  for (const marker of ["chapters: 20", "HSC Accounting First Paper 2026 supporting supplement", "HSC Accounting Second Paper 2026 supporting supplement", "661-page uploaded board-solution guide", "610-page uploaded board-solution guide", "buildAccountingWorkshop"]) assert.ok(data.includes(marker));
   for (const marker of ["হিসাবের ছক ও Working Note খাতা", "জাবেদার পূর্ণ format", "Bank reconciliation format", "Cost of production statement"]) assert.ok(page.includes(marker));
   assert.ok(page.includes('const accountingFormat = subjectId === "accounting"'));
 });
@@ -1579,6 +1647,14 @@ test("Bangla second paper has serial guide evidence and task-specific worked mod
   assert.match(data, /Question-bank sequence and examples were checked together with serial guide/);
 });
 
+test("final 809-page Bangla reference set feeds a visual, source-honest study layer", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  const page = fs.readFileSync(new URL("../components/subject-page.tsx", import.meta.url), "utf8");
+  const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  for (const marker of ["bangla-bichitra-final-2025-26", "809-page image-only guide scan", "001-150.pdf + 151-300.pdf", "MCQ option and answer-key audit", "CQ 1+2+3+4 response-depth review"]) assert.ok(data.includes(marker));
+  for (const marker of ["buildBanglaVisualPlan", "WRITING MAP · দেখে নয়, লিখে শেখো", "LITERATURE MAP · পাঠ থেকে প্রমাণ", "bangla-visual-notebook", "bangla-visual-route"]) assert.ok(`${page}\n${css}`.includes(marker));
+});
+
 test("new master notes feed evidence-safe rapid revision without mixing subjects", () => {
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   const page = fs.readFileSync(new URL("../components/subject-page.tsx", import.meta.url), "utf8");
@@ -1609,10 +1685,18 @@ test("ICT uses the six-book chapter map and the supplied full reference pack", (
   const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
   assert.match(data, /ict: ictReferenceChapters\.map/);
   assert.doesNotMatch(data, /title: "Cyber safety and responsible use"/);
-  assert.match(data, /subject === "business" \? \{ paper \} : \{\}/);
+  assert.match(data, /subject !== "ict" \? \{ paper \} : \{\}/);
   assert.match(data, /একক আবশ্যিক ICT বিষয়—১ম\/২য় পত্র বিভাজন নেই/);
   for (const source of ["ict-cq-scan-369", "ict-mcq-guide-28", "ict-akkharpatra-full-guide"]) assert.match(data, new RegExp(source));
   for (const chapter of ["ICT: World and Bangladesh Perspective", "Communication Systems and Networking", "Number Systems and Digital Devices", "Introduction to Web Design and HTML", "Programming Language", "Database Management System"]) assert.match(data, new RegExp(chapter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+});
+
+test("revised NCTB ICT and uploaded History guide drive paper-specific depth", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  const source = fs.readFileSync(new URL("../lib/source-book-curriculum.ts", import.meta.url), "utf8");
+  for (const marker of ["ict-nctb-revised-2026-27", "history-1-lecture-guide-2027", "buildHistoryWorkshop", "সময়রেখা, উৎস ও CQ ল্যাব", "official curriculum comparison pending"]) assert.ok(data.includes(marker));
+  assert.ok(data.includes("২০২৬–২৭ শিক্ষাবর্ষ"));
+  for (const marker of ["কৃত্রিম বুদ্ধিমত্তা, মেশিন লার্নিং ও রোবটিক্স", 'page: "২৮৯–৩৩৮"', "responsive ও accessible নকশা", "dry run, output prediction, testing ও debugging"]) assert.ok(source.includes(marker));
 });
 
 test("ICT practice starts from chapter-specific MCQs with explanations", () => {
@@ -1725,6 +1809,22 @@ test("final pre-release pass keeps navigation visible, print recall readable and
     "color:#111!important",
   ]) assert.ok(css.includes(marker), `missing final UI/print safeguard: ${marker}`);
   for (const marker of ["chapterSolvedCqAnswer", "isInstructionOnlyCqAnswer", "ক. ১ নম্বর:", "ঘ. ৪ নম্বর:"]) assert.ok(data.includes(marker), `missing CQ answer-quality gate: ${marker}`);
+});
+
+test("uploaded Geography and Islamic History scans replace generic subject packs", () => {
+  const data = fs.readFileSync(new URL("../lib/academic-data.ts", import.meta.url), "utf8");
+  for (const marker of [
+    "geography-1-test-paper-2026", "geography-2-test-paper-2026", "islamic-history-1-supplement-2026",
+    "মানচিত্র, প্রক্রিয়া ও বাংলাদেশ-প্রয়োগভিত্তিক Geography study pack",
+    "কালক্রম, ব্যক্তি, প্রতিষ্ঠান ও সভ্যতাগত প্রভাবভিত্তিক History study pack",
+    "risk = hazard × exposure × vulnerability ÷ capacity",
+    "অযাচাইকৃত কাহিনি, অতিরঞ্জিত সংখ্যা ও অসম্মানজনক ভাষা বাদ দাও",
+  ]) assert.ok(data.includes(marker), `missing scan-driven subject marker: ${marker}`);
+  for (const title of ["Natural Geography", "Climate and Climate Change", "Map Projection and Survey", "Population Geography", "Environment and Hazards"]) {
+    assert.ok(data.includes(`\"${title}\": { terms:`), `missing chapter-specific Geography knowledge: ${title}`);
+  }
+  assert.ok(data.includes('if (!["geography","islamic_history"].includes(subjectId)) return undefined;'));
+  assert.ok(data.includes('role:"question-pattern-reference"'));
 });
 
 test("optional Supabase login preserves local-first progress and isolates student rows", () => {

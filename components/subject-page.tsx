@@ -44,6 +44,36 @@ const noteBlueprints: Record<string,{label:string; promise:string; steps:[string
 
 const defaultNoteBlueprint = {label:"SMART NOTE WORKFLOW",promise:"ধারণা বোঝো, উদাহরণে দেখো, নিজে প্রয়োগ করো এবং না দেখে যাচাই করো।",steps:[["বোঝো","মূল ধারণা ও প্রয়োজনীয় পরিভাষা"],["দেখো","প্রেক্ষাপট ও সমাধানসহ উদাহরণ"],["প্রয়োগ করো","নিজে উত্তর বা বিশ্লেষণ তৈরি"],["যাচাই করো","সাধারণ ভুল ও পরীক্ষার মানদণ্ড"]] as [string,string][]};
 
+function buildBanglaVisualPlan({paper,title,concept,terms,method,example,mistakes}:{paper?:string;title:string;concept?:string;terms?:string[];method?:string[];example?:string;mistakes?:string[]}) {
+  const safeTerms=(terms??[]).filter(Boolean);
+  const safeMethod=(method??[]).filter(Boolean);
+  const isWriting=paper==="2nd Paper";
+  if(isWriting) return {
+    eyebrow:"WRITING MAP · দেখে নয়, লিখে শেখো",
+    title:`${title} — উত্তর তৈরির দৃশ্যমান পথ`,
+    caption:"প্রশ্নের নির্দেশ থেকে সম্পাদিত চূড়ান্ত লেখা পর্যন্ত প্রতিটি ধাপ আগের ধাপের তথ্য ব্যবহার করে।",
+    nodes:[
+      {label:"প্রশ্ন ভাঙো",detail:`কাজের ধরন, পাঠক/প্রাপক ও উদ্দেশ্য আলাদা করো। ${safeTerms[0]??"নির্দেশক শব্দ"} চিহ্নিত করো।`},
+      {label:"নিয়ম/বিন্যাস",detail:safeMethod[0]??"এই কাজের বাধ্যতামূলক অংশগুলো আগে খসড়ায় বসাও।"},
+      {label:"পূর্ণ নমুনা",detail:example??"নির্ধারিত কাঠামোয় তথ্য, উদাহরণ ও স্বাভাবিক ভাষা দিয়ে সম্পূর্ণ উত্তর লেখো।"},
+      {label:"সম্পাদনা",detail:safeMethod.at(-1)??"তথ্য, বিন্যাস, বানান, বিরামচিহ্ন ও শব্দসীমা আলাদাভাবে যাচাই করো।"},
+      {label:"চূড়ান্ত লেখা",detail:`${mistakes?.[0]??"মুখস্থ নমুনা হুবহু বসানো"} এড়িয়ে প্রশ্নের প্রেক্ষাপটে উত্তরটি আবার পড়ো।`},
+    ],
+  };
+  return {
+    eyebrow:"LITERATURE MAP · পাঠ থেকে প্রমাণ",
+    title:`${title} — অর্থ, প্রমাণ ও বিশ্লেষণের মানচিত্র`,
+    caption:"কাহিনি বা পঙ্‌ক্তি পুনর্লিখন নয়—প্রসঙ্গ, পাঠ-প্রমাণ ও তাৎপর্যের যোগসূত্র দেখিয়ে উত্তর তৈরি করো।",
+    nodes:[
+      {label:"প্রেক্ষাপট",detail:concept??"রচনার সময়, পরিস্থিতি ও কেন্দ্রীয় প্রশ্নটি আগে ধরো।"},
+      {label:"কণ্ঠ/চরিত্র",detail:`${safeTerms.slice(0,2).join(" · ")||"বক্তা ও প্রধান চরিত্র"}—কে কী বলছে বা করছে, পাঠ থেকে চিহ্নিত করো।`},
+      {label:"সংঘাত/মূলভাব",detail:`${safeTerms.slice(2,4).join(" · ")||"ঘটনা ও মূল্যবোধ"} কীভাবে কেন্দ্রীয় বক্তব্য তৈরি করেছে, কারণ–ফলে বোঝাও।`},
+      {label:"ভাষা/প্রতীক",detail:safeMethod[1]??"উদ্ধৃতি, শব্দচয়ন, চিত্রকল্প বা প্রতীকের প্রসঙ্গ ও কাজ ব্যাখ্যা করো।"},
+      {label:"তাৎপর্য",detail:`${example??"পাঠের নির্দিষ্ট প্রমাণ"} ধরে বর্তমান প্রাসঙ্গিকতা বা মূল্যায়ন দাও।`},
+    ],
+  };
+}
+
 const banglaLiteratureClinics: Record<string,{
   outcomes:string[];
   precheck:{question:string;answer:string}[];
@@ -239,7 +269,7 @@ export function SubjectPage({ group, subjectId }: { group:"commerce"|"humanities
     ict:{try:"এবার system/code চালিয়ে দেখো",check:"Output ও logic মিলাও",example:"Input থেকে output দেখো"},
     accounting:{try:"খাতায় এবার সম্পূর্ণ সমাধান করো",check:"Debit–credit ও জের মিলাও",example:"Working দেখে পদ্ধতি ধরো"},
     finance:{try:"হিসাব করে সিদ্ধান্ত নাও",check:"Formula, unit ও সিদ্ধান্ত মিলাও",example:"Cash flow থেকে সিদ্ধান্ত দেখো"},
-    business:{try:"Case-টির ব্যবস্থাপনা সমাধান দাও",check:"নীতি, পদক্ষেপ ও KPI মিলাও",example:"Case diagnosis দেখে নাও"},
+    business:{try:"Case-টির ব্যবস্থাপনা সমাধান দাও",check:"নীতি, পদক্ষেপ ও ফলের সূচক মিলাও",example:"Case diagnosis দেখে নাও"},
     economics:{try:"Table–graph–কারণ দিয়ে সমাধান করো",check:"Curve, label ও অর্থ মিলাও",example:"Data থেকে পরিবর্তন দেখো"},
     civics:{try:"আইনসম্মত পথ ও যুক্তি লেখো",check:"নীতি, প্রতিষ্ঠান ও প্রমাণ মিলাও",example:"ঘটনা থেকে সাংবিধানিক যোগ দেখো"},
     geography:{try:"মানচিত্র/চিত্রে প্রক্রিয়াটি দেখাও",check:"Scale, label, কারণ ও ফল মিলাও",example:"স্থান থেকে প্রক্রিয়া বোঝো"},
@@ -288,6 +318,15 @@ export function SubjectPage({ group, subjectId }: { group:"commerce"|"humanities
   const noteProgressKey = `hsc2plus-note-progress-${group}-${subject.id}-${chapter?.title ?? "chapter"}`;
   const chapterCoreTerms = (resource?.guide?.terminology ?? []).slice(0,6);
   const chapterVisualSteps = (resource?.chapterWorkshop?.visual?.steps ?? noteBlueprint.steps.map(([label])=>label)).slice(0,5);
+  const banglaVisualPlan = subject.id==="bangla" ? buildBanglaVisualPlan({
+    paper:chapter?.paper,
+    title:chapter?.titleBn??"বাংলা",
+    concept:resource?.guide?.concept,
+    terms:resource?.guide?.terminology,
+    method:resource?.guide?.method,
+    example:resource?.guide?.application,
+    mistakes:resource?.examToolkit?.mistakes,
+  }) : null;
   const chapterExamTargets = (resource?.chapterWorkshop?.examNightChecklist ?? resource?.guide?.examChecklist ?? []).slice(0,4);
 
   useEffect(()=>{
@@ -467,6 +506,14 @@ export function SubjectPage({ group, subjectId }: { group:"commerce"|"humanities
               <article><strong>{english?"Formula / structure sheet":"সূত্র ও কাঠামোর শিট"}</strong><ol>{(resource?.guide?.structures??[]).map((item,index)=><li key={item}><b>{String(index+1).padStart(2,"0")}</b>{item}</li>)}</ol></article>
               <article className="wide"><strong>{english?"Reusable method":"বারবার ব্যবহারযোগ্য সমাধানপদ্ধতি"}</strong><ol>{(resource?.guide?.method??[]).map((item,index)=><li key={item}><b>{index+1}</b>{item}</li>)}</ol></article>
             </section>
+            {banglaVisualPlan&&<section className="subject-note-chapter bangla-visual-notebook" aria-label={`${chapter?.titleBn??"বাংলা"} দৃশ্যমান পাঠ-মানচিত্র`}>
+              <header><span>MAP</span><div><small>{banglaVisualPlan.eyebrow}</small><h4>{banglaVisualPlan.title}</h4></div></header>
+              <p className="bangla-visual-caption">{banglaVisualPlan.caption}</p>
+              <figure>
+                <div className="bangla-visual-route">{banglaVisualPlan.nodes.map((node,index)=><article key={`${node.label}-${index}`}><div><b>{String(index+1).padStart(2,"0")}</b><strong>{node.label}</strong></div><p>{node.detail}</p>{index<banglaVisualPlan.nodes.length-1&&<ArrowRight aria-hidden="true" size={18}/>}</article>)}</div>
+                <figcaption><Lightbulb size={17}/><span>{chapter?.paper==="2nd Paper"?"এই মানচিত্র দেখে একটি পূর্ণ উত্তর লেখো; তারপর নোট বন্ধ করে একই কাজ নতুন প্রশ্নে করো।":"প্রতিটি তীরের যোগসূত্র একটি বাক্যে ব্যাখ্যা করতে পারলেই মানচিত্রটি সত্যিই বোঝা হয়েছে।"}</span></figcaption>
+              </figure>
+            </section>}
             {!isIct&&!isLogic&&<section className="subject-note-chapter subject-workbook-sheet">
               <header><span>03</span><div><small>{workbook.label}</small><h4>{workbook.title}</h4></div></header>
               <div className="subject-workbook-scroll"><table><thead><tr>{workbook.columns.map(column=><th key={column}>{column}</th>)}</tr></thead><tbody>{workbook.rows(chapterTitle??"").map((row,rowIndex)=><tr key={`${subject.id}-workbook-${rowIndex}`}>{row.map((cell,cellIndex)=><td key={`${cell}-${cellIndex}`}>{cell}</td>)}</tr>)}</tbody></table></div>

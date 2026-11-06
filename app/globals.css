@@ -3416,6 +3416,18 @@ h1 { max-width: 780px; margin: 7px 0 8px; font-family: Arial, "Noto Sans Bengali
 .notebook-self-check summary b { color:#a56422; font-family:"Segoe Print","Comic Sans MS",cursive; }
 .notebook-self-check details p { margin:10px 0 0 31px; color:#42524c; font-size:13px; }
 .subject-workbook-sheet { background:linear-gradient(180deg,#fffdf7,#fffaf0)!important; }
+.bangla-visual-notebook { overflow:hidden; background:linear-gradient(145deg,#fffaf4 0%,#fff 52%,#fff4ef 100%)!important; }
+.bangla-visual-caption { max-width:72ch; margin:0 0 18px; color:#5c4b45; line-height:1.7; }
+.bangla-visual-notebook figure { margin:0; }
+.bangla-visual-route { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; align-items:stretch; }
+.bangla-visual-route article { position:relative; min-width:0; padding:15px 14px; border:1px solid color-mix(in srgb,var(--subject-accent) 28%,#e9ded8); border-radius:18px; background:rgba(255,255,255,.9); box-shadow:0 10px 24px rgba(71,35,31,.05); }
+.bangla-visual-route article>div { display:flex; gap:9px; align-items:center; }
+.bangla-visual-route article>div b { display:grid; width:28px; height:28px; place-items:center; flex:0 0 auto; border-radius:9px; color:#fff; background:var(--subject-ink); font-size:.72rem; }
+.bangla-visual-route article>div strong { color:var(--subject-ink); font-size:.91rem; }
+.bangla-visual-route article p { margin:12px 0 0; color:#50443f; font-size:.82rem; line-height:1.62; overflow-wrap:anywhere; }
+.bangla-visual-route article>svg { position:absolute; z-index:2; top:50%; right:-15px; padding:3px; color:var(--subject-ink); background:#fffaf4; border-radius:999px; transform:translateY(-50%); }
+.bangla-visual-notebook figcaption { display:flex; gap:10px; align-items:flex-start; margin-top:14px; padding:13px 15px; color:#513f39; background:color-mix(in srgb,var(--subject-accent) 12%,#fff); border-radius:14px; line-height:1.6; }
+.bangla-visual-notebook figcaption svg { flex:0 0 auto; margin-top:2px; }
 .subject-workbook-scroll { overflow-x:auto; border:1px solid color-mix(in srgb,var(--subject-accent) 32%,#d9d5c9); border-radius:18px; background:#fff; box-shadow:0 12px 28px rgba(40,35,24,.06); }
 .subject-workbook-sheet table { width:100%; min-width:680px; border-collapse:collapse; text-align:left; }
 .subject-workbook-sheet th { padding:13px 16px; background:color-mix(in srgb,var(--subject-accent) 18%,#fff); color:var(--subject-ink); font-size:.73rem; letter-spacing:.07em; text-transform:uppercase; border-right:1px solid rgba(50,45,35,.09); }
@@ -3427,6 +3439,16 @@ h1 { max-width: 780px; margin: 7px 0 8px; font-family: Arial, "Noto Sans Bengali
 .subject-workbook-sheet>details { margin-top:12px; padding:0 15px; border:1px dashed color-mix(in srgb,var(--subject-accent) 50%,#aaa); border-radius:14px; background:#fff; }
 .subject-workbook-sheet>details summary { cursor:pointer; padding:13px 0; font-weight:800; color:var(--subject-ink); }
 .subject-workbook-sheet>details p { margin:0 0 15px; line-height:1.6; }
+@media(max-width:900px){
+  .bangla-visual-route { grid-template-columns:1fr 1fr; }
+  .bangla-visual-route article:last-child { grid-column:1/-1; }
+  .bangla-visual-route article>svg { top:auto; right:12px; bottom:-14px; transform:rotate(90deg); }
+}
+@media(max-width:560px){
+  .bangla-visual-route { grid-template-columns:1fr; }
+  .bangla-visual-route article:last-child { grid-column:auto; }
+  .bangla-visual-route article { padding:14px; }
+}
 .code-lab-intro { padding:18px 20px 0; }
 .code-example-grid { padding:18px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
 .code-example-grid>article { overflow:hidden; background:#081815; border:1px solid rgba(255,255,255,.1); border-radius:15px; }
@@ -4400,4 +4422,18 @@ pre { max-width:100%; overflow-x:auto; white-space:pre-wrap; overflow-wrap:anywh
   .note-entry-diagnostic { padding:14px; }
   .note-entry-diagnostic>header { align-items:flex-start; flex-direction:column; }
   .literature-glossary>div { grid-template-columns:1fr; }
+}
+/* Release audit: option-level MCQ feedback and resilient academic print layout. */
+.mcq-option-rationales{display:grid;gap:8px;margin-top:12px}
+.mcq-option-rationales p{display:grid;gap:3px;margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--surface) 92%,transparent)}
+.mcq-option-rationales p.correct{border-color:color-mix(in srgb,#16856b 45%,var(--line));background:color-mix(in srgb,#16856b 8%,var(--surface))}
+.mcq-option-rationales p.incorrect{border-color:color-mix(in srgb,#b86b44 22%,var(--line))}
+.mcq-option-rationales strong{font-size:.82rem}
+.mcq-option-rationales span{font-size:.78rem;line-height:1.55;color:var(--muted)}
+
+@media print{
+  .chapter-print-book section,.chapter-print-book article,.exam-print-paper section,.exam-print-paper article,.exam-result-print section{break-inside:avoid-page;page-break-inside:avoid}
+  .print-question,.print-answer,.print-worked,.print-lesson{orphans:3;widows:3}
+  pre,code,.question-visual,.print-options,.print-answer-options{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+  table{break-inside:avoid-page;width:100%;font-size:10pt}
 }
